@@ -20,7 +20,7 @@
       </div>
       <div class="option-group">
         <input type="checkbox" id="samurai-toggle">
-        <label for="samurai-toggle">🗡️ L'ultimo samurai</label>
+        <label for="samurai-toggle" class="samurai-label">🗡️ L'ultimo samurai</label>
       </div>
       <div class="buttons-group">
         <button id="start-game">Inizia Gioco</button>
@@ -35,32 +35,36 @@
     <h2>Tutorial</h2>
     <p>
       Benvenuto in SOMMATRIX!<br>
-      L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale, visualizzati nel formato<br>
-      <strong><span class="partial">N</span><span class="slash-bold">/X</span></strong> dove <span class="partial">N</span> è la somma parziale (non in grassetto) e <span class="slash-bold">/X</span> è il totale da raggiungere (in grassetto).<br>
-      • Modalità <strong>Conferma (✔️)</strong>: clicca per confermare un numero che deve essere usato; la cella diventa azzurra e rimane contrassegnata.<br>
-      • Modalità <strong>Cancella (✖️)</strong>: clicca per cancellare un numero non necessario; se il completamento viene raggiunto, le celle non corrette si cancellano a catena, una dopo l’altra.<br>
+      L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale.<br>
+      • <strong>Conferma (✔️)</strong>: clicca per confermare un numero che deve essere usato.<br>
+      • <strong>Cancella (✖️)</strong>: clicca per cancellare un numero non necessario.<br>
       Se sbagli perdi una vita e l’intera schermata lampeggia di rosso.<br>
-      Usa il tasto in basso per passare dalla modalità conferma a quella cancella.
+      Quando completi riga o colonna, i numeri da cancellare si auto-eliminano a catena.
     </p>
   </div>
 
   <!-- Game Screen -->
-  <div id="game-screen" class="screen" style="display:none;">
-    <!-- Bottone per tornare al menu: in alto a destra -->
-    <button class="back-button" id="back-to-menu-from-game">↩️</button>
+  <div id="game-screen" class="screen" style="display:none; overflow-y: auto;">
+    <!-- Barra superiore con health bar (sx), titolo (centro) e bottone (dx) -->
     <div id="game-header">
       <div id="health-bar"></div>
+      <h1 class="game-title">SOMMATRIX</h1>
+      <button class="back-button" id="back-to-menu-from-game">↩️</button>
     </div>
-    <!-- Griglia integrata: la prima riga e la prima colonna contengono gli indicatori -->
+
+    <!-- Contenitore per la tabella -->
     <div id="grid-wrapper">
       <table id="game-table"></table>
     </div>
-    <!-- Bottone di modalità: in basso, centrato -->
-    <div id="mode-toggle-container-bottom">
-      <button id="mode-toggle">✔️</button>
-      <span id="mode-label">Conferma</span>
+
+    <!-- Barra inferiore con toggle e messaggio -->
+    <div id="bottom-bar">
+      <div id="mode-toggle-container-bottom">
+        <button id="mode-toggle">✔️</button>
+        <span id="mode-label">Conferma</span>
+      </div>
+      <div id="message"></div>
     </div>
-    <div id="message"></div>
   </div>
 
   <script src="script.js"></script>
