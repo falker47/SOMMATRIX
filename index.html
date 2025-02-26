@@ -1,72 +1,84 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-  <meta charset="UTF-8">
-  <title>SOMMATRIX</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>SOMMATRIX</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <!-- Main Menu -->
-  <div id="main-menu" class="screen">
-    <h1>SOMMATRIX</h1>
-    <div class="menu-options">
-      <div class="option-group">
-        <div class="option-label">Scegli dimensione griglia:</div>
-        <div class="grid-size-buttons">
-          <button class="grid-size-btn" data-size="5">5x5</button>
-          <button class="grid-size-btn" data-size="7">7x7</button>
-          <button class="grid-size-btn" data-size="10">10x10</button>
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen">
+        <h1>SOMMATRIX</h1>
+        <div class="menu-options">
+            <!-- Sezione "Scegli dimensione griglia" -->
+            <div class="option-group">
+                <div class="option-label">Scegli la dimensione della griglia:</div>
+                <div class="grid-size-buttons">
+                    <button class="grid-size-btn" data-size="5">5 x 5</button>
+                    <button class="grid-size-btn" data-size="7">7 x 7</button>
+                    <button class="grid-size-btn" data-size="10">10 x 10</button>
+                </div>
+            </div>
+
+            <!-- Sezione "samurai" in un container separato -->
+            <div class="option-group samurai-container">
+                <input type="checkbox" id="samurai-toggle">
+                <label for="samurai-toggle" class="samurai-label">🗡️ L'Ultimo Samurai</label>
+            </div>
+
+            <div class="buttons-group vertical-layout">
+                <!-- Bottone Tutorial sopra -->
+                <button id="show-tutorial" class="tutorial-btn">Tutorial</button>
+                <!-- Bottone Gioca! sotto, più rilevante -->
+                <button id="start-game" class="play-btn">Gioca!</button>
+              </div>
         </div>
-      </div>
-      <div class="option-group">
-        <input type="checkbox" id="samurai-toggle">
-        <label for="samurai-toggle" class="samurai-label">🗡️ L'ultimo samurai</label>
-      </div>
-      <div class="buttons-group">
-        <button id="start-game">Inizia Gioco</button>
-        <button id="show-tutorial">Tutorial</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tutorial Screen -->
-  <div id="tutorial-screen" class="screen" style="display:none;">
-    <button class="back-button" id="back-to-menu-from-tutorial">↩️</button>
-    <h2>Tutorial</h2>
-    <p>
-      Benvenuto in SOMMATRIX!<br>
-      L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale.<br>
-      • <strong>Conferma (✔️)</strong>: clicca per confermare un numero che deve essere usato.<br>
-      • <strong>Cancella (✖️)</strong>: clicca per cancellare un numero non necessario.<br>
-      Se sbagli perdi una vita e l’intera schermata lampeggia di rosso.<br>
-      Quando completi riga o colonna, i numeri da cancellare si auto-eliminano a catena.
-    </p>
-  </div>
-
-  <!-- Game Screen -->
-  <div id="game-screen" class="screen" style="display:none; overflow-y: auto;">
-    <!-- Barra superiore con health bar (sx), titolo (centro) e bottone (dx) -->
-    <div id="game-header">
-      <div id="health-bar"></div>
-      <h1 class="game-title">SOMMATRIX</h1>
-      <button class="back-button" id="back-to-menu-from-game">↩️</button>
     </div>
 
-    <!-- Contenitore per la tabella -->
-    <div id="grid-wrapper">
-      <table id="game-table"></table>
+    <!-- Tutorial Screen -->
+    <div id="tutorial-screen" class="screen" style="display:none;">
+        <button class="back-button" id="back-to-menu-from-tutorial">↩️</button>
+        <h2>Tutorial</h2>
+        <p>
+            Benvenuto su SOMMATRIX!<br>
+            L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale.<br>
+            Per farti strada durante la risoluzione dell'enigma puoi eseguire le seguenti operazioni su un numero:<br>
+            • <strong>Confermare (✔️)</strong>: clicca per confermare un numero che fa parte della somma.<br>
+            • <strong>Cancellare (✖️)</strong>: clicca per cancellare un numero che NON fa parte della somma.<br>
+            Se sbagli perdi una vita e verrà segnalato da un flash rosso.<br>
+            Una volta che selezioni tutti gli addendi corretti di una riga o una colonna, i numeri da cancellare si auto-eliminano automaticamente.<br><br>
+            La modalità <strong>"Ultimo Samurai"</strong> invece è pensata solo per i veri temerari:<br>
+            Farai la partita con una sola vita, non c'è alcun margine di errore!
+        </p>
     </div>
 
-    <!-- Barra inferiore con toggle e messaggio -->
-    <div id="bottom-bar">
-      <div id="mode-toggle-container-bottom">
-        <button id="mode-toggle">✔️</button>
-        <span id="mode-label">Conferma</span>
-      </div>
-      <div id="message"></div>
-    </div>
-  </div>
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen" style="display:none; overflow-y: auto;">
+        <!-- Barra superiore con health bar (sx), titolo (centro) e bottone (dx) -->
+        <div id="game-header">
+            <div id="health-bar"></div>
+            <h1 class="game-title">SOMMATRIX</h1>
+            <button class="back-button" id="back-to-menu-from-game">↩️</button>
+        </div>
 
-  <script src="script.js"></script>
+        <!-- Contenitore per la tabella -->
+        <div id="grid-wrapper">
+            <table id="game-table"></table>
+        </div>
+
+        <!-- Barra inferiore con toggle e messaggio -->
+        <div id="bottom-bar">
+            <div id="mode-toggle-container-bottom">
+                <button id="mode-toggle">✔️</button>
+                <span id="mode-label">Conferma</span>
+            </div>
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
