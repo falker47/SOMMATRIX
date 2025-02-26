@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>SOMMATRIX</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Main Menu -->
+  <div id="main-menu" class="screen">
+    <h1>SOMMATRIX</h1>
+    <div class="menu-options">
+      <div class="option-group">
+        <div class="option-label">Scegli dimensione griglia:</div>
+        <div class="grid-size-buttons">
+          <button class="grid-size-btn" data-size="5">5x5</button>
+          <button class="grid-size-btn" data-size="7">7x7</button>
+          <button class="grid-size-btn" data-size="10">10x10</button>
+        </div>
+      </div>
+      <div class="option-group">
+        <input type="checkbox" id="samurai-toggle">
+        <label for="samurai-toggle">🗡️ L'ultimo samurai</label>
+      </div>
+      <div class="buttons-group">
+        <button id="start-game">Inizia Gioco</button>
+        <button id="show-tutorial">Tutorial</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorial Screen -->
+  <div id="tutorial-screen" class="screen" style="display:none;">
+    <button class="back-button" id="back-to-menu-from-tutorial">↩️</button>
+    <h2>Tutorial</h2>
+    <p>
+      Benvenuto in SOMMATRIX!<br>
+      L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale, visualizzati nel formato<br>
+      <strong><span class="partial">N</span><span class="slash-bold">/X</span></strong> dove <span class="partial">N</span> è la somma parziale (non in grassetto) e <span class="slash-bold">/X</span> è il totale da raggiungere (in grassetto).<br>
+      • Modalità <strong>Conferma (✔️)</strong>: clicca per confermare un numero che deve essere usato; la cella diventa azzurra e rimane contrassegnata.<br>
+      • Modalità <strong>Cancella (✖️)</strong>: clicca per cancellare un numero non necessario; se il completamento viene raggiunto, le celle non corrette si cancellano a catena, una dopo l’altra.<br>
+      Se sbagli perdi una vita e l’intera schermata lampeggia di rosso.<br>
+      Usa il tasto in basso per passare dalla modalità conferma a quella cancella.
+    </p>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen" style="display:none;">
+    <!-- Bottone per tornare al menu: in alto a destra -->
+    <button class="back-button" id="back-to-menu-from-game">↩️</button>
+    <div id="game-header">
+      <div id="health-bar"></div>
+    </div>
+    <!-- Griglia integrata: la prima riga e la prima colonna contengono gli indicatori -->
+    <div id="grid-wrapper">
+      <table id="game-table"></table>
+    </div>
+    <!-- Bottone di modalità: in basso, centrato -->
+    <div id="mode-toggle-container-bottom">
+      <button id="mode-toggle">✔️</button>
+      <span id="mode-label">Conferma</span>
+    </div>
+    <div id="message"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
