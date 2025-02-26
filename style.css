@@ -166,10 +166,11 @@
   
   /* Schermata di Gioco */
   #game-header {
-    display: grid;
-    grid-template-columns: auto 1fr auto; /* colonna sx (health), colonna centrale (titolo), colonna dx (bottone) */
-    align-items: center;
-    margin-bottom: 10px;
+    position: relative;
+  height: 60px;            /* Altezza fissa per l'header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   }
   .game-title {
     margin: 0;
@@ -180,6 +181,14 @@
   #health-bar {
     display: flex;
     gap: 4px;
+        position: absolute;
+        left: 20px;              /* Posizionato a sinistra */
+      
+  }
+
+  #back-to-menu-from-game {
+    position: absolute;
+    right: 20px;             /* Posizionato a destra */
   }
   .life {
     width: 36px;  /* 3:2, es. 36x24 */
