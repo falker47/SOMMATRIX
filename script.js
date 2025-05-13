@@ -76,12 +76,12 @@ backToMenuFromGameBtn.addEventListener("click", showMainMenu);
 modeToggleBtn.addEventListener("click", () => {
   if (currentMode === "confirm") {
     currentMode = "cancel";
-    modeToggleBtn.textContent = "✖️";
+    modeToggleBtn.textContent = "";
     modeLabel.textContent = "Cancella";
     modeToggleBtn.classList.add("cancel");
   } else {
     currentMode = "confirm";
-    modeToggleBtn.textContent = "✔️";
+    modeToggleBtn.textContent = "";
     modeLabel.textContent = "Conferma";
     modeToggleBtn.classList.remove("cancel");
   }
@@ -124,7 +124,7 @@ function initGame() {
   updateHealthBar();
 
   currentMode = "confirm";
-  modeToggleBtn.textContent = "✔️";
+  modeToggleBtn.textContent = "";
   modeLabel.textContent = "Conferma";
   modeToggleBtn.classList.remove("cancel");
 
