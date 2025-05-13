@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 
@@ -30,9 +29,9 @@
             <div class="option-group">
                 <div class="option-label">Scegli la dimensione della griglia:</div>
                 <div class="grid-size-buttons">
-                    <button class="grid-size-btn" data-size="5">5 x 5</button>
-                    <button class="grid-size-btn" data-size="7">7 x 7</button>
-                    <button class="grid-size-btn" data-size="10">10 x 10</button>
+                    <button class="grid-size-btn" data-size="4">4 x 4</button>
+                    <button class="grid-size-btn" data-size="6">6 x 6</button>
+                    <button class="grid-size-btn" data-size="8">8 x 8</button>
                 </div>
             </div>
 
@@ -92,6 +91,12 @@
             </button>
         </div>
 
+        <!-- Informazioni di gioco: timer e punteggio -->
+        <div class="game-info">
+            <div id="timer-display">Tempo: 0s</div>
+            <div id="score-display"></div>
+        </div>
+
         <!-- Contenitore per la tabella -->
         <div id="grid-wrapper">
             <table id="game-table"></table>
@@ -100,8 +105,7 @@
         <!-- Barra inferiore con toggle e messaggio -->
         <div id="bottom-bar">
             <div id="mode-toggle-container-bottom">
-                <button id="mode-toggle">Conferma</button>
-                <span id="mode-label">Modalità attiva</span>
+                <button id="mode-toggle"></button>
             </div>
             <div id="message"></div>
         </div>

@@ -1,6 +1,6 @@
 /* Variabili Globali */
 let currentMode = "confirm";
-let gridSize = 5;
+let gridSize = 4;
 let lives = 3;
 let initialLives = 3;
 let gameOver = false;
@@ -11,7 +11,12 @@ let rowTargets = [];
 let colTargets = [];
 let rowCompleted = [];
 let colCompleted = [];
-let selectedGridSize = 5;
+let selectedGridSize = 4;
+let startTime = 0;
+let currentTime = 0;
+let timerInterval = null;
+let errors = 0;
+let score = 0;
 
 /* Elementi DOM */
 const mainMenu = document.getElementById("main-menu");
@@ -26,6 +31,8 @@ const modeLabel = document.getElementById("mode-label");
 const healthBar = document.getElementById("health-bar");
 const gameTable = document.getElementById("game-table");
 const messageDiv = document.getElementById("message");
+const scoreDisplay = document.getElementById("score-display");
+const timerDisplay = document.getElementById("timer-display");
 const gridSizeButtons = document.querySelectorAll(".grid-size-btn");
 
 /* Selezione dimensione griglia */
@@ -36,13 +43,14 @@ gridSizeButtons.forEach(btn => {
     selectedGridSize = parseInt(btn.dataset.size);
   });
 });
-document.querySelector(".grid-size-btn[data-size='5']").classList.add("selected");
+document.querySelector(".grid-size-btn[data-size='4']").classList.add("selected");
 
 /* Navigazione Schermate */
 function showMainMenu() {
   mainMenu.style.display = "block";
   tutorialScreen.style.display = "none";
   gameScreen.style.display = "none";
+  stopTimer();
 }
 function showTutorial() {
   mainMenu.style.display = "none";
@@ -65,8 +73,10 @@ startGameBtn.addEventListener("click", () => {
     lives = 3;
     initialLives = 3;
   }
+  errors = 0;
   initGame();
   showGame();
+  startTimer();
 });
 showTutorialBtn.addEventListener("click", showTutorial);
 backToMenuFromTutorialBtn.addEventListener("click", showMainMenu);
@@ -76,13 +86,9 @@ backToMenuFromGameBtn.addEventListener("click", showMainMenu);
 modeToggleBtn.addEventListener("click", () => {
   if (currentMode === "confirm") {
     currentMode = "cancel";
-    modeToggleBtn.textContent = "";
-    modeLabel.textContent = "Cancella";
     modeToggleBtn.classList.add("cancel");
   } else {
     currentMode = "confirm";
-    modeToggleBtn.textContent = "";
-    modeLabel.textContent = "Conferma";
     modeToggleBtn.classList.remove("cancel");
   }
 });
@@ -105,9 +111,32 @@ function updateHealthBar() {
               <div class="life empty red"></div>`;
     }
   } else if (initialLives === 1) {
-    html = `<div class="life full red"></div>`;
+    html = `<div class="life full samurai"></div>`;
   }
   healthBar.innerHTML = html;
+}
+
+/* Timer e Punteggio */
+function startTimer() {
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  if (gameOver) return;
+  currentTime = Math.floor((Date.now() - startTime) / 1000);
+  timerDisplay.textContent = `Tempo: ${currentTime}s`;
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+function calculateScore() {
+  const time = currentTime;
+  score = Math.round(Math.pow(gridSize, 2) * (1 - (errors * 0.15)) * (1 - (time * 0.001)));
+  if (score < 0) score = 0;
+  return score;
 }
 
 /* Inizializza il gioco */
@@ -121,11 +150,10 @@ function initGame() {
   rowCompleted = new Array(gridSize).fill(false);
   colCompleted = new Array(gridSize).fill(false);
   messageDiv.textContent = "";
+  scoreDisplay.textContent = "";
   updateHealthBar();
 
   currentMode = "confirm";
-  modeToggleBtn.textContent = "";
-  modeLabel.textContent = "Conferma";
   modeToggleBtn.classList.remove("cancel");
 
   // Genera matrici
@@ -340,6 +368,7 @@ function triggerError() {
   document.body.appendChild(overlay);
   setTimeout(() => { overlay.remove(); }, 500);
   lives--;
+  errors++;
   updateHealthBar();
   if (lives <= 0) {
     endGame(false);
@@ -358,10 +387,16 @@ function checkWin() {
 /* Fine gioco */
 function endGame(won) {
   gameOver = true;
+  stopTimer();
+  
+  const finalScore = calculateScore();
+  
   if (won) {
     messageDiv.textContent = "Hai vinto!";
     messageDiv.classList.add("win-animation");
+    scoreDisplay.textContent = `Punteggio: ${finalScore}`;
   } else {
     messageDiv.textContent = "Game Over!";
+    scoreDisplay.textContent = "Punteggio: 0";
   }
 }
