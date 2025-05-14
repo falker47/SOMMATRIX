@@ -94,7 +94,7 @@
         <!-- Informazioni di gioco: timer e punteggio -->
         <div class="game-info">
             <div id="timer-display">Tempo: 0s</div>
-            <div id="score-display"></div>
+            <div id="score-display">Punteggio: 0</div>
         </div>
 
         <!-- Contenitore per la tabella -->
@@ -102,10 +102,37 @@
             <table id="game-table"></table>
         </div>
 
-        <!-- Barra inferiore con toggle e messaggio -->
-        <div id="bottom-bar">
-            <div id="mode-toggle-container-bottom">
-                <button id="mode-toggle"></button>
+        <!-- Barra inferiore con toggle migliorato e messaggio -->
+<div id="bottom-bar">
+    <div id="mode-toggle-container">
+        <!-- Icona Conferma -->
+        <div class="mode-icon confirm-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Conferma</span>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button id="mode-toggle"></button>
+        
+        <!-- Icona Cancella -->
+        <div class="mode-icon cancel-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>Cancella</span>
+        </div>
+    </div>
+    <div id="message"></div>
+</div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span>Cancella</span>
+                </div>
             </div>
             <div id="message"></div>
         </div>
