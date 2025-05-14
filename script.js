@@ -276,7 +276,7 @@ function cellClick(e) {
   const j = parseInt(cell.dataset.col);
 
   if ((gridSolution[i][j] && gridState[i][j] === 1) ||
-      (!gridSolution[i][j] && gridState[i][j] === -1)) {
+    (!gridSolution[i][j] && gridState[i][j] === -1)) {
     return;
   }
   if (gridState[i][j] !== 0) return;
@@ -410,9 +410,9 @@ function checkWin() {
 function endGame(won) {
   gameOver = true;
   stopTimer();
-  
+
   const finalScore = calculateScore();
-  
+
   if (won) {
     messageDiv.textContent = "Hai vinto!";
     messageDiv.classList.add("win-animation");
