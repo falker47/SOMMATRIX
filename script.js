@@ -87,11 +87,23 @@ modeToggleBtn.addEventListener("click", () => {
   if (currentMode === "confirm") {
     currentMode = "cancel";
     modeToggleBtn.classList.add("cancel");
+    updateModeIndicator(); // Aggiunta chiamata funzione
   } else {
     currentMode = "confirm";
     modeToggleBtn.classList.remove("cancel");
+    updateModeIndicator(); // Aggiunta chiamata funzione
   }
 });
+
+/* Aggiorna indicatore di modalità */
+function updateModeIndicator() {
+  // Funzione aggiunta per aggiornare l'indicatore testuale sotto il toggle
+  const modeIndicator = document.getElementById("mode-indicator");
+  if (modeIndicator) {
+    modeIndicator.textContent = currentMode === "confirm" ? "Conferma" : "Cancella";
+    modeIndicator.className = currentMode === "confirm" ? "mode-confirm" : "mode-cancel";
+  }
+}
 
 /* Aggiorna Health Bar */
 function updateHealthBar() {
@@ -126,6 +138,14 @@ function updateTimer() {
   if (gameOver) return;
   currentTime = Math.floor((Date.now() - startTime) / 1000);
   timerDisplay.textContent = `Tempo: ${currentTime}s`;
+  // Aggiornamento del punteggio in tempo reale
+  updateScore();
+}
+
+function updateScore() {
+  // Nuova funzione per aggiornare il punteggio in tempo reale
+  score = calculateScore();
+  scoreDisplay.textContent = `Punteggio: ${score}`;
 }
 
 function stopTimer() {
@@ -134,9 +154,9 @@ function stopTimer() {
 
 function calculateScore() {
   const time = currentTime;
-  score = Math.round(Math.pow(gridSize, 2) * (1 - (errors * 0.15)) * (1 - (time * 0.001)));
-  if (score < 0) score = 0;
-  return score;
+  let calculatedScore = Math.round(Math.pow(gridSize, 2) * (1 - (errors * 0.15)) * (1 - (time * 0.001)));
+  if (calculatedScore < 0) calculatedScore = 0;
+  return calculatedScore;
 }
 
 /* Inizializza il gioco */
@@ -150,11 +170,12 @@ function initGame() {
   rowCompleted = new Array(gridSize).fill(false);
   colCompleted = new Array(gridSize).fill(false);
   messageDiv.textContent = "";
-  scoreDisplay.textContent = "";
+  scoreDisplay.textContent = "Punteggio: 0"; // Inizializzato il punteggio
   updateHealthBar();
 
   currentMode = "confirm";
   modeToggleBtn.classList.remove("cancel");
+  updateModeIndicator(); // Aggiornamento indicatore modalità
 
   // Genera matrici
   for (let i = 0; i < gridSize; i++) {
@@ -370,6 +391,7 @@ function triggerError() {
   lives--;
   errors++;
   updateHealthBar();
+  updateScore(); // Aggiorna il punteggio dopo un errore
   if (lives <= 0) {
     endGame(false);
   }
