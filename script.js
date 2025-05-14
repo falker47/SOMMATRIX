@@ -308,7 +308,7 @@ function cellClick(e) {
 function updateIndicators() {
   // Righe
   for (let i = 0; i < gridSize; i++) {
-    if (rowCompleted[i]) continue;
+    if (rowCompleted[i]) continue; // Salta se la riga è già marcata come completata
     let partial = 0;
     for (let j = 0; j < gridSize; j++) {
       if (gridState[i][j] === 1) {
@@ -317,9 +317,16 @@ function updateIndicators() {
     }
     const rowTh = document.getElementById("row-indicator-" + i);
     if (rowTh) {
-      rowTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${rowTargets[i]}</span>`;
-      if (partial === rowTargets[i]) {
+      // Aggiorna sempre il contenuto parziale a meno che non sia già completato
+      if (!rowCompleted[i]) { // Evita di sovrascrivere l'indicatore di completamento
+          rowTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${rowTargets[i]}</span>`;
+      }
+
+      if (partial === rowTargets[i] && !rowCompleted[i]) { // Aggiunto !rowCompleted[i] per eseguire solo una volta
         rowCompleted[i] = true;
+        rowTh.classList.add("indicator-completed");
+        rowTh.innerHTML = `<span class="completed-icon">✓</span> <span class="target-sum">${rowTargets[i]}</span>`;
+
         let delay = 0;
         for (let j = 0; j < gridSize; j++) {
           if (!gridSolution[i][j] && gridState[i][j] === 0) {
@@ -331,21 +338,23 @@ function updateIndicators() {
                 setTimeout(() => {
                   cell.textContent = "";
                   cell.style.pointerEvents = "none";
-                  updateIndicators();
+                  // Rimuoviamo la chiamata a updateIndicators() da qui per evitare cicli o aggiornamenti non necessari
+                  // Potrebbe essere necessario richiamare checkWin() o una logica specifica se l'auto-cancellazione completa altre righe/colonne
                 }, 500);
               }
             }, delay);
             delay += 300;
           }
         }
-        setTimeout(() => { rowTh.innerHTML = ""; }, delay + 500);
-        checkWin();
+        // La riga `setTimeout(() => { rowTh.innerHTML = ""; }, delay + 500);` è stata rimossa/commentata
+        checkWin(); // Chiamiamo checkWin dopo aver processato la riga completata
       }
     }
   }
+
   // Colonne
   for (let j = 0; j < gridSize; j++) {
-    if (colCompleted[j]) continue;
+    if (colCompleted[j]) continue; // Salta se la colonna è già marcata come completata
     let partial = 0;
     for (let i = 0; i < gridSize; i++) {
       if (gridState[i][j] === 1) {
@@ -354,9 +363,16 @@ function updateIndicators() {
     }
     const colTh = document.getElementById("col-indicator-" + j);
     if (colTh) {
-      colTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${colTargets[j]}</span>`;
-      if (partial === colTargets[j]) {
+      // Aggiorna sempre il contenuto parziale a meno che non sia già completato
+      if(!colCompleted[j]) { // Evita di sovrascrivere l'indicatore di completamento
+        colTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${colTargets[j]}</span>`;
+      }
+
+      if (partial === colTargets[j] && !colCompleted[j]) { // Aggiunto !colCompleted[j] per eseguire solo una volta
         colCompleted[j] = true;
+        colTh.classList.add("indicator-completed");
+        colTh.innerHTML = `<span class="completed-icon">✓</span> <span class="target-sum">${colTargets[j]}</span>`;
+
         let delay = 0;
         for (let i = 0; i < gridSize; i++) {
           if (!gridSolution[i][j] && gridState[i][j] === 0) {
@@ -368,15 +384,15 @@ function updateIndicators() {
                 setTimeout(() => {
                   cell.textContent = "";
                   cell.style.pointerEvents = "none";
-                  updateIndicators();
+                   // Rimuoviamo la chiamata a updateIndicators() da qui
                 }, 500);
               }
             }, delay);
             delay += 300;
           }
         }
-        setTimeout(() => { colTh.innerHTML = ""; }, delay + 500);
-        checkWin();
+        // La riga `setTimeout(() => { colTh.innerHTML = ""; }, delay + 500);` è stata rimossa/commentata
+        checkWin(); // Chiamiamo checkWin dopo aver processato la colonna completata
       }
     }
   }
