@@ -156,6 +156,13 @@ function calculateScore() {
   const time = currentTime;
   let calculatedScore = Math.round(Math.pow(gridSize, 3) * (1 - (errors * 0.2)) * (1 - (time * 0.001)));
   if (calculatedScore < 0) calculatedScore = 0;
+
+  // Aggiungi questo blocco per il moltiplicatore samurai
+  const isSamuraiMode = document.getElementById("samurai-toggle").checked;
+  if (isSamuraiMode) {
+    calculatedScore = Math.round(calculatedScore * 1.5);
+  }
+
   return calculatedScore;
 }
 
@@ -319,7 +326,7 @@ function updateIndicators() {
     if (rowTh) {
       // Aggiorna sempre il contenuto parziale a meno che non sia già completato
       if (!rowCompleted[i]) { // Evita di sovrascrivere l'indicatore di completamento
-          rowTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${rowTargets[i]}</span>`;
+        rowTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${rowTargets[i]}</span>`;
       }
 
       if (partial === rowTargets[i] && !rowCompleted[i]) { // Aggiunto !rowCompleted[i] per eseguire solo una volta
@@ -364,7 +371,7 @@ function updateIndicators() {
     const colTh = document.getElementById("col-indicator-" + j);
     if (colTh) {
       // Aggiorna sempre il contenuto parziale a meno che non sia già completato
-      if(!colCompleted[j]) { // Evita di sovrascrivere l'indicatore di completamento
+      if (!colCompleted[j]) { // Evita di sovrascrivere l'indicatore di completamento
         colTh.innerHTML = `<span class="partial">${partial}</span><span class="slash-bold">/${colTargets[j]}</span>`;
       }
 
@@ -384,7 +391,7 @@ function updateIndicators() {
                 setTimeout(() => {
                   cell.textContent = "";
                   cell.style.pointerEvents = "none";
-                   // Rimuoviamo la chiamata a updateIndicators() da qui
+                  // Rimuoviamo la chiamata a updateIndicators() da qui
                 }, 500);
               }
             }, delay);
