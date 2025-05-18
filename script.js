@@ -154,7 +154,7 @@ function stopTimer() {
 
 function calculateScore() {
   const time = currentTime;
-  let calculatedScore = Math.round(Math.pow(gridSize, 2) * (1 - (errors * 0.15)) * (1 - (time * 0.001)));
+  let calculatedScore = Math.round(Math.pow(gridSize, 3) * (1 - (errors * 0.2)) * (1 - (time * 0.001)));
   if (calculatedScore < 0) calculatedScore = 0;
   return calculatedScore;
 }
