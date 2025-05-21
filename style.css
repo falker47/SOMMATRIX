@@ -508,6 +508,11 @@ button:hover {
   overflow: hidden;
 }
 
+#mode-toggle {
+  transform: scale(1.15);
+  transform-origin: center;
+}
+
 #mode-toggle::before {
   content: '';
   position: absolute;
