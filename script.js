@@ -33,7 +33,7 @@ const gameTable = document.getElementById("game-table");
 const messageDiv = document.getElementById("message");
 const scoreDisplay = document.getElementById("score-display");
 const timerDisplay = document.getElementById("timer-display");
-const gridSizeButtons = document.querySelectorAll(".grid-size-btn");
+const gridSizeButtons = document.querySelectorAll(".level-card");
 
 /* Selezione dimensione griglia */
 gridSizeButtons.forEach(btn => {
@@ -43,7 +43,7 @@ gridSizeButtons.forEach(btn => {
     selectedGridSize = parseInt(btn.dataset.size);
   });
 });
-document.querySelector(".grid-size-btn[data-size='4']").classList.add("selected");
+document.querySelector(".level-card[data-size='4']").classList.add("selected");
 
 /* Navigazione Schermate */
 function showMainMenu() {
@@ -86,14 +86,14 @@ backToMenuFromGameBtn.addEventListener("click", showMainMenu);
 modeToggleBtn.addEventListener("click", () => {
   if (currentMode === "confirm") {
     currentMode = "cancel";
+    modeToggleBtn.classList.add("cancel");
+    updateModeIndicator(); // Aggiunta chiamata funzione
   } else {
     currentMode = "confirm";
+    modeToggleBtn.classList.remove("cancel");
+    updateModeIndicator(); // Aggiunta chiamata funzione
   }
-  // assegna le classi sul bottone
-  modeToggleBtn.classList.toggle("cancel", currentMode === "cancel");
-  modeToggleBtn.classList.toggle("confirm", currentMode === "confirm");
 });
-
 
 /* Aggiorna indicatore di modalità */
 function updateModeIndicator() {

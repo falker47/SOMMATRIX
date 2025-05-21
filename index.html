@@ -32,11 +32,13 @@
             <!-- Sezione "Scegli dimensione griglia" -->
             <div class="option-group">
                 <div class="option-label">Scegli la dimensione della griglia:</div>
-                <div class="grid-size-buttons">
-                    <button class="grid-size-btn" data-size="4">4 x 4</button>
-                    <button class="grid-size-btn" data-size="6">6 x 6</button>
-                    <button class="grid-size-btn" data-size="8">8 x 8</button>
+
+                <div class="level-cards">
+                    <div class="level-card" data-size="4">4 × 4</div>
+                    <div class="level-card" data-size="6">6 × 6</div>
+                    <div class="level-card" data-size="8">8 × 8</div>
                 </div>
+
             </div>
 
             <!-- Sezione "samurai" in un container separato -->
@@ -111,28 +113,39 @@
         <!-- Barra inferiore con toggle migliorato e messaggio -->
         <div id="bottom-bar">
             <div id="mode-toggle-container">
-                <button id="mode-toggle" class="confirm">
-                    <!-- icona gomma -->
-                    <span class="eraser-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 20H7L3 16c-1.5-1.5-1.5-3.5 0-5l7-7c1.5-1.5 3.5-1.5 5 0l5 5" />
-                            <path d="M6 12l6 6" />
-                            <path d="M11 7l5 5" />
-                        </svg>
-                    </span>
-                    <!-- icona matita -->
-                    <span class="pencil-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                        </svg>
-                    </span>
-                </button>
+                <!-- Icona Conferma -->
+                <div class="mode-icon confirm-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                        <path d="m15 5 4 4"></path>
+                    </svg>
+                    <span>Conferma</span>
+                </div>
+
+                <!-- Toggle Button -->
+                <button id="mode-toggle"></button>
+
+                <!-- Icona Cancella -->
+                <div class="mode-icon cancel-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                        <line x1="12" y1="9" x2="18" y2="15"></line>
+                    </svg>
+                    <span>Cancella</span>
+                </div>
             </div>
             <div id="message"></div>
         </div>
+
+
+    </div>
+    </div>
+    <div id="message"></div>
+    </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
