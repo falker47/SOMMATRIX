@@ -75,6 +75,7 @@ startGameBtn.addEventListener("click", () => {
   }
   errors = 0;
   initGame();
+  displayRecord();
   showGame();
   startTimer();
 });
@@ -437,11 +438,38 @@ function endGame(won) {
   const finalScore = calculateScore();
 
   if (won) {
-    messageDiv.textContent = "Hai vinto!";
-    messageDiv.classList.add("win-animation");
-    scoreDisplay.textContent = `Punteggio: ${finalScore}`;
+  const finalScore = calculateScore();
+  const key = `sommatrix_record_${gridSize}`;
+  const oldRecord = loadRecord();
+
+  if (finalScore > oldRecord) {
+    localStorage.setItem(key, finalScore);
+    messageDiv.textContent = `Hai vinto! 🎉 Nuovo record: ${finalScore}`;
   } else {
-    messageDiv.textContent = "Game Over!";
-    scoreDisplay.textContent = "Punteggio: 0";
+    messageDiv.textContent = "Hai vinto!";
   }
+
+  // Aggiorna la visualizzazione del record
+  displayRecord();
+
+  messageDiv.classList.add("win-animation");
+  scoreDisplay.textContent = `Punteggio: ${finalScore}`;
+} else {
+  messageDiv.textContent = "Game Over!";
+  scoreDisplay.textContent = "Punteggio: 0";
+}
+
+}
+
+// Restituisce il record (miglior punteggio) per la difficoltà corrente
+function loadRecord() {
+  const key = `sommatrix_record_${gridSize}`;
+  return Number(localStorage.getItem(key)) || 0;
+}
+
+// Aggiorna la visualizzazione del record
+function displayRecord() {
+  const record = loadRecord();
+  const rd = document.getElementById("record-display");
+  rd.textContent = `Record: ${record}`;
 }

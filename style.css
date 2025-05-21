@@ -181,7 +181,6 @@ h2 {
 .win-animation {
   animation: winAnim 1s ease-out;
   color: #2ecc71;
-  text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
 }
 
 @keyframes winAnim {
@@ -857,6 +856,14 @@ button:hover {
     height: clamp(40px, 12vw, 55px);
   }
 }
+
+/* Aggiungi in fondo a style.css */
+#record-display {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #a18b0b;  /* verde per evidenziare il record */
+}
+
 
 .pencil-icon {
   left: 0;
