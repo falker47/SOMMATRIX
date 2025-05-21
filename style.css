@@ -21,11 +21,16 @@ body {
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
-  padding: 0; /* MODIFICATO da 20px a 0 */
-  height: 100%; /* AGGIUNTO */
-  margin: 0; /* Assicurati che margin sia 0, il tuo reset * { margin: 0; } lo fa già */
-  display: flex; /* AGGIUNTO */
-  flex-direction: column; /* AGGIUNTO */
+  padding: 0;
+  /* MODIFICATO da 20px a 0 */
+  height: 100%;
+  /* AGGIUNTO */
+  margin: 0;
+  /* Assicurati che margin sia 0, il tuo reset * { margin: 0; } lo fa già */
+  display: flex;
+  /* AGGIUNTO */
+  flex-direction: column;
+  /* AGGIUNTO */
 }
 
 .screen {
@@ -37,11 +42,15 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   position: relative;
   text-align: center;
-  width: 100%; /* AGGIUNTO (o assicurati che si comporti come block) */
+  width: 100%;
+  /* AGGIUNTO (o assicurati che si comporti come block) */
   /* Le seguenti sono opzionali ma possono aiutare a centrare il contenuto interno degli screen di default */
-  display: flex; /* AGGIUNTO */
-  flex-direction: column; /* AGGIUNTO */
-  align-items: center; /* AGGIUNTO (per centrare contenuto più stretto di max-width) */
+  display: flex;
+  /* AGGIUNTO */
+  flex-direction: column;
+  /* AGGIUNTO */
+  align-items: center;
+  /* AGGIUNTO (per centrare contenuto più stretto di max-width) */
 }
 
 h1,
@@ -111,7 +120,7 @@ h2 {
   background: #3498db;
   color: white;
   border-color: #2980b9;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -154,6 +163,8 @@ h2 {
 }
 
 .samurai-label {
+  display: inline-flex;
+  align-items: center;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -174,10 +185,24 @@ h2 {
 }
 
 @keyframes winAnim {
-  0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-  50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
-  70% { transform: scale(0.95) rotate(-2deg); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
+  0% {
+    transform: scale(0.5) rotate(-10deg);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
 }
 
 /* Buttons */
@@ -229,7 +254,7 @@ button:hover {
   border-radius: 30px;
   font-size: 1.5rem;
   background: linear-gradient(135deg, #27ae60, #2ecc71);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
   animation: pulsePlay 2s infinite;
@@ -361,31 +386,47 @@ button:hover {
 }
 
 #game-table {
-  border-collapse: separate; /* Necessario per border-spacing */
-  border-spacing: 1px; /* Spazio tra le celle, simula i bordi */
-  background-color: #bdc3c7; /* Colore per gli spazi/bordi */
-  margin: 20px auto; /* Aggiunto margine per centrare meglio */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata */
-  border-radius: 8px; /* Angoli arrotondati per il contenitore della tabella */
-  overflow: hidden; /* Per far rispettare i bordi arrotondati alle celle */
+  border-collapse: separate;
+  /* Necessario per border-spacing */
+  border-spacing: 1px;
+  /* Spazio tra le celle, simula i bordi */
+  background-color: #bdc3c7;
+  /* Colore per gli spazi/bordi */
+  margin: 20px auto;
+  /* Aggiunto margine per centrare meglio */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Ombra più pronunciata */
+  border-radius: 8px;
+  /* Angoli arrotondati per il contenitore della tabella */
+  overflow: hidden;
+  /* Per far rispettare i bordi arrotondati alle celle */
 }
 
 #game-table th,
 #game-table td {
-  width: 65px; /* Leggermente più grandi */
+  width: 65px;
+  /* Leggermente più grandi */
   height: 65px;
-  border: none; /* Rimuovi bordi individuali se usi border-spacing */
+  border: none;
+  /* Rimuovi bordi individuali se usi border-spacing */
   text-align: center;
   vertical-align: middle;
-  font-size: 1.35rem; /* Testo leggermente più grande */
-  background-color: white; /* Sfondo bianco per le celle */
-  transition: all 0.25s ease-in-out; /* Transizione più fluida */
+  font-size: 1.35rem;
+  /* Testo leggermente più grande */
+  background-color: white;
+  /* Sfondo bianco per le celle */
+  transition: all 0.25s ease-in-out;
+  /* Transizione più fluida */
 }
 
-#game-table th { /* Intestazioni di riga/colonna */
-  background-color: #ecf0f1; /* Colore di sfondo più leggero per le intestazioni */
-  color: #34495e; /* Colore testo più scuro per contrasto */
-  font-weight: 700; /* Testo in grassetto */
+#game-table th {
+  /* Intestazioni di riga/colonna */
+  background-color: #ecf0f1;
+  /* Colore di sfondo più leggero per le intestazioni */
+  color: #34495e;
+  /* Colore testo più scuro per contrasto */
+  font-weight: 700;
+  /* Testo in grassetto */
 }
 
 /* Timer e Punteggio */
@@ -419,20 +460,26 @@ button:hover {
 }
 
 .cell-confirmed {
-  background-color: #e6ffed; /* Verde molto chiaro */
-  color: #257942; /* Testo verde scuro */
+  background-color: #e6ffed !important;
+  /* Verde molto chiaro */
+  color: #000000;
   font-weight: bold;
   /* box-shadow: inset 0 0 5px rgba(46, 204, 113, 0.5); */
 }
-.cell-confirmed::after { /* Rimuovi il segno di spunta SVG se lo stile è già chiaro */
-    content: none; 
+
+.cell-confirmed::after {
+  /* Rimuovi il segno di spunta SVG se lo stile è già chiaro */
+  content: none;
 }
 
 
 .cell:not(.cell-confirmed):not(.cell-cancelled):hover {
-  background-color: #e9f5ff; /* Azzurro chiaro al passaggio del mouse */
-  transform: scale(1.05); /* Leggero ingrandimento */
-  box-shadow: 0 0 10px rgba(5, 26, 39, 0.3); /* Ombra azzurra */
+  background-color: #e9f5ff;
+  /* Azzurro chiaro al passaggio del mouse */
+  transform: scale(1.05);
+  /* Leggero ingrandimento */
+  box-shadow: 0 0 10px rgba(5, 26, 39, 0.3);
+  /* Ombra azzurra */
 }
 
 .cell-cancelled {
@@ -503,6 +550,7 @@ button:hover {
   color: #e74c3c;
 }
 
+
 /* Toggle button stilizzato */
 #mode-toggle {
   position: relative;
@@ -540,86 +588,111 @@ button:hover {
 
 /* Media queries per responsività */
 @media (max-width: 480px) {
+
   /* Sovrascrivi gli stili generali di .screen specificamente per #game-screen su mobile */
   #game-screen {
     width: 100%;
-    height: 100%; /* Occupa tutta l'altezza del viewport */
-    min-height: 100vh; /* Assicura l'altezza minima anche su browser mobili con UI dinamiche */
+    height: 100%;
+    /* Occupa tutta l'altezza del viewport */
+    min-height: 100vh;
+    /* Assicura l'altezza minima anche su browser mobili con UI dinamiche */
     margin: 0;
-    padding: 5px 5px 5px 5px; /* Padding: top, right, bottom, left. Ridotto per mobile. */
+    padding: 5px 5px 5px 5px;
+    /* Padding: top, right, bottom, left. Ridotto per mobile. */
     border-radius: 0;
     box-shadow: none;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Assicura che il bottom-bar stia in fondo se c'è spazio */
-    overflow: hidden; /* Previene lo scroll di body, gestito internamente se necessario */
+    justify-content: space-between;
+    /* Assicura che il bottom-bar stia in fondo se c'è spazio */
+    overflow: hidden;
+    /* Previene lo scroll di body, gestito internamente se necessario */
   }
 
   /* Layout per i figli diretti di #game-screen */
   #game-header {
-    flex-shrink: 0; /* Non si restringe */
+    flex-shrink: 0;
+    /* Non si restringe */
     padding: 5px 0;
     /* Altezza e margin-bottom sono già gestiti dal tuo CSS, ma flex-wrap è buono */
-    flex-wrap: wrap; /* Mantenuto dal tuo CSS originale */
+    flex-wrap: wrap;
+    /* Mantenuto dal tuo CSS originale */
     /* position: relative; è ok */
     /* height: auto; è meglio di 60px fisso per il wrap */
-    height: auto; 
-    margin-bottom: 10px; /* Ridotto rispetto ai 20px per guadagnare spazio */
+    height: auto;
+    margin-bottom: 10px;
+    /* Ridotto rispetto ai 20px per guadagnare spazio */
   }
 
   .game-title {
-    font-size: 1.4rem; /* Leggermente più piccolo */
+    font-size: 1.4rem;
+    /* Leggermente più piccolo */
     /* width: 100%; text-align: center; margin-bottom: 10px; sono già nel tuo blocco originale e vanno bene */
   }
 
   #health-bar {
     /* position: relative; left: auto; justify-content: center; margin-bottom: 10px; sono già nel tuo blocco e vanno bene */
-    gap: 6px; /* Leggermente ridotto */
+    gap: 6px;
+    /* Leggermente ridotto */
   }
 
-  .life { /* Leggermente più piccole le vite per schermi stretti */
+  .life {
+    /* Leggermente più piccole le vite per schermi stretti */
     width: 22px;
     height: 22px;
   }
 
   .back-button {
     /* position: relative; right: auto; top: auto; margin: 10px auto; sono già nel tuo blocco e vanno bene */
-    padding: 3px; /* Leggermente più piccolo */
+    padding: 3px;
+    /* Leggermente più piccolo */
     font-size: 1.3rem;
   }
 
   .game-info {
     flex-shrink: 0;
-    padding: 6px 10px; /* Leggermente ridotto */
+    padding: 6px 10px;
+    /* Leggermente ridotto */
     font-size: 0.85rem;
-    margin: 8px auto; /* Ridotto */
+    margin: 8px auto;
+    /* Ridotto */
     /* max-width: 90%; è ok */
   }
 
   #grid-wrapper {
-    flex-grow: 1; /* Elemento che si espande */
-    overflow-y: auto; /* Scroll verticale per la tabella */
-    overflow-x: auto; /* Scroll orizzontale per la tabella */
+    flex-grow: 1;
+    /* Elemento che si espande */
+    overflow-y: auto;
+    /* Scroll verticale per la tabella */
+    overflow-x: auto;
+    /* Scroll orizzontale per la tabella */
     display: flex;
-    flex-direction: column; /* Necessario per allineare la tabella se è flex item */
-    align-items: center; /* Centra la tabella orizzontalmente */
-    justify-content: flex-start; /* Allinea la tabella in alto dentro il wrapper, o 'center' se preferisci */
-    padding: 5px 0; /* Spazio sopra/sotto la tabella */
+    flex-direction: column;
+    /* Necessario per allineare la tabella se è flex item */
+    align-items: center;
+    /* Centra la tabella orizzontalmente */
+    justify-content: flex-start;
+    /* Allinea la tabella in alto dentro il wrapper, o 'center' se preferisci */
+    padding: 5px 0;
+    /* Spazio sopra/sotto la tabella */
     width: 100%;
-    -webkit-overflow-scrolling: touch; /* Mantenuto */
+    -webkit-overflow-scrolling: touch;
+    /* Mantenuto */
   }
 
   #game-table {
     /* Le tue regole per #game-table (border-collapse, background-color, ecc.) sono ok. */
     /* Margin auto potrebbe non essere necessario se #grid-wrapper è display:flex e align-items:center */
-    margin: 0 auto; /* O anche solo margin: 0; */
+    margin: 0 auto;
+    /* O anche solo margin: 0; */
   }
 
   /* Dimensioni celle più flessibili */
   #game-table th,
   #game-table td {
-    width: clamp(32px, 10.5vw, 48px); /* Min, Preferred (circa 8-9 celle per larghezza schermo), Max */
+    width: clamp(32px, 10.5vw, 48px);
+    /* Min, Preferred (circa 8-9 celle per larghezza schermo), Max */
     height: clamp(32px, 10.5vw, 48px);
     font-size: clamp(0.75rem, 2.8vw, 1rem);
     /* Le altre proprietà (border, text-align, ecc.) sono ok */
@@ -628,10 +701,13 @@ button:hover {
   #bottom-bar {
     flex-shrink: 0;
     padding: 8px 0;
-    background-color: rgba(255, 255, 255, 0.9); /* Sfondo leggermente trasparente o solido */
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Sfondo leggermente trasparente o solido */
     width: 100%;
-    margin-top: 10px; /* Ridotto */
-    gap: 10px; /* Ridotto */
+    margin-top: 10px;
+    /* Ridotto */
+    gap: 10px;
+    /* Ridotto */
   }
 
   #mode-toggle-container {
@@ -644,54 +720,75 @@ button:hover {
   /* Stili per il toggle button stesso, se necessario adattamenti */
   #mode-toggle {
     /* width: 90px; height: 45px; nel tuo CSS originale, potrebbe essere ok o riducibile */
-    width: 80px; /* Leggermente più piccolo */
+    width: 80px;
+    /* Leggermente più piccolo */
     height: 40px;
   }
 
   #mode-toggle::before {
     /* width: 37px; height: 37px; nel tuo CSS originale */
-    width: 32px; /* Adattato alla nuova dimensione del toggle */
+    width: 32px;
+    /* Adattato alla nuova dimensione del toggle */
     height: 32px;
   }
+
   #mode-toggle.cancel::before {
-    transform: translateX(40px); /* Coerente con width: 80px e ::before width: 32px, left: 4px */
+    transform: translateX(40px);
+    /* Coerente con width: 80px e ::before width: 32px, left: 4px */
   }
-  #mode-toggle::after { /* Se mantieni l'icona SVG dentro il toggle */
-    width: 16px; /* Adattato */
+
+  #mode-toggle::after {
+    /* Se mantieni l'icona SVG dentro il toggle */
+    width: 16px;
+    /* Adattato */
     height: 16px;
-    top: 12px; /* Adattato */
-    left: 12px; /* Adattato */
+    top: 12px;
+    /* Adattato */
+    left: 12px;
+    /* Adattato */
   }
+
   #mode-toggle.cancel::after {
-    transform: translateX(40px); /* Coerente */
+    transform: translateX(40px);
+    /* Coerente */
   }
 
 
-  .mode-icon svg { /* Assicurati che gli SVG siano dimensionati bene */
+  .mode-icon svg {
+    /* Assicurati che gli SVG siano dimensionati bene */
     width: 22px;
     height: 22px;
   }
+
   .mode-icon span {
-    font-size: 0.75rem; /* Leggermente più piccolo */
+    font-size: 0.75rem;
+    /* Leggermente più piccolo */
   }
 
   #message {
-    font-size: 1.2rem; /* Leggermente ridotto */
-    margin-top: 8px; /* Ridotto */
-    min-height: 25px; /* Assicura un po' di spazio */
+    font-size: 1.2rem;
+    /* Leggermente ridotto */
+    margin-top: 8px;
+    /* Ridotto */
+    min-height: 25px;
+    /* Assicura un po' di spazio */
   }
 
   /* Stili di ripristino per gli altri screen se non devono essere full-screen su mobile */
-  #main-menu, 
+  #main-menu,
   #tutorial-screen {
-      height: auto; 
-      min-height: auto; /* O 0 se necessario per sovrascrivere */
-      margin: 20px auto; /* Ripristina margini originali, o 10px auto per mobile */
-      padding: 20px;    /* Ripristina padding originali, o 15px per mobile */
-      border-radius: 6px; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); 
-      max-width: 800px; /* Assicura che non superino la larghezza massima */
-      /* Rimuovi flex da body se interferisce con questi, o assicurati che questi screen abbiano flex-shrink: 0 */
+    height: auto;
+    min-height: auto;
+    /* O 0 se necessario per sovrascrivere */
+    margin: 20px auto;
+    /* Ripristina margini originali, o 10px auto per mobile */
+    padding: 20px;
+    /* Ripristina padding originali, o 15px per mobile */
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    max-width: 800px;
+    /* Assicura che non superino la larghezza massima */
+    /* Rimuovi flex da body se interferisce con questi, o assicurati che questi screen abbiano flex-shrink: 0 */
   }
 
   /* Se altre regole specifiche dal tuo vecchio blocco @media (max-width: 480px) sono importanti e non coperte, */
@@ -711,13 +808,14 @@ button:hover {
     height: 20px;
     margin-right: 6px;
   }
-  
+
   .grid-size-btn {
     min-width: 80px;
     padding: 10px;
   }
-  
-  #game-table th, #game-table td {
+
+  #game-table th,
+  #game-table td {
     width: clamp(40px, 12vw, 55px);
     height: clamp(40px, 12vw, 55px);
   }
@@ -862,13 +960,17 @@ button:hover {
   }
 }
 
-#game-table th .partial { /* Somma parziale */
-  color: #2980b9; /* Blu più vibrante */
+#game-table th .partial {
+  /* Somma parziale */
+  color: #2980b9;
+  /* Blu più vibrante */
   font-weight: bold;
 }
 
-#game-table th.completed .partial { /* Quando la somma è completata */
-    color: #27ae60; /* Verde */
+#game-table th.completed .partial {
+  /* Quando la somma è completata */
+  color: #27ae60;
+  /* Verde */
 }
 
 /* Indicators */
