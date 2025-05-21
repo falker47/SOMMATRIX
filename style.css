@@ -407,12 +407,12 @@ button:hover {
 }
 
 .cell:hover {
-  background-color: #f0f8ff;
+  background-color: #b7d3eb;
 }
 
 .cell-confirmed {
-  background-color: #e6ffed; /* Verde molto chiaro */
-  color: #257942; /* Testo verde scuro */
+  background-color: #d4eddc !important; /* Verde molto chiaro */
+  color: #000000; /* Testo verde scuro */
   font-weight: bold;
   /* box-shadow: inset 0 0 5px rgba(46, 204, 113, 0.5); */
 }
@@ -468,7 +468,7 @@ button:hover {
   justify-content: center;
   gap: 15px;
   position: relative;
-  margin: 10px auto;
+  margin: 5px auto;
   padding: 5px;
 }
 
@@ -528,6 +528,14 @@ button:hover {
 
 #mode-toggle.cancel::before {
   transform: translateX(40px);
+}
+
+/* Nascondi l’icona non attiva */
+#mode-toggle.confirm .eraser-icon {
+  opacity: 0;
+}
+#mode-toggle.cancel .pencil-icon {
+  opacity: 0;
 }
 
 /* Media queries per responsività */

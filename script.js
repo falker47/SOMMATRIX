@@ -86,14 +86,14 @@ backToMenuFromGameBtn.addEventListener("click", showMainMenu);
 modeToggleBtn.addEventListener("click", () => {
   if (currentMode === "confirm") {
     currentMode = "cancel";
-    modeToggleBtn.classList.add("cancel");
-    updateModeIndicator(); // Aggiunta chiamata funzione
   } else {
     currentMode = "confirm";
-    modeToggleBtn.classList.remove("cancel");
-    updateModeIndicator(); // Aggiunta chiamata funzione
   }
+  // assegna le classi sul bottone
+  modeToggleBtn.classList.toggle("cancel", currentMode === "cancel");
+  modeToggleBtn.classList.toggle("confirm", currentMode === "confirm");
 });
+
 
 /* Aggiorna indicatore di modalità */
 function updateModeIndicator() {
