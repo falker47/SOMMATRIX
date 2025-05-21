@@ -617,6 +617,7 @@ button:hover {
     padding: 5px 0;
     /* Altezza e margin-bottom sono già gestiti dal tuo CSS, ma flex-wrap è buono */
     flex-wrap: wrap;
+  
     /* Mantenuto dal tuo CSS originale */
     /* position: relative; è ok */
     /* height: auto; è meglio di 60px fisso per il wrap */
@@ -679,6 +680,42 @@ button:hover {
     width: 100%;
     -webkit-overflow-scrolling: touch;
     /* Mantenuto */
+  }
+
+   .samurai-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center; /* o flex-start, se vuoi allineare a sinistra */
+    gap: 8px;
+  }
+
+  /* Checkbox più leggibile e centrata */
+  #samurai-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin: 0;          /* rimuove eventuali offset */
+    vertical-align: middle;
+  }
+
+  /* Label come inline-flex per centrare l’emoji */
+  .samurai-label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;    /* regola a piacere */
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  /* Emoji dimensionata e spaziatura */
+  .samurai-label::before {
+    content: "🥷";
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    line-height: 1;
   }
 
   #game-table {
