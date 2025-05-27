@@ -473,3 +473,11 @@ function displayRecord() {
   const rd = document.getElementById("record-display");
   rd.textContent = `Record: ${record}`;
 }
+
+// Imposta l'anno corrente nel footer
+document.addEventListener('DOMContentLoaded', function() {
+    const currentYearElement = document.getElementById('currentYear');
+    if (currentYearElement) {
+        currentYearElement.textContent = new Date().getFullYear();
+    }
+});
