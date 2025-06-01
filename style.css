@@ -230,8 +230,8 @@ h2 {
 }
 
 .level-card {
-  width: 75px;
-  height: 75px;
+  width: 85px;
+  height: 85px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -242,7 +242,7 @@ h2 {
   background-size: 10px 10px;
   border: 2px solid #ddd;
   border-radius: 8px;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -415,8 +415,8 @@ h2 {
 
 #samurai-toggle {
   appearance: none;
-  width: 24px;
-  height: 24px;
+  width: 30px; /* Aumentato da 24px */
+  height: 30px; /* Aumentato da 24px */
   border: 2px solid #e74c3c;
   border-radius: 4px;
   position: relative;
@@ -437,7 +437,7 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 14px;
+  font-size: 18px; /* Aumentato da 14px per adattarsi */
 }
 
 .win-animation {
@@ -705,7 +705,7 @@ button:hover {
 }
 
 .tutorial-samurai h3::before {
-  content: '⚔️';
+  content: '🥷';
 }
 
 .tutorial-tips h3::before {
@@ -1977,17 +1977,6 @@ main {
     margin-bottom: 12px;
   }
   
-  .level-cards {
-    gap: 15px;
-    margin: 15px 0;
-  }
-  
-  .level-card {
-    width: 65px;
-    height: 65px;
-    font-size: 1rem;
-  }
-  
   .play-btn {
     padding: 10px 30px;
     font-size: 1.1rem;
@@ -2025,18 +2014,7 @@ main {
     font-size: 0.9rem;
     margin-bottom: 10px;
   }
-  
-  .level-cards {
-    gap: 12px;
-    margin: 12px 0;
-  }
-  
-  .level-card {
-    width: 55px;
-    height: 55px;
-    font-size: 0.9rem;
-  }
-  
+
   .buttons-group {
     gap: 10px;
     margin-top: 12px;
@@ -2095,16 +2073,6 @@ main {
 @media (max-width: 360px) {
   h1 {
     font-size: 1.6em;
-  }
-  
-  .level-cards {
-    gap: 8px;
-  }
-  
-  .level-card {
-    width: 50px;
-    height: 50px;
-    font-size: 0.8rem;
   }
   
   .option-label {
@@ -2258,11 +2226,7 @@ main {
     font-size: 1.4em;
     margin: 5px 0;
   }
-  
-  .level-cards {
-    margin: 8px 0;
-  }
-  
+
   .buttons-group {
     margin-top: 8px;
   }
