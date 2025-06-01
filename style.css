@@ -993,12 +993,13 @@ button:hover {
 /* Timer e Punteggio */
 .game-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Cambiato da space-between a center */
   align-items: center;
+  gap: 20px; /* Aggiungi gap per spaziatura uniforme */
   padding: 10px 20px;
   background-color: #f8f9fa;
   border-radius: 4px;
-  margin: 10px 0 5px 0;
+  margin: 10px auto 5px auto; /* Aggiungi auto per centrare il container */
   max-width: 90%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
@@ -1009,6 +1010,34 @@ button:hover {
   font-size: 0.9rem;
   font-weight: 600;
   color: #2c3e50;
+}
+
+/* Assicura che sia centrata anche su mobile */
+@media (max-width: 768px) {
+  .game-info {
+    justify-content: center;
+    gap: 15px;
+    margin: 10px auto;
+    padding: 8px 15px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  
+  .game-info > div {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #34495e;
+    white-space: nowrap;
+  }
+}
+
+/* Per schermi molto piccoli */
+@media (max-width: 480px) {
+  .game-info {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
 }
 
 /* Cells */
@@ -1304,7 +1333,7 @@ button:hover {
   #bottom-bar {
     flex-shrink: 0;
     padding: 8px 0;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: transparent;
     /* Sfondo leggermente trasparente o solido */
     width: 100%;
     margin-top: 10px;
@@ -1316,6 +1345,7 @@ button:hover {
   #mode-toggle-container {
     /* Le regole esistenti per il toggle su mobile (width: 100%, padding) sono ok */
     /* Gap e margin potrebbero essere ridotti se necessario */
+    background-color: transparent;
     gap: 10px;
     margin: 5px auto;
   }
@@ -2082,24 +2112,82 @@ main {
   }
 }
 
+/* Nuovo layout per game-header su mobile */
+@media (max-width: 768px) {
+  #game-header {
+    position: relative;
+    height: auto;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    padding: 5px 0;
+  }
+  
+  /* Contenitore per vite e bottone back */
+  #game-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    pointer-events: none;
+  }
+  
+  /* Vite in alto a sinistra */
+  #health-bar {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    display: flex;
+    gap: 6px;
+  }
+  
+  /* Bottone back in alto a destra */
+  .back-button {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    background: transparent;
+    box-shadow: none;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  /* Titolo centrato sotto vite e bottone */
+  .game-title {
+    margin: 40px 0 0 0; /* Spazio dall'alto per non sovrapporsi */
+    font-size: 1.4rem;
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+  }
+}
+
 /* Ottimizzazioni specifiche per mobile */
 @media (max-width: 768px) {
   #game-screen {
-    padding: 5px;
-  }
-  
-  #game-header {
-    margin-bottom: 8px;
-    min-height: 45px;
-  }
-  
-  .game-title {
-    font-size: 1.4rem;
+    padding: 8px;
   }
   
   .life {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Riduce la dimensione del bottone back su mobile */
+  .back-button svg {
+    width: 20px;
+    height: 20px;
   }
   
   #game-table th,
