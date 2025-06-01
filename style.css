@@ -1,11 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Raleway:wght@600;700&display=swap');
+
 /* Reset di base e font */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Raleway:wght@600;700&display=swap');
 
 html {
   height: 100%;
@@ -320,15 +320,19 @@ button:hover {
 }
 
 .life {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .life.full.green {
-  background-color: #2ecc71;
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  box-shadow: 
+    0 4px 12px rgba(46, 204, 113, 0.3),
+    0 0 16px rgba(46, 204, 113, 0.2);
 }
 
 .life.empty.green {
@@ -337,7 +341,10 @@ button:hover {
 }
 
 .life.full.yellow {
-  background-color: #f1c40f;
+  background: linear-gradient(145deg, #f1c40f, #f39c12);
+  box-shadow: 
+    0 4px 12px rgba(241, 196, 15, 0.3),
+    0 0 16px rgba(241, 196, 15, 0.2);
 }
 
 .life.empty.yellow {
@@ -346,7 +353,10 @@ button:hover {
 }
 
 .life.full.red {
-  background-color: #e74c3c;
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  box-shadow: 
+    0 4px 12px rgba(231, 76, 60, 0.3),
+    0 0 16px rgba(231, 76, 60, 0.2);
 }
 
 .life.empty.red {
@@ -356,22 +366,28 @@ button:hover {
 
 /* Stile speciale per la modalità samurai */
 .life.full.samurai {
-  background-color: #c0392b;
-  box-shadow: 0 0 10px #e74c3c, 0 0 20px #e74c3c;
-  animation: pulse 1.5s infinite;
+  background: linear-gradient(145deg, #c0392b, #922b21);
+  box-shadow: 
+    0 4px 12px rgba(192, 57, 43, 0.4),
+    0 0 20px rgba(231, 76, 60, 0.6),
+    0 0 30px rgba(231, 76, 60, 0.3);
+  animation: pulseSamurai 1.5s infinite;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 5px #e74c3c, 0 0 10px #e74c3c;
+@keyframes pulseSamurai {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 4px 12px rgba(192, 57, 43, 0.4),
+      0 0 20px rgba(231, 76, 60, 0.6),
+      0 0 30px rgba(231, 76, 60, 0.3);
   }
-
   50% {
-    box-shadow: 0 0 15px #e74c3c, 0 0 25px #e74c3c;
-  }
-
-  100% {
-    box-shadow: 0 0 5px #e74c3c, 0 0 10px #e74c3c;
+    transform: scale(1.1);
+    box-shadow: 
+      0 6px 16px rgba(192, 57, 43, 0.5),
+      0 0 25px rgba(231, 76, 60, 0.8),
+      0 0 40px rgba(231, 76, 60, 0.4);
   }
 }
 
@@ -639,8 +655,8 @@ button:hover {
 
   .life {
     /* Leggermente più piccole le vite per schermi stretti */
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
 
   .back-button {
@@ -1080,6 +1096,181 @@ main {
     flex: 1;
 }
 
+/* Victory Overlay */
+.victory-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.95), rgba(39, 174, 96, 0.95));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.victory-content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.victory-content h2 {
+    font-size: 2.5rem;
+    color: #27ae60;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Raleway', sans-serif;
+}
+
+.victory-content p {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.victory-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.victory-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.victory-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+}
+
+.victory-btn.secondary {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+/* Defeat Overlay */
+.defeat-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.95), rgba(192, 57, 43, 0.95));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.defeat-content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.defeat-content h2 {
+    font-size: 2.5rem;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Raleway', sans-serif;
+}
+
+.defeat-content p {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.defeat-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.defeat-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+}
+
+.menu-btn {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+}
+
+.defeat-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Animazioni speciali per le celle */
+.cell.victory-pulse {
+    animation: victoryPulse 0.8s ease-in-out;
+}
+
+@keyframes victoryPulse {
+    0%, 100% {
+        transform: scale(1);
+        background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
+    }
+    50% {
+        transform: scale(1.15);
+        background: linear-gradient(145deg, #a5d6a7, #81c784);
+        box-shadow: 0 0 25px rgba(76, 175, 80, 0.8);
+    }
+}
+
+.cell.defeat-shake {
+    animation: defeatShake 0.6s ease-in-out;
+}
+
+@keyframes defeatShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
 /* Responsive adjustments - migliorati per mobile */
 @media (max-width: 768px) {
   .screen {
@@ -1101,4 +1292,31 @@ main {
   .option-label {
     font-size: 1.1rem;
   }
+}
+
+/* Responsive per mobile */
+@media (max-width: 480px) {
+    .victory-content,
+    .defeat-content {
+        margin: 20px;
+        padding: 30px 20px;
+        max-width: calc(100% - 40px);
+    }
+    
+    .victory-content h2,
+    .defeat-content h2 {
+        font-size: 2rem;
+    }
+    
+    .victory-buttons,
+    .defeat-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .victory-btn,
+    .defeat-btn {
+        width: 100%;
+        max-width: 200px;
+    }
 }

@@ -153,21 +153,30 @@ function stopTimer() {
   clearInterval(timerInterval);
 }
 
-function calculateScore() {
-  const time = currentTime;
-  let calculatedScore = Math.round(Math.pow(gridSize, 3) * (1 - (errors * 0.2)) * (1 - (time * 0.001)));
-  if (calculatedScore < 0) calculatedScore = 0;
-
-  // Aggiungi questo blocco per il moltiplicatore samurai
-  const isSamuraiMode = document.getElementById("samurai-toggle").checked;
-  if (isSamuraiMode) {
-    calculatedScore = Math.round(calculatedScore * 1.5);
-  }
-
-  return calculatedScore;
+/* Funzioni per gestire i record */
+function loadRecord() {
+  const key = `sommatrix_record_${gridSize}`;
+  const record = localStorage.getItem(key);
+  return record ? parseInt(record) : 0;
 }
 
-/* Inizializza il gioco */
+function displayRecord() {
+  const recordDisplay = document.getElementById('record-display');
+  if (recordDisplay) {
+    const currentRecord = loadRecord();
+    recordDisplay.textContent = `Record: ${currentRecord}`;
+  }
+}
+
+/* Calcola il punteggio finale */
+function calculateScore() {
+  const timeBonus = Math.max(0, 300 - currentTime); // Bonus tempo
+  const errorPenalty = errors * 10; // Penalità errori
+  const sizeBonus = gridSize * 50; // Bonus dimensione griglia
+  const finalScore = Math.max(0, timeBonus + sizeBonus - errorPenalty);
+  return finalScore;
+}
+
 function initGame() {
   gameOver = false;
   gridNumbers = [];
@@ -430,7 +439,7 @@ function checkWin() {
   }
 }
 
-/* Fine gioco */
+/* Fine gioco con animazioni */
 function endGame(won) {
   gameOver = true;
   stopTimer();
@@ -438,46 +447,169 @@ function endGame(won) {
   const finalScore = calculateScore();
 
   if (won) {
-  const finalScore = calculateScore();
-  const key = `sommatrix_record_${gridSize}`;
-  const oldRecord = loadRecord();
-
-  if (finalScore > oldRecord) {
-    localStorage.setItem(key, finalScore);
-    messageDiv.textContent = `Hai vinto! 🎉 Nuovo record: ${finalScore}`;
+    showVictoryAnimation(finalScore);
   } else {
-    messageDiv.textContent = "Hai vinto!";
+    showDefeatAnimation();
   }
-
-  // Aggiorna la visualizzazione del record
-  displayRecord();
-
-  messageDiv.classList.add("win-animation");
-  scoreDisplay.textContent = `Punteggio: ${finalScore}`;
-} else {
-  messageDiv.textContent = "Game Over!";
-  scoreDisplay.textContent = "Punteggio: 0";
 }
 
-}
-
-// Restituisce il record (miglior punteggio) per la difficoltà corrente
-function loadRecord() {
-  const key = `sommatrix_record_${gridSize}`;
-  return Number(localStorage.getItem(key)) || 0;
-}
-
-// Aggiorna la visualizzazione del record
-function displayRecord() {
-  const record = loadRecord();
-  const rd = document.getElementById("record-display");
-  rd.textContent = `Record: ${record}`;
-}
-
-// Imposta l'anno corrente nel footer
-document.addEventListener('DOMContentLoaded', function() {
-    const currentYearElement = document.getElementById('currentYear');
-    if (currentYearElement) {
-        currentYearElement.textContent = new Date().getFullYear();
+/* Animazione Vittoria */
+function showVictoryAnimation(finalScore) {
+  const gameScreen = document.getElementById('game-screen');
+  
+  // Anima le celle della griglia prima
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach((cell, index) => {
+    setTimeout(() => {
+      cell.classList.add('victory-pulse');
+    }, index * 50);
+  });
+  
+  // Crea overlay per la vittoria dopo un breve delay
+  setTimeout(() => {
+    const key = `sommatrix_record_${gridSize}`;
+    const oldRecord = loadRecord();
+    let isNewRecord = false;
+    
+    if (finalScore > oldRecord) {
+      localStorage.setItem(key, finalScore);
+      isNewRecord = true;
     }
-});
+    
+    const victoryOverlay = document.createElement('div');
+    victoryOverlay.className = 'victory-overlay animate__animated animate__fadeIn';
+    
+    const recordText = isNewRecord ? 
+      `🏆 Nuovo Record: ${finalScore}! 🏆` : 
+      `Punteggio: ${finalScore}`;
+    
+    victoryOverlay.innerHTML = `
+        <div class="victory-content animate__animated animate__bounceIn animate__delay-1s">
+            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">VITTORIA!</h2>
+            <p class="animate__animated animate__fadeInUp animate__delay-2s">
+                Complimenti! Hai risolto il puzzle!<br>
+                <strong>${recordText}</strong>
+            </p>
+            <div class="victory-buttons animate__animated animate__fadeInUp animate__delay-3s">
+                <button class="victory-btn" id="play-again-btn">Gioca Ancora</button>
+                <button class="victory-btn secondary" id="victory-menu-btn">Menu Principale</button>
+            </div>
+        </div>
+    `;
+    
+    gameScreen.appendChild(victoryOverlay);
+    
+    // Aggiorna la visualizzazione del record
+    displayRecord();
+    
+    // Event listeners
+    document.getElementById('play-again-btn').addEventListener('click', () => {
+      victoryOverlay.classList.remove('animate__fadeIn');
+      victoryOverlay.classList.add('animate__fadeOut');
+      setTimeout(() => {
+        victoryOverlay.remove();
+        restartGame();
+      }, 500);
+    });
+    
+    document.getElementById('victory-menu-btn').addEventListener('click', () => {
+      victoryOverlay.classList.remove('animate__fadeIn');
+      victoryOverlay.classList.add('animate__fadeOut');
+      setTimeout(() => {
+        victoryOverlay.remove();
+        showMainMenu();
+      }, 500);
+    });
+    
+  }, 800);
+}
+
+/* Animazione Sconfitta */
+function showDefeatAnimation() {
+  const gameScreen = document.getElementById('game-screen');
+  
+  // Anima le vite rimanenti
+  const lives = document.querySelectorAll('.life');
+  lives.forEach((life, index) => {
+    setTimeout(() => {
+      life.classList.add('animate__animated', 'animate__shakeX');
+    }, index * 100);
+  });
+  
+  // Anima le celle con effetto shake
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach((cell, index) => {
+    setTimeout(() => {
+      cell.classList.add('defeat-shake');
+    }, index * 30);
+  });
+  
+  // Crea overlay per la sconfitta
+  setTimeout(() => {
+    const defeatOverlay = document.createElement('div');
+    defeatOverlay.className = 'defeat-overlay animate__animated animate__fadeIn animate__delay-1s';
+    defeatOverlay.innerHTML = `
+        <div class="defeat-content animate__animated animate__slideInDown animate__delay-2s">
+            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">GAME OVER</h2>
+            <p class="animate__animated animate__fadeInUp animate__delay-3s">
+                Non ti arrendere! Ogni errore è un passo verso la vittoria!
+            </p>
+            <div class="defeat-buttons animate__animated animate__fadeInUp animate__delay-4s">
+                <button class="defeat-btn retry-btn" id="retry-btn">Riprova</button>
+                <button class="defeat-btn menu-btn" id="defeat-menu-btn">Menu Principale</button>
+            </div>
+        </div>
+    `;
+    
+    gameScreen.appendChild(defeatOverlay);
+    
+    // Event listeners
+    document.getElementById('retry-btn').addEventListener('click', () => {
+      defeatOverlay.classList.remove('animate__fadeIn');
+      defeatOverlay.classList.add('animate__fadeOut');
+      setTimeout(() => {
+        defeatOverlay.remove();
+        restartGame();
+      }, 500);
+    });
+    
+    document.getElementById('defeat-menu-btn').addEventListener('click', () => {
+      defeatOverlay.classList.remove('animate__fadeIn');
+      defeatOverlay.classList.add('animate__fadeOut');
+      setTimeout(() => {
+        defeatOverlay.remove();
+        showMainMenu();
+      }, 500);
+    });
+    
+  }, 1000);
+}
+
+/* Funzione per riavviare il gioco */
+function restartGame() {
+  // Rimuovi tutte le animazioni dalle celle
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.classList.remove('victory-pulse', 'defeat-shake', 'animate__animated', 'animate__pulse', 'animate__shakeX');
+  });
+  
+  // Rimuovi animazioni dalle vite
+  const lives = document.querySelectorAll('.life');
+  lives.forEach(life => {
+    life.classList.remove('animate__animated', 'animate__shakeX');
+  });
+  
+  // Reinizializza il gioco
+  if (document.getElementById("samurai-toggle").checked) {
+    lives = 1;
+    initialLives = 1;
+  } else {
+    lives = 3;
+    initialLives = 3;
+  }
+  
+  errors = 0;
+  gameOver = false;
+  initGame();
+  startTimer();
+}
