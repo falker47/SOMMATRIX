@@ -134,22 +134,16 @@
 
     <!-- Game Screen -->
     <div id="game-screen" class="screen" style="display:none; overflow-y: auto;">
-        <!-- Header con titolo e controlli -->
+        <!-- Barra superiore con health bar (sx), titolo (centro) e bottone (dx) -->
         <div id="game-header">
-            <!-- Titolo su una riga -->
+            <div id="health-bar"></div>
             <h1 class="game-title">SOMMATRIX</h1>
-            
-            <!-- Controlli su una seconda riga -->
-            <div class="game-controls">
-                <div id="health-bar"></div>
-                <button class="back-button" id="back-to-menu-from-game">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                    Menu
-                </button>
-            </div>
+            <button class="back-button" id="back-to-menu-from-game">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
         </div>
 
         <!-- Informazioni di gioco: timer, punteggio e record -->
