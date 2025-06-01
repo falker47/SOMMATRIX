@@ -603,6 +603,9 @@ function showDefeatAnimation() {
 
 /* Funzione per riavviare il gioco */
 function restartGame() {
+  // Ferma il timer precedente, se attivo
+  stopTimer();
+
   // Rimuovi tutte le animazioni dalle celle
   const cells = document.querySelectorAll('.cell');
   cells.forEach(cell => {
@@ -610,22 +613,29 @@ function restartGame() {
   });
 
   // Rimuovi animazioni dalle vite
-  const lives = document.querySelectorAll('.life');
-  lives.forEach(life => {
+  const livesElements = document.querySelectorAll('.life'); // Rinominato per evitare conflitto con la variabile 'lives' globale
+  livesElements.forEach(life => {
     life.classList.remove('animate__animated', 'animate__shakeX');
   });
 
-  // Reinizializza il gioco
+  // Aggiungi le stesse istruzioni del bottone "Gioca" principale
+  gridSize = selectedGridSize;
   if (document.getElementById("samurai-toggle").checked) {
-    lives = 1;
+    lives = 1; // Assicurati che questa sia la variabile globale 'lives'
     initialLives = 1;
   } else {
-    lives = 3;
+    lives = 3; // Assicurati che questa sia la variabile globale 'lives'
     initialLives = 3;
   }
 
   errors = 0;
   gameOver = false;
+  // Resetta currentTime a 0 prima di chiamare initGame e startTimer
+  currentTime = 0;
+  timerDisplay.textContent = `Tempo: 0s`; // Aggiorna subito il display del timer
+
   initGame();
-  startTimer();
+  displayRecord();
+  showGame();
+  startTimer(); // Ora il nuovo timer parte dopo che tutto è stato resettato
 }

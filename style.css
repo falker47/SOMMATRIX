@@ -2342,3 +2342,68 @@ main {
     font-size: 0.8rem;
   }
 }
+
+/* Rimuovi l'emoji duplicata del samurai su mobile */
+@media (max-width: 768px) {
+  /* Rimuovi l'emoji accanto al testo del samurai su mobile */
+  .samurai-label::before {
+    display: none; /* Nasconde l'emoji accanto al testo */
+  }
+  
+  /* Aumenta le dimensioni della selezione livello per full width */
+  .grid-size-buttons {
+    gap: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .grid-size-btn {
+    flex: 1;
+    min-width: calc(50% - 4px); /* Due bottoni per riga */
+    padding: 15px 12px; /* Aumentato da 10px */
+    font-size: 1rem; /* Aumentato da 0.9rem */
+    text-align: center;
+  }
+  
+  /* Aumenta le dimensioni degli altri bottoni */
+  .play-btn {
+    padding: 12px 30px; /* Aumentato da 8px 25px */
+    font-size: 1.1rem; /* Aumentato da 1rem */
+    min-height: 50px;
+  }
+  
+  .tutorial-btn {
+    padding: 10px 22px; /* Aumentato da 6px 18px */
+    font-size: 0.95rem; /* Aumentato da 0.85rem */
+    min-height: 45px;
+  }
+  
+  /* Aumenta anche i bottoni di vittoria e sconfitta */
+  .victory-btn,
+  .defeat-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+  
+  /* Bottone back */
+  .back-button {
+    width: 45px; /* Aumentato */
+    height: 45px; /* Aumentato */
+  }
+  
+  .back-button svg {
+    width: 22px; /* Aumentato */
+    height: 22px; /* Aumentato */
+  }
+}
+
+/* Per schermi molto piccoli, un bottone per riga */
+@media (max-width: 480px) {
+  .grid-size-btn {
+    min-width: 100%;
+    padding: 18px 15px;
+    font-size: 1.1rem;
+  }
+}
