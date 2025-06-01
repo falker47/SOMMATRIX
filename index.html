@@ -81,18 +81,55 @@
             </svg>
         </button>
         <h2>Tutorial</h2>
-        <p>
-            Benvenuto su SOMMATRIX!<br>
-            L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga il totale.<br>
-            Per farti strada durante la risoluzione dell'enigma puoi eseguire le seguenti operazioni su un numero:<br>
-            • <strong>Confermare</strong>: clicca per confermare un numero che fa parte della somma.<br>
-            • <strong>Cancellare</strong>: clicca per cancellare un numero che NON fa parte della somma.<br>
-            Se sbagli perdi una vita e verrà segnalato da un flash rosso.<br>
-            Una volta che selezioni tutti gli addendi corretti di una riga o una colonna, i numeri da cancellare si
-            auto-eliminano automaticamente.<br><br>
-            La modalità <strong>"Ultimo Samurai"</strong> invece è pensata solo per i veri temerari:<br>
-            Farai la partita con una sola vita, non c'è alcun margine di errore!
-        </p>
+        
+        <div class="tutorial-content">
+            <div class="tutorial-section tutorial-objective">
+                <h3>Obiettivo del Gioco</h3>
+                <p>Benvenuto su <strong>SOMMATRIX</strong>! L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga esattamente il totale indicato.</p>
+            </div>
+    
+            <div class="tutorial-section tutorial-controls">
+                <h3>Controlli</h3>
+                <p>Per risolvere l'enigma puoi eseguire due operazioni sui numeri:</p>
+                
+                <div class="control-item control-confirm">
+                    <div class="control-icon">✓</div>
+                    <div class="control-text">
+                        <strong>Confermare</strong>
+                        <p>Clicca per confermare un numero che fa parte della somma</p>
+                    </div>
+                </div>
+                
+                <div class="control-item control-cancel">
+                    <div class="control-icon">✗</div>
+                    <div class="control-text">
+                        <strong>Cancellare</strong>
+                        <p>Clicca per cancellare un numero che NON fa parte della somma</p>
+                    </div>
+                </div>
+                
+                <p><strong>Attenzione:</strong> Se sbagli perdi una vita e verrà segnalato da un flash rosso!</p>
+            </div>
+    
+            <div class="tutorial-section tutorial-tips">
+                <h3>Suggerimenti</h3>
+                <div class="tip-box">
+                    <ul>
+                        <li>Una volta selezionati tutti gli addendi corretti di una riga o colonna, i numeri da cancellare si auto-eliminano automaticamente</li>
+                        <li>Usa la modalità "Cancella" per eliminare i numeri che sicuramente non fanno parte della somma</li>
+                        <li>Controlla sempre i totali parziali per verificare i tuoi progressi</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="tutorial-section tutorial-samurai">
+                <h3>Modalità "Ultimo Samurai"</h3>
+                <div class="samurai-warning">
+                    <h4>Solo per Veri Temerari!</h4>
+                    <p>Farai la partita con <strong>una sola vita</strong> - non c'è alcun margine di errore!</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Game Screen -->
@@ -102,10 +139,11 @@
             <div id="health-bar"></div>
             <h1 class="game-title">SOMMATRIX</h1>
             <button class="back-button" id="back-to-menu-from-game">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
+                Menu
             </button>
         </div>
 
@@ -148,13 +186,13 @@
                     <span>Cancella</span>
                 </div>
             </div>
-            <div id="message"></div>
+            <!-- Rimosso: <div id="message"></div> -->
         </div>
 
 
     </div>
     </div>
-    <div id="message"></div>
+    <!-- Rimosso: <div id="message"></div> -->
     </div>
     </div>
 

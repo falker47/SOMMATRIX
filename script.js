@@ -165,7 +165,186 @@ function displayRecord() {
   if (recordDisplay) {
     const currentRecord = loadRecord();
     recordDisplay.textContent = `Record: ${currentRecord}`;
+    
+    // Rimuovi la classe di animazione se presente
+    recordDisplay.classList.remove('new-record');
   }
+}
+
+// Nella funzione showVictoryAnimation, aggiungi:
+function showVictoryAnimation(finalScore) {
+  const gameScreen = document.getElementById('game-screen');
+
+  // Anima le celle della griglia prima
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach((cell, index) => {
+    setTimeout(() => {
+      cell.classList.add('victory-pulse');
+    }, index * 50);
+  });
+
+  // Crea overlay per la vittoria dopo un breve delay
+  setTimeout(() => {
+    const key = `sommatrix_record_${gridSize}`;
+    const oldRecord = loadRecord();
+    let isNewRecord = false;
+
+    if (finalScore > oldRecord) {
+      localStorage.setItem(key, finalScore);
+      isNewRecord = true;
+    
+      // Aggiungi animazione per nuovo record
+      setTimeout(() => {
+        const recordDisplay = document.getElementById('record-display');
+        if (recordDisplay) {
+          recordDisplay.classList.add('new-record');
+          // Rimuovi l'animazione dopo 5 secondi
+          setTimeout(() => {
+            recordDisplay.classList.remove('new-record');
+          }, 5000);
+        }
+      }, 1000);
+    }
+
+    const victoryOverlay = document.createElement('div');
+    victoryOverlay.className = 'victory-overlay animate__animated animate__fadeIn';
+
+    const recordText = isNewRecord ?
+      `🏆 Nuovo Record: ${finalScore}! 🏆` :
+      `Punteggio: ${finalScore}`;
+
+    victoryOverlay.innerHTML = `
+        <div class="victory-content animate__animated animate__bounceIn animate__delay-1s">
+            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">VITTORIA!</h2>
+            <p class="animate__animated animate__fadeInUp animate__delay-2s">
+                Complimenti! Hai risolto il puzzle!<br>
+                <strong>${recordText}</strong>
+            </p>
+            <div class="victory-buttons animate__animated animate__fadeInUp animate__delay-3s">
+                <button class="victory-btn" id="play-again-btn">Gioca Ancora</button>
+                <button class="victory-btn secondary" id="victory-menu-btn">Menu Principale</button>
+            </div>
+        </div>
+    `;
+
+    gameScreen.appendChild(victoryOverlay);
+
+    // Aggiorna la visualizzazione del record
+    displayRecord();
+
+    // Event listeners
+    document.getElementById('play-again-btn').addEventListener('click', () => {
+      victoryOverlay.classList.remove('animate__fadeIn');
+      victoryOverlay.classList.add('animate__fadeOut');
+      victoryOverlay.addEventListener('animationend', function handleAnimationEnd() {
+        victoryOverlay.removeEventListener('animationend', handleAnimationEnd);
+        victoryOverlay.remove();
+        restartGame();
+      });
+    });
+
+    document.getElementById('victory-menu-btn').addEventListener('click', () => {
+      victoryOverlay.classList.remove('animate__fadeIn');
+      victoryOverlay.classList.add('animate__fadeOut');
+      victoryOverlay.addEventListener('animationend', function handleAnimationEnd() {
+        victoryOverlay.removeEventListener('animationend', handleAnimationEnd);
+        victoryOverlay.remove();
+        showMainMenu();
+      });
+    });
+
+  }, 800);
+}
+
+/* Animazione Sconfitta */
+function showDefeatAnimation() {
+  const gameScreen = document.getElementById('game-screen');
+
+  // Anima le vite rimanenti
+  const lives = document.querySelectorAll('.life');
+  lives.forEach((life, index) => {
+    setTimeout(() => {
+      life.classList.add('animate__animated', 'animate__shakeX');
+    }, index * 100);
+  });
+
+  // Anima le celle con effetto shake
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach((cell, index) => {
+    setTimeout(() => {
+      cell.classList.add('defeat-shake');
+    }, index * 30);
+  });
+
+  // Crea overlay per la sconfitta
+  setTimeout(() => {
+    const defeatOverlay = document.createElement('div');
+    defeatOverlay.className = 'defeat-overlay animate__animated animate__fadeIn animate__delay-1s';
+    defeatOverlay.innerHTML = `
+        <div class="defeat-content animate__animated animate__slideInDown animate__delay-2s">
+            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">GAME OVER</h2>
+            <p class="animate__animated animate__fadeInUp animate__delay-3s">
+                Non ti arrendere! Ogni errore è un passo verso la vittoria!
+            </p>
+            <div class="defeat-buttons animate__animated animate__fadeInUp animate__delay-4s">
+                <button class="defeat-btn retry-btn" id="retry-btn">Riprova</button>
+                <button class="defeat-btn menu-btn" id="defeat-menu-btn">Menu Principale</button>
+            </div>
+        </div>
+    `;
+
+    gameScreen.appendChild(defeatOverlay);
+
+    // Event listeners
+    document.getElementById('retry-btn').addEventListener('click', () => {
+      defeatOverlay.classList.remove('animate__fadeIn');
+      defeatOverlay.classList.add('animate__fadeOut');
+      defeatOverlay.addEventListener('animationend', function handleAnimationEnd() {
+        defeatOverlay.removeEventListener('animationend', handleAnimationEnd);
+        defeatOverlay.remove();
+        restartGame();
+      });
+    });
+
+    document.getElementById('defeat-menu-btn').addEventListener('click', () => {
+      defeatOverlay.classList.remove('animate__fadeIn');
+      defeatOverlay.classList.add('animate__fadeOut');
+      defeatOverlay.addEventListener('animationend', function handleAnimationEnd() {
+        defeatOverlay.removeEventListener('animationend', handleAnimationEnd);
+        defeatOverlay.remove();
+        showMainMenu();
+      });
+    });
+
+  }, 1000);
+}
+
+/* Funzione per riavviare il gioco */
+function restartGame() {
+  // Rimuovi tutte le overlay esistenti
+  const existingOverlays = document.querySelectorAll('.victory-overlay, .defeat-overlay');
+  existingOverlays.forEach(overlay => overlay.remove());
+  
+  // Ferma il timer esistente se attivo
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  // Chiama esattamente la stessa logica del bottone "Gioca!" dal menu
+  // I valori di difficoltà e samurai mode rimangono invariati
+  gridSize = selectedGridSize;
+  if (document.getElementById("samurai-toggle").checked) {
+    lives = 1;
+    initialLives = 1;
+  } else {
+    lives = 3;
+    initialLives = 3;
+  }
+  errors = 0;
+  initGame();
+  displayRecord();
+  startTimer();
 }
 
 /* Calcola il punteggio finale */
@@ -186,7 +365,7 @@ function initGame() {
   colTargets = [];
   rowCompleted = new Array(gridSize).fill(false);
   colCompleted = new Array(gridSize).fill(false);
-  messageDiv.textContent = "";
+
   scoreDisplay.textContent = "Punteggio: 0"; // Inizializzato il punteggio
   updateHealthBar();
 
@@ -283,6 +462,11 @@ function buildTable() {
     }
     gameTable.appendChild(tr);
   }
+  if (gridSize >= 6) {
+    gameTable.classList.add('large-grid');
+  } else {
+    gameTable.classList.remove('large-grid');
+  }
 }
 
 /* Gestione clic su cella */
@@ -292,10 +476,19 @@ function cellClick(e) {
   const i = parseInt(cell.dataset.row);
   const j = parseInt(cell.dataset.col);
 
+  // Verifica che i dati siano validi
+  if (isNaN(i) || isNaN(j) || i < 0 || i >= gridSize || j < 0 || j >= gridSize) {
+    console.error('Dati cella non validi:', i, j);
+    return;
+  }
+
+  // Controlla se la cella è già stata processata correttamente
   if ((gridSolution[i][j] && gridState[i][j] === 1) ||
     (!gridSolution[i][j] && gridState[i][j] === -1)) {
     return;
   }
+
+  // Evita doppi click
   if (gridState[i][j] !== 0) return;
 
   if (currentMode === "confirm") {
@@ -311,8 +504,10 @@ function cellClick(e) {
       gridState[i][j] = -1;
       cell.classList.add("cell-cancelled");
       setTimeout(() => {
-        cell.textContent = "";
-        cell.style.pointerEvents = "none";
+        if (cell && gridState[i] && gridState[i][j] === -1) { // Verifica che la cella esista ancora
+          cell.textContent = "";
+          cell.style.pointerEvents = "none";
+        }
       }, 500);
     } else {
       triggerError();
@@ -451,165 +646,4 @@ function endGame(won) {
   } else {
     showDefeatAnimation();
   }
-}
-
-/* Animazione Vittoria */
-function showVictoryAnimation(finalScore) {
-  const gameScreen = document.getElementById('game-screen');
-  
-  // Anima le celle della griglia prima
-  const cells = document.querySelectorAll('.cell');
-  cells.forEach((cell, index) => {
-    setTimeout(() => {
-      cell.classList.add('victory-pulse');
-    }, index * 50);
-  });
-  
-  // Crea overlay per la vittoria dopo un breve delay
-  setTimeout(() => {
-    const key = `sommatrix_record_${gridSize}`;
-    const oldRecord = loadRecord();
-    let isNewRecord = false;
-    
-    if (finalScore > oldRecord) {
-      localStorage.setItem(key, finalScore);
-      isNewRecord = true;
-    }
-    
-    const victoryOverlay = document.createElement('div');
-    victoryOverlay.className = 'victory-overlay animate__animated animate__fadeIn';
-    
-    const recordText = isNewRecord ? 
-      `🏆 Nuovo Record: ${finalScore}! 🏆` : 
-      `Punteggio: ${finalScore}`;
-    
-    victoryOverlay.innerHTML = `
-        <div class="victory-content animate__animated animate__bounceIn animate__delay-1s">
-            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">VITTORIA!</h2>
-            <p class="animate__animated animate__fadeInUp animate__delay-2s">
-                Complimenti! Hai risolto il puzzle!<br>
-                <strong>${recordText}</strong>
-            </p>
-            <div class="victory-buttons animate__animated animate__fadeInUp animate__delay-3s">
-                <button class="victory-btn" id="play-again-btn">Gioca Ancora</button>
-                <button class="victory-btn secondary" id="victory-menu-btn">Menu Principale</button>
-            </div>
-        </div>
-    `;
-    
-    gameScreen.appendChild(victoryOverlay);
-    
-    // Aggiorna la visualizzazione del record
-    displayRecord();
-    
-    // Event listeners
-    document.getElementById('play-again-btn').addEventListener('click', () => {
-      victoryOverlay.classList.remove('animate__fadeIn');
-      victoryOverlay.classList.add('animate__fadeOut');
-      setTimeout(() => {
-        victoryOverlay.remove();
-        restartGame();
-      }, 500);
-    });
-    
-    document.getElementById('victory-menu-btn').addEventListener('click', () => {
-      victoryOverlay.classList.remove('animate__fadeIn');
-      victoryOverlay.classList.add('animate__fadeOut');
-      setTimeout(() => {
-        victoryOverlay.remove();
-        showMainMenu();
-      }, 500);
-    });
-    
-  }, 800);
-}
-
-/* Animazione Sconfitta */
-function showDefeatAnimation() {
-  const gameScreen = document.getElementById('game-screen');
-  
-  // Anima le vite rimanenti
-  const lives = document.querySelectorAll('.life');
-  lives.forEach((life, index) => {
-    setTimeout(() => {
-      life.classList.add('animate__animated', 'animate__shakeX');
-    }, index * 100);
-  });
-  
-  // Anima le celle con effetto shake
-  const cells = document.querySelectorAll('.cell');
-  cells.forEach((cell, index) => {
-    setTimeout(() => {
-      cell.classList.add('defeat-shake');
-    }, index * 30);
-  });
-  
-  // Crea overlay per la sconfitta
-  setTimeout(() => {
-    const defeatOverlay = document.createElement('div');
-    defeatOverlay.className = 'defeat-overlay animate__animated animate__fadeIn animate__delay-1s';
-    defeatOverlay.innerHTML = `
-        <div class="defeat-content animate__animated animate__slideInDown animate__delay-2s">
-            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">GAME OVER</h2>
-            <p class="animate__animated animate__fadeInUp animate__delay-3s">
-                Non ti arrendere! Ogni errore è un passo verso la vittoria!
-            </p>
-            <div class="defeat-buttons animate__animated animate__fadeInUp animate__delay-4s">
-                <button class="defeat-btn retry-btn" id="retry-btn">Riprova</button>
-                <button class="defeat-btn menu-btn" id="defeat-menu-btn">Menu Principale</button>
-            </div>
-        </div>
-    `;
-    
-    gameScreen.appendChild(defeatOverlay);
-    
-    // Event listeners
-    document.getElementById('retry-btn').addEventListener('click', () => {
-      defeatOverlay.classList.remove('animate__fadeIn');
-      defeatOverlay.classList.add('animate__fadeOut');
-      setTimeout(() => {
-        defeatOverlay.remove();
-        restartGame();
-      }, 500);
-    });
-    
-    document.getElementById('defeat-menu-btn').addEventListener('click', () => {
-      defeatOverlay.classList.remove('animate__fadeIn');
-      defeatOverlay.classList.add('animate__fadeOut');
-      setTimeout(() => {
-        defeatOverlay.remove();
-        showMainMenu();
-      }, 500);
-    });
-    
-  }, 1000);
-}
-
-/* Funzione per riavviare il gioco */
-function restartGame() {
-  // Rimuovi tutte le animazioni dalle celle
-  const cells = document.querySelectorAll('.cell');
-  cells.forEach(cell => {
-    cell.classList.remove('victory-pulse', 'defeat-shake', 'animate__animated', 'animate__pulse', 'animate__shakeX');
-  });
-  
-  // Rimuovi animazioni dalle vite
-  const lives = document.querySelectorAll('.life');
-  lives.forEach(life => {
-    life.classList.remove('animate__animated', 'animate__shakeX');
-  });
-  
-  // Reinizializza il gioco
-  if (document.getElementById("samurai-toggle").checked) {
-    lives = 1;
-    initialLives = 1;
-  } else {
-    lives = 3;
-    initialLives = 3;
-  }
-  
-  errors = 0;
-  gameOver = false;
-  initGame();
-  startTimer();
 }
