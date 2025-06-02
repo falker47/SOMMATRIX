@@ -86,7 +86,7 @@ body::before {
   height: 6px;
   background: #f8f6f0;
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 60px 0 #f8f6f0,
     0 120px 0 #f8f6f0,
     0 180px 0 #f8f6f0,
@@ -415,8 +415,10 @@ h2 {
 
 #samurai-toggle {
   appearance: none;
-  width: 30px; /* Aumentato da 24px */
-  height: 30px; /* Aumentato da 24px */
+  width: 30px;
+  /* Aumentato da 24px */
+  height: 30px;
+  /* Aumentato da 24px */
   border: 2px solid #e74c3c;
   border-radius: 4px;
   position: relative;
@@ -437,7 +439,8 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 18px; /* Aumentato da 14px per adattarsi */
+  font-size: 18px;
+  /* Aumentato da 14px per adattarsi */
 }
 
 .win-animation {
@@ -557,12 +560,12 @@ button:hover {
   margin: 15px auto;
   padding: 30px 40px;
   background: #fefefe;
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   background-size: 20px 20px;
   border-radius: 8px;
-  box-shadow: 
+  box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.1),
     0 8px 16px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -583,7 +586,7 @@ button:hover {
   height: 6px;
   background: #f8f6f0;
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 60px 0 #f8f6f0,
     0 120px 0 #f8f6f0,
     0 180px 0 #f8f6f0,
@@ -602,7 +605,7 @@ button:hover {
     0 960px 0 #f8f6f0,
     0 1020px 0 #f8f6f0,
     0 1080px 0 #f8f6f0;
-    
+
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -993,13 +996,16 @@ button:hover {
 /* Timer e Punteggio */
 .game-info {
   display: flex;
-  justify-content: center; /* Cambiato da space-between a center */
+  justify-content: center;
+  /* Cambiato da space-between a center */
   align-items: center;
-  gap: 20px; /* Aggiungi gap per spaziatura uniforme */
+  gap: 20px;
+  /* Aggiungi gap per spaziatura uniforme */
   padding: 10px 20px;
   background-color: #f8f9fa;
   border-radius: 4px;
-  margin: 10px auto 5px auto; /* Aggiungi auto per centrare il container */
+  margin: 10px auto 5px auto;
+  /* Aggiungi auto per centrare il container */
   max-width: 90%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
@@ -1015,15 +1021,17 @@ button:hover {
 /* Assicura che sia centrata anche su mobile */
 @media (max-width: 768px) {
   .game-info {
+    display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
     margin: 10px auto;
     padding: 8px 15px;
     flex-wrap: wrap;
     text-align: center;
   }
-  
-  .game-info > div {
+
+  .game-info>div {
     font-size: 0.9rem;
     font-weight: 600;
     color: #34495e;
@@ -1037,6 +1045,8 @@ button:hover {
     flex-direction: column;
     gap: 8px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -1245,10 +1255,8 @@ button:hover {
 
   .game-info {
     flex-shrink: 0;
-    padding: 6px 10px;
     /* Leggermente ridotto */
     font-size: 0.85rem;
-    margin: 8px auto;
     /* Ridotto */
     /* max-width: 90%; è ok */
   }
@@ -1406,41 +1414,41 @@ button:hover {
     padding: 20px 25px;
     height: 85vh;
   }
-  
+
   #tutorial-screen::before,
   #tutorial-screen::after {
     display: none;
   }
-  
+
   #tutorial-screen h2 {
     font-size: 1.6em;
     margin-left: 0;
     margin-bottom: 20px;
   }
-  
+
   .tutorial-content {
     margin-left: 0;
     margin-right: 0;
   }
-  
+
   #tutorial-screen p {
     margin-left: 0;
     margin-right: 0;
     font-size: 1.1rem;
   }
-  
+
   .tutorial-section {
     margin: 15px 0;
     padding: 12px;
   }
-  
+
   .control-item {
     flex-direction: column;
     text-align: center;
     gap: 10px;
     padding: 6px 10px;
   }
-  
+
   .control-icon {
     margin-right: 0;
     margin-bottom: 10px;
@@ -1931,21 +1939,21 @@ main {
     padding: 20px 25px;
     height: 85vh;
   }
-  
+
   #tutorial-screen h2 {
     font-size: 1.6em;
     margin-bottom: 20px;
   }
-  
+
   .tutorial-section {
     margin: 15px 0;
     padding: 12px;
   }
-  
+
   .control-item {
     padding: 6px 10px;
   }
-  
+
   .control-icon {
     width: 25px;
     height: 25px;
@@ -1961,27 +1969,27 @@ main {
     margin: 0;
     border-radius: 0;
   }
-  
+
   h1 {
     font-size: 2.2em;
     margin: 15px 0 10px 25px;
   }
-  
+
   .menu-options {
     margin-left: 25px;
     gap: 12px;
   }
-  
+
   .option-label {
     font-size: 1rem;
     margin-bottom: 12px;
   }
-  
+
   .play-btn {
     padding: 10px 30px;
     font-size: 1.1rem;
   }
-  
+
   .tutorial-btn {
     padding: 8px 20px;
     font-size: 0.95rem;
@@ -1994,22 +2002,22 @@ main {
     padding: 10px;
     height: 100vh;
   }
-  
+
   #main-menu::before,
   #main-menu::after {
     display: none;
   }
-  
+
   h1 {
     font-size: 1.8em;
     margin: 10px 0 8px 0;
   }
-  
+
   .menu-options {
     margin-left: 0;
     gap: 10px;
   }
-  
+
   .option-label {
     font-size: 0.9rem;
     margin-bottom: 10px;
@@ -2019,17 +2027,17 @@ main {
     gap: 10px;
     margin-top: 12px;
   }
-  
+
   .play-btn {
     padding: 8px 25px;
     font-size: 1rem;
   }
-  
+
   .tutorial-btn {
     padding: 6px 18px;
     font-size: 0.85rem;
   }
-  
+
   .samurai-container {
     margin: 10px 0;
   }
@@ -2074,7 +2082,7 @@ main {
   h1 {
     font-size: 1.6em;
   }
-  
+
   .option-label {
     font-size: 0.85rem;
   }
@@ -2094,7 +2102,7 @@ main {
     flex-shrink: 0;
     padding: 5px 0;
   }
-  
+
   /* Contenitore per vite e bottone back */
   #game-header::before {
     content: '';
@@ -2105,7 +2113,7 @@ main {
     height: 40px;
     pointer-events: none;
   }
-  
+
   /* Vite in alto a sinistra */
   #health-bar {
     position: absolute;
@@ -2114,7 +2122,7 @@ main {
     display: flex;
     gap: 6px;
   }
-  
+
   /* Bottone back in alto a destra */
   .back-button {
     position: absolute;
@@ -2130,10 +2138,11 @@ main {
     justify-content: center;
     margin: 0;
   }
-  
+
   /* Titolo centrato sotto vite e bottone */
   .game-title {
-    margin: 40px 0 0 0; /* Spazio dall'alto per non sovrapporsi */
+    margin: 40px 0 0 0;
+    /* Spazio dall'alto per non sovrapporsi */
     font-size: 1.4rem;
     line-height: 1.2;
     text-align: center;
@@ -2146,18 +2155,18 @@ main {
   #game-screen {
     padding: 8px;
   }
-  
+
   .life {
     width: 20px;
     height: 20px;
   }
-  
+
   /* Riduce la dimensione del bottone back su mobile */
   .back-button svg {
     width: 20px;
     height: 20px;
   }
-  
+
   #game-table th,
   #game-table td {
     width: clamp(30px, 10vw, 50px);
@@ -2172,43 +2181,42 @@ main {
     height: 100vh;
     max-height: 100vh;
   }
-  
+
   #game-header {
     margin-bottom: 5px;
     min-height: 40px;
     flex-wrap: wrap;
   }
-  
+
   .game-title {
     font-size: 1.2rem;
     width: 100%;
     text-align: center;
     margin-bottom: 5px;
   }
-  
+
   #health-bar {
     position: static;
     justify-content: center;
     gap: 4px;
   }
-  
+
   .life {
     width: 20px;
     height: 20px;
   }
-  
+
   #game-table th,
   #game-table td {
     width: clamp(25px, 12vw, 45px);
     height: clamp(25px, 12vw, 45px);
     font-size: clamp(0.6rem, 3vw, 0.9rem);
   }
-  
+
   .game-info {
     font-size: 0.8rem;
-    margin: 5px 0;
   }
-  
+
   .back-button {
     padding: 6px 12px;
     font-size: 0.8rem;
@@ -2221,7 +2229,7 @@ main {
     height: 100vh;
     padding: 10px;
   }
-  
+
   h1 {
     font-size: 1.4em;
     margin: 5px 0;
@@ -2230,26 +2238,26 @@ main {
   .buttons-group {
     margin-top: 8px;
   }
-  
+
   #game-screen {
     height: 100vh;
     padding: 2px;
   }
-  
+
   #game-header {
     margin-bottom: 3px;
     min-height: 35px;
   }
-  
+
   .game-title {
     font-size: 1.1rem;
   }
-  
+
   .life {
     width: 18px;
     height: 18px;
   }
-  
+
   #game-table {
     max-height: 50vh;
   }
@@ -2268,6 +2276,7 @@ main {
 
 /* Ottimizzazione griglia per PC - griglie più grandi */
 @media (min-width: 1024px) {
+
   /* Per griglie 6x6 e 8x8 su desktop, riduci le celle */
   #game-table th,
   #game-table td {
@@ -2275,7 +2284,7 @@ main {
     height: clamp(30px, 5vw, 45px);
     font-size: clamp(0.7rem, 1.5vw, 1rem);
   }
-  
+
   /* Riduci ulteriormente per griglie molto grandi */
   #game-table.large-grid th,
   #game-table.large-grid td {
@@ -2283,7 +2292,7 @@ main {
     height: clamp(25px, 4vw, 40px);
     font-size: clamp(0.6rem, 1.2vw, 0.9rem);
   }
-  
+
   /* Ottimizza anche l'altezza massima della tabella */
   #game-table {
     max-height: 70vh;
@@ -2292,13 +2301,14 @@ main {
 
 /* Media query per schermi molto grandi */
 @media (min-width: 1440px) {
+
   #game-table th,
   #game-table td {
     width: 40px;
     height: 40px;
     font-size: 0.9rem;
   }
-  
+
   #game-table.large-grid th,
   #game-table.large-grid td {
     width: 35px;
@@ -2309,11 +2319,13 @@ main {
 
 /* Rimuovi l'emoji duplicata del samurai su mobile */
 @media (max-width: 768px) {
+
   /* Rimuovi l'emoji accanto al testo del samurai su mobile */
   .samurai-label::before {
-    display: none; /* Nasconde l'emoji accanto al testo */
+    display: none;
+    /* Nasconde l'emoji accanto al testo */
   }
-  
+
   /* Aumenta le dimensioni della selezione livello per full width */
   .grid-size-buttons {
     gap: 8px;
@@ -2324,25 +2336,32 @@ main {
 
   .grid-size-btn {
     flex: 1;
-    min-width: calc(50% - 4px); /* Due bottoni per riga */
-    padding: 15px 12px; /* Aumentato da 10px */
-    font-size: 1rem; /* Aumentato da 0.9rem */
+    min-width: calc(50% - 4px);
+    /* Due bottoni per riga */
+    padding: 15px 12px;
+    /* Aumentato da 10px */
+    font-size: 1rem;
+    /* Aumentato da 0.9rem */
     text-align: center;
   }
-  
+
   /* Aumenta le dimensioni degli altri bottoni */
   .play-btn {
-    padding: 12px 30px; /* Aumentato da 8px 25px */
-    font-size: 1.1rem; /* Aumentato da 1rem */
+    padding: 12px 30px;
+    /* Aumentato da 8px 25px */
+    font-size: 1.1rem;
+    /* Aumentato da 1rem */
     min-height: 50px;
   }
-  
+
   .tutorial-btn {
-    padding: 10px 22px; /* Aumentato da 6px 18px */
-    font-size: 0.95rem; /* Aumentato da 0.85rem */
+    padding: 10px 22px;
+    /* Aumentato da 6px 18px */
+    font-size: 0.95rem;
+    /* Aumentato da 0.85rem */
     min-height: 45px;
   }
-  
+
   /* Aumenta anche i bottoni di vittoria e sconfitta */
   .victory-btn,
   .defeat-btn {
@@ -2350,16 +2369,20 @@ main {
     font-size: 1rem;
     min-height: 48px;
   }
-  
+
   /* Bottone back */
   .back-button {
-    width: 45px; /* Aumentato */
-    height: 45px; /* Aumentato */
+    width: 45px;
+    /* Aumentato */
+    height: 45px;
+    /* Aumentato */
   }
-  
+
   .back-button svg {
-    width: 22px; /* Aumentato */
-    height: 22px; /* Aumentato */
+    width: 22px;
+    /* Aumentato */
+    height: 22px;
+    /* Aumentato */
   }
 }
 
