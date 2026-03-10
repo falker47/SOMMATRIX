@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Raleway:wght@600;700&display=swap');
 
-/* Reset di base e font */
+/* ============================================
+   1. RESET & BASE
+   ============================================ */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,27 +14,27 @@ html {
 }
 
 body {
-  background-color: #f8f6f0;
-  background-image:
-    linear-gradient(rgba(200, 200, 200, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200, 200, 200, 0.3) 1px, transparent 1px),
-    linear-gradient(rgba(220, 220, 220, 0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(220, 220, 220, 0.2) 1px, transparent 1px);
-  background-size: 20px 20px, 20px 20px, 4px 4px, 4px 4px;
-  background-position: 0 0, 0 0, 0 0, 0 0;
   font-family: 'Nunito', sans-serif;
   color: #2c3e50;
   line-height: 1.6;
   height: 100vh;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  /* Paper background with grid lines and fiber texture */
+  background-color: #f8f6f0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 119, 101, 0.02) 2px, rgba(139, 119, 101, 0.02) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 119, 101, 0.02) 2px, rgba(139, 119, 101, 0.02) 4px),
+    linear-gradient(rgba(200, 200, 200, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 200, 200, 0.25) 1px, transparent 1px),
+    linear-gradient(rgba(220, 220, 220, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 220, 220, 0.15) 1px, transparent 1px);
+  background-size: 4px 4px, 4px 4px, 20px 20px, 20px 20px, 5px 5px, 5px 5px;
 }
 
-/* Texture di carta per il background */
+/* Paper grain overlay with vignette */
 body::before {
   content: '';
   position: fixed;
@@ -41,132 +43,99 @@ body::before {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(120, 119, 108, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(120, 119, 108, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(120, 119, 108, 0.03) 0%, transparent 50%);
+    radial-gradient(ellipse at center, transparent 50%, rgba(139, 119, 101, 0.08) 100%),
+    radial-gradient(circle at 15% 25%, rgba(139, 119, 101, 0.04) 0%, transparent 3%),
+    radial-gradient(circle at 85% 15%, rgba(139, 119, 101, 0.03) 0%, transparent 4%),
+    radial-gradient(circle at 45% 75%, rgba(139, 119, 101, 0.04) 0%, transparent 2%),
+    radial-gradient(circle at 75% 85%, rgba(139, 119, 101, 0.03) 0%, transparent 5%);
   pointer-events: none;
   z-index: -1;
 }
 
-/* Main Menu - Ottimizzato con le stesse proprietà del tutorial */
-#main-menu {
-  max-width: 800px;
-  margin: 15px auto;
-  padding: 30px 40px;
-  background: #fefefe;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
-  border-radius: 8px;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 8px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
-  text-align: center;
-  width: 100%;
-  height: auto;
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  overflow: visible;
-}
-
-/* Effetto buchi per rilegatura - ridotti di due buchi */
-#main-menu::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 40px;
-  width: 6px;
-  height: 6px;
-  background: #f8f6f0;
-  border-radius: 50%;
-  box-shadow:
-    0 60px 0 #f8f6f0,
-    0 120px 0 #f8f6f0,
-    0 180px 0 #f8f6f0,
-    0 240px 0 #f8f6f0,
-    0 300px 0 #f8f6f0,
-    0 360px 0 #f8f6f0,
-    0 420px 0 #f8f6f0,
-    0 480px 0 #f8f6f0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Linea rossa del margine - identica al tutorial */
-#main-menu::after {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: 20px;
-  bottom: 20px;
-  width: 2px;
-  background: linear-gradient(to bottom, #ff6b6b 0%, #ff5252 100%);
-  opacity: 0.6;
-}
-
+/* ============================================
+   2. SHARED SCREEN STYLES (NOTEBOOK PAGE)
+   ============================================ */
 .screen {
   max-width: 800px;
   margin: 20px auto;
-  padding: 40px;
-  background: #fefefe;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
+  padding: 35px 40px 35px 55px;
   border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Paper with subtle aging */
+  background:
+    linear-gradient(135deg, rgba(245, 235, 200, 0.15) 0%, transparent 20%),
+    linear-gradient(225deg, rgba(245, 235, 200, 0.1) 0%, transparent 15%),
+    linear-gradient(315deg, rgba(245, 235, 200, 0.12) 0%, transparent 18%),
+    linear-gradient(45deg, rgba(245, 235, 200, 0.08) 0%, transparent 12%),
+    linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    #fefefe;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 20px 20px, 20px 20px, 100% 100%;
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.1),
     0 8px 16px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
-  text-align: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Effetto buchi per rilegatura */
+/* Spiral ring binding */
 .screen::before {
   content: '';
   position: absolute;
-  left: 30px;
-  top: 50px;
-  width: 8px;
-  height: 8px;
-  background: #f8f6f0;
+  left: 18px;
+  top: 35px;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(145deg, #c8c8c8 0%, #a0a0a0 50%, #888 100%);
   border-radius: 50%;
+  border: 1px solid rgba(100, 100, 100, 0.3);
+  color: #a8a8a8;
+  z-index: 10;
   box-shadow:
-    0 40px 0 #f8f6f0,
-    0 80px 0 #f8f6f0,
-    0 120px 0 #f8f6f0,
-    0 160px 0 #f8f6f0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+    inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.2),
+    1px 1px 2px rgba(0, 0, 0, 0.15),
+    0 55px 0 0 currentColor,
+    0 110px 0 0 currentColor,
+    0 165px 0 0 currentColor,
+    0 220px 0 0 currentColor,
+    0 275px 0 0 currentColor,
+    0 330px 0 0 currentColor,
+    0 385px 0 0 currentColor;
 }
 
-/* Linea rossa del margine */
+/* Red margin line */
 .screen::after {
   content: '';
   position: absolute;
-  left: 60px;
-  top: 20px;
-  bottom: 20px;
+  left: 42px;
+  top: 15px;
+  bottom: 15px;
   width: 2px;
-  background: linear-gradient(to bottom, #ff6b6b 0%, #ff5252 100%);
-  opacity: 0.6;
+  background: linear-gradient(to bottom,
+      rgba(255, 107, 107, 0.5) 0%,
+      rgba(255, 82, 82, 0.7) 20%,
+      rgba(255, 82, 82, 0.6) 50%,
+      rgba(255, 107, 107, 0.8) 80%,
+      rgba(255, 82, 82, 0.5) 100%);
+  box-shadow: 0 0 1px rgba(255, 82, 82, 0.3);
 }
 
+.screen > * {
+  position: relative;
+}
+
+/* ============================================
+   3. TYPOGRAPHY
+   ============================================ */
 h1 {
   font-family: 'Raleway', sans-serif;
   font-size: 2.5em;
-  margin: 20px 0 15px 30px;
+  margin: 20px 0 15px 0;
   color: #2c3e50;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   letter-spacing: 2px;
@@ -174,7 +143,6 @@ h1 {
   flex-shrink: 0;
 }
 
-/* Sottolineatura decorativa per il titolo */
 h1::after {
   content: '';
   position: absolute;
@@ -189,21 +157,168 @@ h1::after {
 
 h2 {
   font-family: 'Raleway', sans-serif;
-  letter-spacing: 1px;
-}
-
-h2 {
   font-size: 1.8em;
   margin-bottom: 15px;
   color: #34495e;
+  letter-spacing: 1px;
 }
 
-/* Main Menu - Contenuto centrale */
+/* ============================================
+   4. BUTTONS (BASE)
+   ============================================ */
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #27ae60 100%);
+  background-size: 200% 100%;
+  color: white;
+  padding: 14px 40px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 30px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: shimmer 3s ease infinite;
+  box-shadow:
+    0 4px 15px rgba(39, 174, 96, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.play-btn:hover {
+  box-shadow:
+    0 6px 20px rgba(39, 174, 96, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.02);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.tutorial-btn {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+  padding: 10px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 3px 10px rgba(243, 156, 18, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.tutorial-btn:hover {
+  box-shadow:
+    0 5px 15px rgba(243, 156, 18, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.back-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: transparent;
+  box-shadow: none;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  color: #34495e;
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: none;
+  transform: none;
+}
+
+.buttons-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* ============================================
+   5. LANGUAGE TOGGLE
+   ============================================ */
+.lang-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #f8f6f0 0%, #e8e6e0 100%);
+  border: 2px solid #bdc3c7;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  z-index: 100;
+}
+
+.lang-toggle:hover {
+  background: linear-gradient(135deg, #fff 0%, #f0ede5 100%);
+  border-color: #3498db;
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+.lang-toggle:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   6. MAIN MENU
+   ============================================ */
+#main-menu {
+  min-height: 70vh;
+  justify-content: center;
+}
+
 .menu-options {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 30px;
   flex: 1;
   justify-content: center;
   gap: 15px;
@@ -219,9 +334,9 @@ h2 {
   margin-bottom: 15px;
   font-weight: 600;
   color: #34495e;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }
 
+/* Level cards - mini notebook pages */
 .level-cards {
   display: flex;
   gap: 20px;
@@ -235,50 +350,54 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fefefe;
+  background: linear-gradient(135deg, #fefefe 0%, #f8f6f0 100%);
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 10px 10px;
-  border: 2px solid #ddd;
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 8px 8px;
+  border: 2px solid #d0d0d0;
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
   color: #2c3e50;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .level-card:hover {
   border-color: #3498db;
-  transform: translateY(-3px) rotate(1deg);
+  transform: translateY(-4px) rotate(1deg);
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 6px 12px rgba(0, 0, 0, 0.12),
     0 2px 4px rgba(52, 152, 219, 0.2);
 }
 
+.level-card:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
 .level-card.selected {
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
   color: white;
-  border-color: #2980b9;
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.2),
-    0 2px 4px rgba(52, 152, 219, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: #2471a3;
   transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px rgba(52, 152, 219, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .level-card.selected::before {
-  content: '✓';
+  content: '\2713';
   position: absolute;
   top: -8px;
   right: -8px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   background: #27ae60;
   color: white;
   border-radius: 50%;
@@ -290,111 +409,16 @@ h2 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Samurai container compatto */
-.samurai-container {
-  margin: 15px 0;
-}
-
-/* Bottoni compatti */
-.buttons-group {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.play-btn {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
-  color: white;
-  border: none;
-  padding: 12px 35px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
-}
-
-.play-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.play-btn:hover::before {
-  left: 100%;
-}
-
-.play-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.2),
-    0 2px 4px rgba(46, 204, 113, 0.3);
-}
-
-.tutorial-btn {
-  background: linear-gradient(135deg, #f39c12, #e67e22);
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
-}
-
-.tutorial-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.tutorial-btn:hover::before {
-  left: 100%;
-}
-
-.tutorial-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 5px 10px rgba(0, 0, 0, 0.15),
-    0 2px 4px rgba(243, 156, 18, 0.3);
-}
-
-/* Miglioramenti per il toggle samurai */
+/* Samurai toggle */
 .samurai-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-  padding: 15px 25px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 2px dashed #bdc3c7;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed #ccc;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
@@ -405,20 +429,17 @@ h2 {
 }
 
 .samurai-label {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #e74c3c;
+  color: #c0392b;
   cursor: pointer;
-  transition: color 0.3s ease;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 #samurai-toggle {
   appearance: none;
-  width: 30px;
-  /* Aumentato da 24px */
-  height: 30px;
-  /* Aumentato da 24px */
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
   border: 2px solid #e74c3c;
   border-radius: 4px;
   position: relative;
@@ -433,207 +454,31 @@ h2 {
 }
 
 #samurai-toggle:checked::after {
-  content: '🥷';
+  content: '\1F977';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-size: 18px;
-  /* Aumentato da 14px per adattarsi */
+  font-size: 16px;
 }
 
-.win-animation {
-  animation: winAnim 1s ease-out;
-  color: #2ecc71;
-}
-
-@keyframes winAnim {
-  0% {
-    transform: scale(0.5) rotate(-10deg);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.2) rotate(5deg);
-    opacity: 1;
-  }
-
-  70% {
-    transform: scale(0.95) rotate(-2deg);
-  }
-
-  100% {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
-}
-
-/* Buttons */
-.buttons-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-button {
-  background-color: #3498db;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-button:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.tutorial-btn {
-  background-color: #f1f1f1;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
-.tutorial-btn:hover {
-  background-color: #e9e9e9;
-}
-
-/* Play button “hero” style */
-.play-btn {
-  width: 160px;
-  height: 55px;
-  border-radius: 30px;
-  font-size: 1.5rem;
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-  animation: pulsePlay 2s infinite;
-  transition: transform 0.2s ease;
-}
-
-.play-btn:hover {
-  transform: scale(1.03);
-}
-
-
-.back-button {
-  position: absolute;
-  right: 20px;
-  /* Cambiato da left a right */
-  top: 20px;
-  background: transparent;
-  box-shadow: none;
-  color: #7f8c8d;
-  font-size: 0.9rem;
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 5px 0;
-}
-
-.back-button:hover {
-  color: #34495e;
-  background: transparent;
-  transform: translateX(3px);
-  /* Cambiato da -3px a 3px per la direzione */
-  box-shadow: none;
-}
-
-/* Tutorial Screen - Versione Compatta e User-Friendly */
+/* ============================================
+   7. TUTORIAL SCREEN
+   ============================================ */
 #tutorial-screen {
-  max-width: 800px;
-  margin: 15px auto;
-  padding: 30px 40px;
-  background: #fefefe;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
-  border-radius: 8px;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 8px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
   text-align: left;
-  border: 1px solid rgba(0, 0, 0, 0.08);
   height: 80vh;
   overflow-y: auto;
 }
 
-/* Effetto buchi per rilegatura - ridotti */
-#tutorial-screen::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 40px;
-  width: 6px;
-  height: 6px;
-  background: #f8f6f0;
-  border-radius: 50%;
-  box-shadow:
-    0 60px 0 #f8f6f0,
-    0 120px 0 #f8f6f0,
-    0 180px 0 #f8f6f0,
-    0 240px 0 #f8f6f0,
-    0 300px 0 #f8f6f0,
-    0 360px 0 #f8f6f0,
-    0 420px 0 #f8f6f0,
-    0 480px 0 #f8f6f0,
-    0 540px 0 #f8f6f0,
-    0 600px 0 #f8f6f0,
-    0 660px 0 #f8f6f0,
-    0 720px 0 #f8f6f0,
-    0 780px 0 #f8f6f0,
-    0 840px 0 #f8f6f0,
-    0 900px 0 #f8f6f0,
-    0 960px 0 #f8f6f0,
-    0 1020px 0 #f8f6f0,
-    0 1080px 0 #f8f6f0;
-
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Linea rossa del margine */
-#tutorial-screen::after {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: 20px;
-  bottom: 20px;
-  width: 2px;
-  background: linear-gradient(to bottom, #ff6b6b 0%, #ff5252 100%);
-  opacity: 0.6;
-}
-
 #tutorial-screen h2 {
-  font-family: 'Raleway', sans-serif;
   font-size: 2em;
-  margin-bottom: 25px;
   color: #2c3e50;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  letter-spacing: 1px;
-  margin-left: 30px;
-  position: relative;
   text-align: center;
+  position: relative;
 }
 
-/* Sottolineatura decorativa per il titolo */
 #tutorial-screen h2::after {
   content: '';
   position: absolute;
@@ -647,20 +492,14 @@ button:hover {
 }
 
 #tutorial-screen p {
-  text-align: left;
   font-size: 1rem;
-  margin: 15px 0;
+  margin: 12px 0;
   line-height: 1.6;
   color: #2c3e50;
-  margin-left: 30px;
-  margin-right: 15px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-/* Stile per il contenuto del tutorial - compatto */
 .tutorial-content {
-  margin-left: 30px;
-  margin-right: 15px;
+  margin: 0 10px;
 }
 
 .tutorial-section {
@@ -668,20 +507,8 @@ button:hover {
   padding: 15px;
   background: rgba(255, 255, 255, 0.7);
   border-left: 3px solid #3498db;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 8px 8px 0;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-
-.tutorial-section::before {
-  content: '';
-  position: absolute;
-  left: -3px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(to bottom, #3498db, #2980b9);
-  border-radius: 2px;
 }
 
 .tutorial-section h3 {
@@ -694,40 +521,26 @@ button:hover {
   gap: 8px;
 }
 
-.tutorial-section h3::before {
-  content: '📝';
-  font-size: 1em;
-}
-
-.tutorial-objective h3::before {
-  content: '🎯';
-}
-
-.tutorial-controls h3::before {
-  content: '🎮';
-}
-
-.tutorial-samurai h3::before {
-  content: '🥷';
-}
-
-.tutorial-tips h3::before {
-  content: '💡';
-}
+.tutorial-section h3::before { content: '\1F4DD'; font-size: 1em; }
+.tutorial-objective h3::before { content: '\1F3AF'; }
+.tutorial-controls h3::before { content: '\1F3AE'; }
+.tutorial-samurai h3::before { content: '\1F977'; }
+.tutorial-tips h3::before { content: '\1F4A1'; }
 
 .control-item {
   display: flex;
   align-items: center;
   margin: 10px 0;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: rgba(52, 152, 219, 0.05);
-  border-radius: 4px;
-  border-left: 2px solid #3498db;
+  border-radius: 6px;
+  border-left: 3px solid #3498db;
 }
 
 .control-icon {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
   background: linear-gradient(135deg, #3498db, #2980b9);
   border-radius: 6px;
   display: flex;
@@ -740,35 +553,17 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.control-confirm .control-icon {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
-}
+.control-confirm .control-icon { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+.control-cancel .control-icon { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 
-.control-cancel .control-icon {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-}
-
-.control-text {
-  flex: 1;
-}
-
-.control-text strong {
-  color: #2c3e50;
-  font-size: 1em;
-}
-
-.control-text p {
-  margin: 3px 0 0 0;
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  line-height: 1.3;
-}
+.control-text { flex: 1; }
+.control-text strong { color: #2c3e50; font-size: 1em; }
+.control-text p { margin: 3px 0 0 0; font-size: 0.9rem; color: #7f8c8d; line-height: 1.4; }
 
 .samurai-warning {
   background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.05));
-  border-left-color: #e74c3c;
   border: 2px dashed #e74c3c;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 15px;
   margin: 15px 0;
   text-align: center;
@@ -784,43 +579,33 @@ button:hover {
   gap: 8px;
 }
 
-.samurai-warning h4::before {
-  content: '⚠️';
-}
+.samurai-warning h4::before { content: '\26A0\FE0F'; }
 
 .tip-box {
   background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(230, 126, 34, 0.05));
-  border-left-color: #f39c12;
   padding: 15px;
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 15px 0;
 }
 
-.tip-box ul {
-  margin: 8px 0;
-  padding-left: 18px;
-}
+.tip-box ul { margin: 8px 0; padding-left: 18px; }
+.tip-box li { margin: 6px 0; color: #2c3e50; line-height: 1.5; font-size: 0.95rem; }
 
-.tip-box li {
-  margin: 6px 0;
-  color: #2c3e50;
-  line-height: 1.4;
-  font-size: 0.95rem;
-}
-
-/* Game Screen */
+/* ============================================
+   8. GAME SCREEN
+   ============================================ */
 #game-screen {
   height: 100vh;
   max-height: 100vh;
   margin: 0;
-  padding: 10px;
+  padding: 10px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  box-sizing: border-box;
 }
 
+/* No notebook decorations on game screen */
 #game-screen::before,
 #game-screen::after {
   display: none;
@@ -828,12 +613,11 @@ button:hover {
 
 #game-header {
   position: relative;
-  height: auto;
   min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   flex-shrink: 0;
   padding: 5px 0;
 }
@@ -844,170 +628,75 @@ button:hover {
   line-height: 1.2;
 }
 
+.game-title::after {
+  display: none;
+}
+
 /* Health Bar */
 #health-bar {
   display: flex;
   gap: 6px;
   position: absolute;
-  left: 20px;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .life {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .life.full.green {
   background: linear-gradient(145deg, #2ecc71, #27ae60);
-  box-shadow:
-    0 4px 12px rgba(46, 204, 113, 0.3),
-    0 0 16px rgba(46, 204, 113, 0.2);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3), 0 0 16px rgba(46, 204, 113, 0.2);
 }
-
-.life.empty.green {
-  background-color: transparent;
-  border: 2px solid #2ecc71;
-}
+.life.empty.green { background: transparent; border: 2px solid #2ecc71; }
 
 .life.full.yellow {
   background: linear-gradient(145deg, #f1c40f, #f39c12);
-  box-shadow:
-    0 4px 12px rgba(241, 196, 15, 0.3),
-    0 0 16px rgba(241, 196, 15, 0.2);
+  box-shadow: 0 4px 12px rgba(241, 196, 15, 0.3), 0 0 16px rgba(241, 196, 15, 0.2);
 }
-
-.life.empty.yellow {
-  background-color: transparent;
-  border: 2px solid #f1c40f;
-}
+.life.empty.yellow { background: transparent; border: 2px solid #f1c40f; }
 
 .life.full.red {
   background: linear-gradient(145deg, #e74c3c, #c0392b);
-  box-shadow:
-    0 4px 12px rgba(231, 76, 60, 0.3),
-    0 0 16px rgba(231, 76, 60, 0.2);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3), 0 0 16px rgba(231, 76, 60, 0.2);
 }
+.life.empty.red { background: transparent; border: 2px solid #e74c3c; }
 
-.life.empty.red {
-  background-color: transparent;
-  border: 2px solid #e74c3c;
-}
-
-/* Stile speciale per la modalità samurai */
 .life.full.samurai {
   background: linear-gradient(145deg, #c0392b, #922b21);
-  box-shadow:
-    0 4px 12px rgba(192, 57, 43, 0.4),
-    0 0 20px rgba(231, 76, 60, 0.6),
-    0 0 30px rgba(231, 76, 60, 0.3);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.4), 0 0 20px rgba(231, 76, 60, 0.6);
   animation: pulseSamurai 1.5s infinite;
 }
 
 @keyframes pulseSamurai {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
-    box-shadow:
-      0 4px 12px rgba(192, 57, 43, 0.4),
-      0 0 20px rgba(231, 76, 60, 0.6),
-      0 0 30px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 12px rgba(192, 57, 43, 0.4), 0 0 20px rgba(231, 76, 60, 0.6);
   }
-
   50% {
-    transform: scale(1.1);
-    box-shadow:
-      0 6px 16px rgba(192, 57, 43, 0.5),
-      0 0 25px rgba(231, 76, 60, 0.8),
-      0 0 40px rgba(231, 76, 60, 0.4);
+    transform: scale(1.15);
+    box-shadow: 0 6px 16px rgba(192, 57, 43, 0.5), 0 0 30px rgba(231, 76, 60, 0.8);
   }
 }
 
-/* Grid */
-#game-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 0;
-  overflow: hidden;
-}
-
-#grid-wrapper {
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  overflow-x: auto;
-}
-
-#game-table {
-  border-collapse: separate;
-  /* Necessario per border-spacing */
-  border-spacing: 1px;
-  /* Spazio tra le celle, simula i bordi */
-  background-color: #bdc3c7;
-  /* Colore per gli spazi/bordi */
-  margin: 0 auto;
-  /* Aggiunto margine per centrare meglio */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  /* Ombra più pronunciata */
-  border-radius: 8px;
-  /* Angoli arrotondati per il contenitore della tabella */
-  overflow: hidden;
-  /* Per far rispettare i bordi arrotondati alle celle */
-  max-width: 100%;
-  max-height: 60vh;
-}
-
-#game-table th,
-#game-table td {
-  width: clamp(35px, 8vw, 60px);
-  /* Leggermente più grandi */
-  height: clamp(35px, 8vw, 60px);
-  border: none;
-  /* Rimuovi bordi individuali se usi border-spacing */
-  text-align: center;
-  vertical-align: middle;
-  font-size: clamp(0.8rem, 2vw, 1.2rem);
-  /* Testo leggermente più grande */
-  background-color: white;
-  /* Sfondo bianco per le celle */
-  transition: all 0.25s ease-in-out;
-  /* Transizione più fluida */
-  padding: 2px;
-}
-
-#game-table th {
-  /* Intestazioni di riga/colonna */
-  background-color: #ecf0f1;
-  /* Colore di sfondo più leggero per le intestazioni */
-  color: #34495e;
-  /* Colore testo più scuro per contrasto */
-  font-weight: 700;
-  /* Testo in grassetto */
-}
-
-/* Timer e Punteggio */
+/* Game info bar */
 .game-info {
   display: flex;
   justify-content: center;
-  /* Cambiato da space-between a center */
   align-items: center;
   gap: 20px;
-  /* Aggiungi gap per spaziatura uniforme */
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  margin: 10px auto 5px auto;
-  /* Aggiungi auto per centrare il container */
+  padding: 8px 20px;
+  background: rgba(248, 249, 250, 0.9);
+  border-radius: 8px;
+  margin: 5px auto;
   max-width: 90%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
 }
 
@@ -1018,125 +707,158 @@ button:hover {
   color: #2c3e50;
 }
 
-/* Assicura che sia centrata anche su mobile */
-@media (max-width: 768px) {
-  .game-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin: 10px auto;
-    padding: 8px 15px;
-    flex-wrap: wrap;
-    text-align: center;
-  }
-
-  .game-info>div {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #34495e;
-    white-space: nowrap;
-  }
+#record-display {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #a18b0b;
 }
 
-/* Per schermi molto piccoli */
-@media (max-width: 480px) {
-  .game-info {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-  }
+/* ============================================
+   9. GAME GRID & CELLS
+   ============================================ */
+#grid-wrapper {
+  flex: 1;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow: auto;
+  min-height: 0;
 }
 
-/* Cells */
+#game-table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  background: linear-gradient(145deg, #c4c8cb 0%, #a8acaf 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 60vh;
+}
+
+#game-table th,
+#game-table td {
+  width: clamp(38px, 8vw, 60px);
+  height: clamp(38px, 8vw, 60px);
+  border: none;
+  text-align: center;
+  vertical-align: middle;
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  transition: all 0.25s ease;
+  padding: 2px;
+}
+
+#game-table th {
+  background: linear-gradient(145deg, #f0f2f5 0%, #e4e7ea 100%);
+  color: #34495e;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
 .cell {
   cursor: pointer;
-  background-color: white;
-  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  font-weight: 500;
 }
 
-.cell:hover {
-  background-color: #f0f8ff;
+.cell:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: -2px;
+  z-index: 5;
 }
-
-.cell-confirmed {
-  background-color: #e6ffed !important;
-  /* Verde molto chiaro */
-  color: #000000;
-  font-weight: bold;
-  /* box-shadow: inset 0 0 5px rgba(46, 204, 113, 0.5); */
-}
-
-.cell-confirmed::after {
-  /* Rimuovi il segno di spunta SVG se lo stile è già chiaro */
-  content: none;
-}
-
 
 .cell:not(.cell-confirmed):not(.cell-cancelled):hover {
-  background-color: #e9f5ff;
-  /* Azzurro chiaro al passaggio del mouse */
+  background: linear-gradient(135deg, #e8f4fd 0%, #d6ecfa 100%);
   transform: scale(1.05);
-  /* Leggero ingrandimento */
-  box-shadow: 0 0 10px rgba(5, 26, 39, 0.3);
-  /* Ombra azzurra */
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.4), 0 4px 8px rgba(52, 152, 219, 0.2);
+  z-index: 5;
 }
 
+/* Confirmed cell - ink fill effect */
+.cell-confirmed {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%) !important;
+  color: #155724 !important;
+  font-weight: bold;
+  animation: inkSpread 0.4s ease-out;
+}
+
+@keyframes inkSpread {
+  0% {
+    background: linear-gradient(135deg, #fff 0%, #fff 100%);
+    box-shadow: inset 0 0 0 0 rgba(40, 167, 69, 0.4);
+  }
+  50% { box-shadow: inset 0 0 15px 5px rgba(40, 167, 69, 0.3); }
+  100% {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    box-shadow: inset 0 0 5px 0 rgba(40, 167, 69, 0.1);
+  }
+}
+
+/* Cancelled cell - eraser effect */
 .cell-cancelled {
-  animation: fadeOut 0.5s forwards;
+  animation: pencilErase 0.5s ease-out forwards;
 }
 
-@keyframes fadeOut {
+@keyframes pencilErase {
   0% {
     opacity: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
   }
-
+  30% {
+    background: linear-gradient(135deg, #ffe0e0 0%, #ffd0d0 100%);
+    transform: scale(0.95);
+  }
   100% {
-    opacity: 0.2;
-    background-color: rgba(231, 76, 60, 0.1);
+    opacity: 0.15;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    transform: scale(0.98);
   }
 }
 
-/* Mode Toggle - Stile migliorato con icone */
+/* Indicators */
+.partial { font-weight: normal; color: #3498db; }
+.slash-bold { font-weight: bold; color: #7f8c8d; }
+
+.indicator-completed {
+  background: linear-gradient(145deg, #d4edda 0%, #c3e6cb 100%) !important;
+  color: #155724 !important;
+  animation: completePulse 0.5s ease-out;
+}
+
+@keyframes completePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); background: linear-gradient(145deg, #b8dacd 0%, #9dcfb8 100%); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   10. MODE TOGGLE
+   ============================================ */
 #bottom-bar {
-  margin-top: 25px;
+  margin-top: auto;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  flex-shrink: 0;
 }
 
-#mode-toggle-container-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  width: 140px;
-  height: 70px;
-}
-
-/* Stile per il container del toggle e le icone */
 #mode-toggle-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
-  position: relative;
-  margin: 10px auto;
   padding: 5px;
 }
 
-/* Stile icone con etichette */
 .mode-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  color: #7f8c8d;
-  transition: color 0.3s ease;
+  gap: 4px;
+  transition: all 0.3s ease;
 }
 
 .mode-icon span {
@@ -1144,381 +866,8 @@ button:hover {
   font-weight: 600;
 }
 
-.confirm-icon {
-  color: #2ecc71;
-}
-
-.cancel-icon {
-  color: #e74c3c;
-}
-
-
-/* Toggle button stilizzato */
-#mode-toggle {
-  position: relative;
-  width: 80px;
-  height: 40px;
-  border-radius: 40px;
-  background-color: #2ecc71;
-  transition: all 0.3s ease;
-  padding: 0;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
-
-#mode-toggle::before {
-  content: '';
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background-color: white;
-  border-radius: 50%;
-  top: 4px;
-  left: 4px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-#mode-toggle.cancel {
-  background-color: #e74c3c;
-}
-
-#mode-toggle.cancel::before {
-  transform: translateX(40px);
-}
-
-/* Media queries per responsività */
-@media (max-width: 480px) {
-
-  /* Sovrascrivi gli stili generali di .screen specificamente per #game-screen su mobile */
-  #game-screen {
-    width: 100%;
-    height: 100%;
-    /* Occupa tutta l'altezza del viewport */
-    min-height: 100vh;
-    /* Assicura l'altezza minima anche su browser mobili con UI dinamiche */
-    margin: 0;
-    padding: 5px 5px 5px 5px;
-    /* Padding: top, right, bottom, left. Ridotto per mobile. */
-    border-radius: 0;
-    box-shadow: none;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* Assicura che il bottom-bar stia in fondo se c'è spazio */
-    overflow: hidden;
-    /* Previene lo scroll di body, gestito internamente se necessario */
-  }
-
-  /* Layout per i figli diretti di #game-screen */
-  #game-header {
-    flex-shrink: 0;
-    /* Non si restringe */
-    padding: 5px 0;
-    /* Altezza e margin-bottom sono già gestiti dal tuo CSS, ma flex-wrap è buono */
-    flex-wrap: wrap;
-
-    /* Mantenuto dal tuo CSS originale */
-    /* position: relative; è ok */
-    /* height: auto; è meglio di 60px fisso per il wrap */
-    height: auto;
-    margin-bottom: 10px;
-    /* Ridotto rispetto ai 20px per guadagnare spazio */
-  }
-
-  .game-title {
-    font-size: 1.4rem;
-    /* Leggermente più piccolo */
-    /* width: 100%; text-align: center; margin-bottom: 10px; sono già nel tuo blocco originale e vanno bene */
-  }
-
-  .life {
-    /* Leggermente più piccole le vite per schermi stretti */
-    width: 24px;
-    height: 24px;
-  }
-
-  .back-button {
-    /* position: relative; right: auto; top: auto; margin: 10px auto; sono già nel tuo blocco e vanno bene */
-    padding: 3px;
-    /* Leggermente più piccolo */
-    font-size: 1.3rem;
-  }
-
-  .game-info {
-    flex-shrink: 0;
-    /* Leggermente ridotto */
-    font-size: 0.85rem;
-    /* Ridotto */
-    /* max-width: 90%; è ok */
-  }
-
-  #grid-wrapper {
-    flex-grow: 1;
-    /* Elemento che si espande */
-    overflow-y: auto;
-    /* Scroll verticale per la tabella */
-    overflow-x: auto;
-    /* Scroll orizzontale per la tabella */
-    display: flex;
-    flex-direction: column;
-    /* Necessario per allineare la tabella se è flex item */
-    align-items: center;
-    /* Centra la tabella orizzontalmente */
-    justify-content: flex-start;
-    /* Allinea la tabella in alto dentro il wrapper, o 'center' se preferisci */
-    padding: 5px 0;
-    /* Spazio sopra/sotto la tabella */
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    /* Mantenuto */
-  }
-
-  .samurai-container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center;
-    /* o flex-start, se vuoi allineare a sinistra */
-    gap: 8px;
-  }
-
-  /* Checkbox più leggibile e centrata */
-  #samurai-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    /* rimuove eventuali offset */
-    vertical-align: middle;
-  }
-
-  /* Label come inline-flex per centrare l’emoji */
-  .samurai-label {
-    display: inline-flex;
-    align-items: center;
-    font-size: 1rem;
-    /* regola a piacere */
-    line-height: 1;
-    vertical-align: middle;
-  }
-
-  /* Emoji dimensionata e spaziatura */
-  .samurai-label::before {
-    content: "🥷";
-    display: inline-block;
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
-    line-height: 1;
-  }
-
-  #game-table {
-    /* Le tue regole per #game-table (border-collapse, background-color, ecc.) sono ok. */
-    /* Margin auto potrebbe non essere necessario se #grid-wrapper è display:flex e align-items:center */
-    margin: 0 auto;
-    /* O anche solo margin: 0; */
-  }
-
-  /* Dimensioni celle più flessibili */
-  #game-table th,
-  #game-table td {
-    width: clamp(32px, 10.5vw, 48px);
-    /* Min, Preferred (circa 8-9 celle per larghezza schermo), Max */
-    height: clamp(32px, 10.5vw, 48px);
-    font-size: clamp(0.75rem, 2.8vw, 1rem);
-    /* Le altre proprietà (border, text-align, ecc.) sono ok */
-  }
-
-  #bottom-bar {
-    flex-shrink: 0;
-    padding: 8px 0;
-    background-color: transparent;
-    /* Sfondo leggermente trasparente o solido */
-    width: 100%;
-    margin-top: 10px;
-    /* Ridotto */
-    gap: 10px;
-    /* Ridotto */
-  }
-
-  #mode-toggle-container {
-    /* Le regole esistenti per il toggle su mobile (width: 100%, padding) sono ok */
-    /* Gap e margin potrebbero essere ridotti se necessario */
-    background-color: transparent;
-    gap: 10px;
-    margin: 5px auto;
-  }
-
-  /* Stili per il toggle button stesso, se necessario adattamenti */
-  #mode-toggle {
-    /* width: 90px; height: 45px; nel tuo CSS originale, potrebbe essere ok o riducibile */
-    width: 80px;
-    /* Leggermente più piccolo */
-    height: 40px;
-  }
-
-  #mode-toggle::before {
-    /* width: 37px; height: 37px; nel tuo CSS originale */
-    width: 32px;
-    /* Adattato alla nuova dimensione del toggle */
-    height: 32px;
-  }
-
-  #mode-toggle.cancel::before {
-    transform: translateX(40px);
-    /* Coerente con width: 80px e ::before width: 32px, left: 4px */
-  }
-
-  #mode-toggle::after {
-    /* Se mantieni l'icona SVG dentro il toggle */
-    width: 16px;
-    /* Adattato */
-    height: 16px;
-    top: 12px;
-    /* Adattato */
-    left: 12px;
-    /* Adattato */
-  }
-
-  #mode-toggle.cancel::after {
-    transform: translateX(40px);
-    /* Coerente */
-  }
-
-
-  .mode-icon svg {
-    /* Assicurati che gli SVG siano dimensionati bene */
-    width: 22px;
-    height: 22px;
-  }
-
-  .mode-icon span {
-    font-size: 0.75rem;
-    /* Leggermente più piccolo */
-  }
-
-
-
-  /* Responsive per tutorial */
-  #tutorial-screen {
-    margin: 10px;
-    padding: 20px 25px;
-    height: 85vh;
-  }
-
-  #tutorial-screen::before,
-  #tutorial-screen::after {
-    display: none;
-  }
-
-  #tutorial-screen h2 {
-    font-size: 1.6em;
-    margin-left: 0;
-    margin-bottom: 20px;
-  }
-
-  .tutorial-content {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  #tutorial-screen p {
-    margin-left: 0;
-    margin-right: 0;
-    font-size: 1.1rem;
-  }
-
-  .tutorial-section {
-    margin: 15px 0;
-    padding: 12px;
-  }
-
-  .control-item {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-    padding: 6px 10px;
-  }
-
-  .control-icon {
-    margin-right: 0;
-    margin-bottom: 10px;
-    width: 25px;
-    height: 25px;
-    font-size: 0.8em;
-  }
-
-  /* Stili di ripristino per gli altri screen se non devono essere full-screen su mobile */
-  #main-menu {
-    height: auto;
-    min-height: auto;
-    /* O 0 se necessario per sovrascrivere */
-    margin: 20px auto;
-    /* Ripristina margini originali, o 10px auto per mobile */
-    padding: 20px;
-    /* Ripristina padding originali, o 15px per mobile */
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    max-width: 800px;
-    /* Assicura che non superino la larghezza massima */
-    /* Rimuovi flex da body se interferisce con questi, o assicurati che questi screen abbiano flex-shrink: 0 */
-  }
-
-  /* Se altre regole specifiche dal tuo vecchio blocco @media (max-width: 480px) sono importanti e non coperte, */
-  /* come quelle per .grid-size-buttons, .grid-size-btn, puoi ricopiarle qui dentro. */
-  /* Quelle che hai per questi elementi sembrano già adatte: */
-  .grid-size-buttons {
-    gap: 5px;
-  }
-
-  .grid-size-btn {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-
-  .samurai-label::before {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-  }
-
-  .grid-size-btn {
-    min-width: 80px;
-    padding: 10px;
-  }
-
-  #game-table th,
-  #game-table td {
-    width: clamp(40px, 12vw, 55px);
-    height: clamp(40px, 12vw, 55px);
-  }
-}
-
-/* Aggiungi in fondo a style.css */
-#record-display {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #a18b0b;
-  /* verde per evidenziare il record */
-}
-
-
-.pencil-icon {
-  left: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232ecc71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'%3E%3C/path%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'%3E%3C/path%3E%3Cpath d='M2 2l7.586 7.586'%3E%3C/path%3E%3Ccircle cx='11' cy='11' r='2'%3E%3C/circle%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.eraser-icon {
-  right: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e74c3c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20H7L3 16c-1.5-1.5-1.5-3.5 0-5l7-7c1.5-1.5 3.5-1.5 5 0l5 5'%3E%3C/path%3E%3Cpath d='M6 12l6 6'%3E%3C/path%3E%3Cpath d='M11 7l5 5'%3E%3C/path%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+.confirm-icon { color: #2ecc71; }
+.cancel-icon { color: #e74c3c; }
 
 #mode-toggle {
   position: relative;
@@ -1528,9 +877,9 @@ button:hover {
   background-color: #2ecc71;
   transition: all 0.3s ease;
   padding: 0;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  margin: 0 auto;
+  border: none;
 }
 
 #mode-toggle::before {
@@ -1561,38 +910,16 @@ button:hover {
   z-index: 2;
 }
 
-#mode-toggle.cancel {
-  background-color: #e74c3c;
-}
-
-#mode-toggle.cancel::before {
-  transform: translateX(40px);
-}
-
+#mode-toggle.cancel { background-color: #e74c3c; }
+#mode-toggle.cancel::before { transform: translateX(40px); }
 #mode-toggle.cancel::after {
   transform: translateX(40px);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e74c3c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
 }
 
-.mode-text {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 5px;
-  transition: all 0.3s ease;
-}
-
-.confirm-text {
-  color: #2ecc71;
-}
-
-.cancel-text {
-  color: #e74c3c;
-}
-
-
-
-/* Effects */
+/* ============================================
+   11. ERROR OVERLAY
+   ============================================ */
 #error-overlay {
   position: fixed;
   top: 0;
@@ -1606,115 +933,13 @@ button:hover {
 }
 
 @keyframes flashOverlay {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-.win-animation {
-  animation: winAnim 1s ease-out;
-  color: #2ecc71;
-}
-
-@keyframes winAnim {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-#game-table th .partial {
-  /* Somma parziale */
-  color: #2980b9;
-  /* Blu più vibrante */
-  font-weight: bold;
-}
-
-#game-table th.completed .partial {
-  /* Quando la somma è completata */
-  color: #27ae60;
-  /* Verde */
-}
-
-/* Indicators */
-.partial {
-  font-weight: normal;
-  color: #3498db;
-}
-
-.slash-bold {
-  font-weight: bold;
-  color: #7f8c8d;
-}
-
-/* Credits */
-#credits {
-  margin-top: 30px;
-  padding: 15px 0;
-  text-align: center;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  border-top: 1px solid #ecf0f1;
-}
-
-.credits-title {
-  color: #7f8c8d;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
-
-.credits-author {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #34495e;
-  font-style: italic;
-}
-
-/* Footer Sticky in fondo alla pagina */
-footer {
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-  background: #222;
-  color: #bbb;
-  box-sizing: border-box;
-  margin-top: auto;
-  /* Per il layout flexbox */
-}
-
-footer a {
-  color: #bbb;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-footer a:hover {
-  color: #56f1d2;
-}
-
-/* Il contenuto principale dovrebbe crescere per spingere il footer in basso */
-main {
-  flex: 1;
-}
-
-/* Victory Overlay */
+/* ============================================
+   12. VICTORY & DEFEAT OVERLAYS
+   ============================================ */
 .victory-overlay {
   position: fixed;
   top: 0;
@@ -1754,7 +979,8 @@ main {
   line-height: 1.6;
 }
 
-.victory-buttons {
+.victory-buttons,
+.defeat-buttons {
   display: flex;
   gap: 15px;
   justify-content: center;
@@ -1783,7 +1009,6 @@ main {
   background: linear-gradient(135deg, #95a5a6, #7f8c8d);
 }
 
-/* Defeat Overlay */
 .defeat-overlay {
   position: fixed;
   top: 0;
@@ -1823,13 +1048,6 @@ main {
   line-height: 1.6;
 }
 
-.defeat-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .defeat-btn {
   padding: 12px 24px;
   border: none;
@@ -1841,34 +1059,22 @@ main {
   min-width: 100px;
 }
 
-.retry-btn {
-  background: linear-gradient(135deg, #f39c12, #e67e22);
-  color: white;
-}
-
-.menu-btn {
-  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-  color: white;
-}
+.retry-btn { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
+.menu-btn { background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
 
 .defeat-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Animazioni speciali per le celle */
-.cell.victory-pulse {
-  animation: victoryPulse 0.8s ease-in-out;
-}
+/* Cell animations */
+.cell.victory-pulse { animation: victoryPulse 0.8s ease-in-out; }
 
 @keyframes victoryPulse {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
     background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
   }
-
   50% {
     transform: scale(1.15);
     background: linear-gradient(145deg, #a5d6a7, #81c784);
@@ -1876,61 +1082,121 @@ main {
   }
 }
 
-.cell.defeat-shake {
-  animation: defeatShake 0.6s ease-in-out;
-}
+.cell.defeat-shake { animation: defeatShake 0.6s ease-in-out; }
 
 @keyframes defeatShake {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
-    transform: translateX(-5px);
-  }
-
-  20%,
-  40%,
-  60%,
-  80% {
-    transform: translateX(5px);
-  }
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* Responsive adjustments - migliorati per mobile */
+/* ============================================
+   13. FOOTER
+   ============================================ */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 8px 15px;
+  background: linear-gradient(to bottom, #e8e6e0 0%, #d8d6d0 100%);
+  color: #7f8c8d;
+  margin-top: auto;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+}
+
+footer a {
+  color: #5a6a7a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover { color: #3498db; }
+
+/* ============================================
+   14. RESPONSIVE - TABLET (max 768px)
+   ============================================ */
 @media (max-width: 768px) {
   .screen {
     margin: 10px;
-    padding: 15px;
-  }
-
-  #game-table th,
-  #game-table td {
-    width: 55px;
-    height: 55px;
-    font-size: 1.1rem;
+    padding: 25px 30px 25px 45px;
   }
 
   h1 {
     font-size: 2rem;
+    margin: 15px 0 10px 0;
+  }
+
+  #main-menu {
+    min-height: auto;
+    padding: 15px 20px 15px 45px;
+  }
+
+  .menu-options {
+    gap: 12px;
   }
 
   .option-label {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 12px;
   }
-}
 
-/* Responsive per schermi piccoli */
-@media (max-width: 768px) {
+  /* Game header */
+  #game-header {
+    flex-direction: column;
+    min-height: 60px;
+  }
+
+  #health-bar {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+  }
+
+  .back-button {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+  }
+
+  .game-title {
+    margin-top: 38px;
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .life {
+    width: 20px;
+    height: 20px;
+  }
+
+  #game-screen {
+    padding: 8px;
+  }
+
+  .game-info {
+    gap: 15px;
+    padding: 8px 15px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+
+  #game-table th,
+  #game-table td {
+    width: clamp(32px, 10vw, 50px);
+    height: clamp(32px, 10vw, 50px);
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+  }
+
+  .back-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Tutorial */
   #tutorial-screen {
-    margin: 10px;
-    padding: 20px 25px;
+    padding: 20px 25px 20px 45px;
     height: 85vh;
   }
 
@@ -1944,39 +1210,95 @@ main {
     padding: 12px;
   }
 
-  .control-item {
-    padding: 6px 10px;
+  .control-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.8em;
   }
 
-  .control-icon {
-    width: 25px;
-    height: 25px;
-    font-size: 0.8em;
+  /* Buttons on tablet */
+  .play-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    min-height: 50px;
+  }
+
+  .tutorial-btn {
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    min-height: 45px;
+  }
+
+  .victory-btn,
+  .defeat-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+
+  .mode-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mode-icon span {
+    font-size: 0.8rem;
   }
 }
 
-/* Responsive per tablet */
-@media (max-width: 768px) {
-  #main-menu {
-    padding: 15px;
-    max-width: 100%;
-    margin: 0;
-    border-radius: 0;
+/* ============================================
+   15. RESPONSIVE - MOBILE (max 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  /* Hide notebook decorations on mobile */
+  .screen::before,
+  .screen::after,
+  #main-menu::before,
+  #main-menu::after,
+  #tutorial-screen::before,
+  #tutorial-screen::after {
+    display: none;
+  }
+
+  .screen {
+    margin: 10px;
+    padding: 20px 15px;
   }
 
   h1 {
-    font-size: 2.2em;
-    margin: 15px 0 10px 25px;
+    font-size: 1.8em;
+    margin: 10px 0 8px 0;
+  }
+
+  #main-menu {
+    padding: 15px;
+    min-height: 0;
+    height: auto;
   }
 
   .menu-options {
-    margin-left: 25px;
-    gap: 12px;
+    gap: 10px;
   }
 
   .option-label {
-    font-size: 1rem;
-    margin-bottom: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .level-cards {
+    gap: 12px;
+  }
+
+  .level-card {
+    width: 72px;
+    height: 72px;
+    font-size: 0.85rem;
+  }
+
+  .buttons-group {
+    gap: 10px;
+    margin-top: 12px;
   }
 
   .play-btn {
@@ -1986,66 +1308,126 @@ main {
 
   .tutorial-btn {
     padding: 8px 20px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Responsive per mobile */
-@media (max-width: 480px) {
-  #main-menu {
-    padding: 10px;
-    height: 100vh;
-  }
-
-  #main-menu::before,
-  #main-menu::after {
-    display: none;
-  }
-
-  h1 {
-    font-size: 1.8em;
-    margin: 10px 0 8px 0;
-  }
-
-  .menu-options {
-    margin-left: 0;
-    gap: 10px;
-  }
-
-  .option-label {
     font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
-
-  .buttons-group {
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .play-btn {
-    padding: 8px 25px;
-    font-size: 1rem;
-  }
-
-  .tutorial-btn {
-    padding: 6px 18px;
-    font-size: 0.85rem;
   }
 
   .samurai-container {
     margin: 10px 0;
+    padding: 10px 15px;
   }
 
-  .screen {
-    margin: 10px;
-    padding: 25px 20px;
+  .lang-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 
-  .screen::before,
-  .screen::after {
-    display: none;
+  /* Game screen mobile */
+  #game-screen {
+    width: 100%;
+    height: 100vh;
+    padding: 5px;
+    border-radius: 0;
+    box-shadow: none;
   }
 
+  #game-header {
+    margin-bottom: 5px;
+    min-height: 45px;
+  }
+
+  .game-title {
+    font-size: 1.2rem;
+    margin-top: 35px;
+  }
+
+  .life {
+    width: 18px;
+    height: 18px;
+  }
+
+  .game-info {
+    font-size: 0.8rem;
+    gap: 10px;
+    padding: 6px 12px;
+  }
+
+  #grid-wrapper {
+    padding: 5px 0;
+  }
+
+  #game-table th,
+  #game-table td {
+    width: clamp(28px, 11vw, 45px);
+    height: clamp(28px, 11vw, 45px);
+    font-size: clamp(0.65rem, 2.8vw, 0.9rem);
+  }
+
+  #bottom-bar {
+    padding: 6px 0;
+  }
+
+  #mode-toggle-container {
+    gap: 10px;
+  }
+
+  #mode-toggle {
+    width: 70px;
+    height: 36px;
+  }
+
+  #mode-toggle::before {
+    width: 28px;
+    height: 28px;
+  }
+
+  #mode-toggle.cancel::before {
+    transform: translateX(34px);
+  }
+
+  #mode-toggle::after {
+    width: 16px;
+    height: 16px;
+    top: 10px;
+    left: 10px;
+  }
+
+  #mode-toggle.cancel::after {
+    transform: translateX(34px);
+  }
+
+  .mode-icon span {
+    font-size: 0.75rem;
+  }
+
+  /* Tutorial mobile */
+  #tutorial-screen {
+    margin: 5px;
+    padding: 15px;
+    height: 90vh;
+  }
+
+  #tutorial-screen h2 {
+    font-size: 1.4em;
+  }
+
+  .tutorial-content {
+    margin: 0;
+  }
+
+  .control-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .control-icon {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  /* Overlays mobile */
   .victory-content,
   .defeat-content {
     margin: 20px;
@@ -2071,159 +1453,34 @@ main {
   }
 }
 
-/* Responsive per schermi molto piccoli */
+/* ============================================
+   16. RESPONSIVE - SMALL MOBILE (max 360px)
+   ============================================ */
 @media (max-width: 360px) {
-  h1 {
-    font-size: 1.6em;
-  }
+  h1 { font-size: 1.5em; }
+  .option-label { font-size: 0.85rem; }
 
-  .option-label {
-    font-size: 0.85rem;
-  }
-}
-
-/* Nuovo layout per game-header su mobile */
-@media (max-width: 768px) {
-  #game-header {
-    position: relative;
-    height: auto;
-    min-height: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-    flex-shrink: 0;
-    padding: 5px 0;
-  }
-
-  /* Contenitore per vite e bottone back */
-  #game-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    pointer-events: none;
-  }
-
-  /* Vite in alto a sinistra */
-  #health-bar {
-    position: absolute;
-    top: 8px;
-    left: 15px;
-    display: flex;
-    gap: 6px;
-  }
-
-  /* Bottone back in alto a destra */
-  .back-button {
-    position: absolute;
-    top: 8px;
-    right: 15px;
-    background: transparent;
-    box-shadow: none;
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-
-  /* Titolo centrato sotto vite e bottone */
-  .game-title {
-    margin: 40px 0 0 0;
-    /* Spazio dall'alto per non sovrapporsi */
-    font-size: 1.4rem;
-    line-height: 1.2;
-    text-align: center;
-    width: 100%;
-  }
-}
-
-/* Ottimizzazioni specifiche per mobile */
-@media (max-width: 768px) {
-  #game-screen {
-    padding: 8px;
-  }
-
-  .life {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Riduce la dimensione del bottone back su mobile */
-  .back-button svg {
-    width: 20px;
-    height: 20px;
+  .level-card {
+    width: 62px;
+    height: 62px;
+    font-size: 0.8rem;
   }
 
   #game-table th,
   #game-table td {
-    width: clamp(30px, 10vw, 50px);
-    height: clamp(30px, 10vw, 50px);
-    font-size: clamp(0.7rem, 2.5vw, 1rem);
+    width: clamp(24px, 12vw, 40px);
+    height: clamp(24px, 12vw, 40px);
+    font-size: clamp(0.6rem, 3vw, 0.85rem);
   }
 }
 
-@media (max-width: 480px) {
-  #game-screen {
-    padding: 3px;
-    height: 100vh;
-    max-height: 100vh;
-  }
-
-  #game-header {
-    margin-bottom: 5px;
-    min-height: 40px;
-    flex-wrap: wrap;
-  }
-
-  .game-title {
-    font-size: 1.2rem;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 5px;
-  }
-
-  #health-bar {
-    position: absolute;
-    top: 8px;
-    left: 15px;
-    display: flex;
-    gap: 6px;
-  }
-
-  .life {
-    width: 20px;
-    height: 20px;
-  }
-
-  #game-table th,
-  #game-table td {
-    width: clamp(25px, 12vw, 45px);
-    height: clamp(25px, 12vw, 45px);
-    font-size: clamp(0.6rem, 3vw, 0.9rem);
-  }
-
-  .game-info {
-    font-size: 0.8rem;
-  }
-
-  .back-button {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-}
-
-/* Orientamento landscape su mobile */
+/* ============================================
+   17. RESPONSIVE - LANDSCAPE MOBILE
+   ============================================ */
 @media (max-width: 768px) and (orientation: landscape) {
   #main-menu {
-    height: 100vh;
-    padding: 10px;
+    min-height: auto;
+    padding: 10px 15px 10px 40px;
   }
 
   h1 {
@@ -2231,13 +1488,11 @@ main {
     margin: 5px 0;
   }
 
-  .buttons-group {
-    margin-top: 8px;
-  }
+  .buttons-group { margin-top: 8px; }
 
   #game-screen {
     height: 100vh;
-    padding: 2px;
+    padding: 3px;
   }
 
   #game-header {
@@ -2247,19 +1502,25 @@ main {
 
   .game-title {
     font-size: 1.1rem;
+    margin-top: 30px;
   }
 
   .life {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
   }
 
-  #game-table {
-    max-height: 50vh;
+  #game-table { max-height: 50vh; }
+
+  .game-info {
+    padding: 4px 12px;
+    font-size: 0.75rem;
   }
 }
 
-/* Centraggio per #game-screen su desktop */
+/* ============================================
+   18. RESPONSIVE - DESKTOP
+   ============================================ */
 @media (min-width: 769px) {
   #game-screen {
     margin: 20px auto;
@@ -2270,123 +1531,36 @@ main {
   }
 }
 
-/* Ottimizzazione griglia per PC - griglie più grandi */
 @media (min-width: 1024px) {
-
-  /* Per griglie 6x6 e 8x8 su desktop, riduci le celle */
   #game-table th,
   #game-table td {
-    width: clamp(30px, 5vw, 45px);
-    height: clamp(30px, 5vw, 45px);
-    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    width: clamp(35px, 5vw, 50px);
+    height: clamp(35px, 5vw, 50px);
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   }
 
-  /* Riduci ulteriormente per griglie molto grandi */
   #game-table.large-grid th,
   #game-table.large-grid td {
-    width: clamp(25px, 4vw, 40px);
-    height: clamp(25px, 4vw, 40px);
-    font-size: clamp(0.6rem, 1.2vw, 0.9rem);
+    width: clamp(28px, 4vw, 42px);
+    height: clamp(28px, 4vw, 42px);
+    font-size: clamp(0.7rem, 1.2vw, 0.95rem);
   }
 
-  /* Ottimizza anche l'altezza massima della tabella */
-  #game-table {
-    max-height: 70vh;
-  }
+  #game-table { max-height: 70vh; }
 }
 
-/* Media query per schermi molto grandi */
 @media (min-width: 1440px) {
-
   #game-table th,
   #game-table td {
-    width: 40px;
-    height: 40px;
-    font-size: 0.9rem;
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
   }
 
   #game-table.large-grid th,
   #game-table.large-grid td {
-    width: 35px;
-    height: 35px;
-    font-size: 0.8rem;
-  }
-}
-
-/* Rimuovi l'emoji duplicata del samurai su mobile */
-@media (max-width: 768px) {
-
-  /* Rimuovi l'emoji accanto al testo del samurai su mobile */
-  .samurai-label::before {
-    display: none;
-    /* Nasconde l'emoji accanto al testo */
-  }
-
-  /* Aumenta le dimensioni della selezione livello per full width */
-  .grid-size-buttons {
-    gap: 8px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .grid-size-btn {
-    flex: 1;
-    min-width: calc(50% - 4px);
-    /* Due bottoni per riga */
-    padding: 15px 12px;
-    /* Aumentato da 10px */
-    font-size: 1rem;
-    /* Aumentato da 0.9rem */
-    text-align: center;
-  }
-
-  /* Aumenta le dimensioni degli altri bottoni */
-  .play-btn {
-    padding: 12px 30px;
-    /* Aumentato da 8px 25px */
-    font-size: 1.1rem;
-    /* Aumentato da 1rem */
-    min-height: 50px;
-  }
-
-  .tutorial-btn {
-    padding: 10px 22px;
-    /* Aumentato da 6px 18px */
-    font-size: 0.95rem;
-    /* Aumentato da 0.85rem */
-    min-height: 45px;
-  }
-
-  /* Aumenta anche i bottoni di vittoria e sconfitta */
-  .victory-btn,
-  .defeat-btn {
-    padding: 12px 25px;
-    font-size: 1rem;
-    min-height: 48px;
-  }
-
-  /* Bottone back */
-  .back-button {
-    width: 45px;
-    /* Aumentato */
-    height: 45px;
-    /* Aumentato */
-  }
-
-  .back-button svg {
-    width: 22px;
-    /* Aumentato */
-    height: 22px;
-    /* Aumentato */
-  }
-}
-
-/* Per schermi molto piccoli, un bottone per riga */
-@media (max-width: 480px) {
-  .grid-size-btn {
-    min-width: 100%;
-    padding: 18px 15px;
-    font-size: 1.1rem;
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
   }
 }

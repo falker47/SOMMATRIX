@@ -11,7 +11,7 @@
     <!-- Meta tag Open Graph per la condivisione -->
     <meta property="og:title" content="SOMMATRIX - Puzzle Game">
     <meta property="og:description" content="Puzzle matematico in cui il giocatore seleziona o cancella numeri in una griglia per far combaciare le somme di ogni riga e colonna con i target prestabiliti.">
-    <meta property="og:image" content="./sommatrix.webp">
+    <meta property="og:image" content="https://falker47.github.io/SOMMATRIX/sommatrix.webp">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,12 +22,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SOMMATRIX - Puzzle Game">
     <meta name="twitter:description" content="Puzzle matematico in cui il giocatore seleziona o cancella numeri in una griglia per far combaciare le somme di ogni riga e colonna con i target prestabiliti.">
-    <meta name="twitter:image" content="./sommatrix.webp">
+    <meta name="twitter:image" content="https://falker47.github.io/SOMMATRIX/sommatrix.webp">
     
-    <!-- Icona Logo -->
-    <link href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" rel="icon">
-    <link href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" rel="apple-touch-icon">
-
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
@@ -44,90 +40,93 @@
 <body>
     <!-- Main Menu -->
     <div id="main-menu" class="screen">
-        <h1>SOMMATRIX</h1>
+        <!-- Language Toggle -->
+        <button id="language-toggle" class="lang-toggle" aria-label="Switch language">🇬🇧 EN</button>
+        
+        <h1 data-i18n="title">SOMMATRIX</h1>
         <div class="menu-options">
             <!-- Sezione "Scegli dimensione griglia" -->
             <div class="option-group">
-                <div class="option-label">Scegli la dimensione della griglia:</div>
+                <div class="option-label" data-i18n="chooseGridSize">Scegli la dimensione della griglia:</div>
 
                 <div class="level-cards">
-                    <div class="level-card" data-size="4">4 × 4</div>
-                    <div class="level-card" data-size="6">6 × 6</div>
-                    <div class="level-card" data-size="8">8 × 8</div>
+                    <div class="level-card" data-size="4" role="button" tabindex="0" aria-label="4x4 grid">4 × 4</div>
+                    <div class="level-card" data-size="6" role="button" tabindex="0" aria-label="6x6 grid">6 × 6</div>
+                    <div class="level-card" data-size="8" role="button" tabindex="0" aria-label="8x8 grid">8 × 8</div>
                 </div>
 
             </div>
 
             <!-- Sezione "samurai" in un container separato -->
             <div class="option-group samurai-container">
-                <input type="checkbox" id="samurai-toggle">
-                <label for="samurai-toggle" class="samurai-label">L'Ultimo Samurai</label>
+                <input type="checkbox" id="samurai-toggle" aria-describedby="samurai-desc">
+                <label for="samurai-toggle" class="samurai-label" data-i18n="lastSamurai">L'Ultimo Samurai</label>
             </div>
 
             <div class="buttons-group vertical-layout">
                 <!-- Bottone Tutorial sopra -->
-                <button id="show-tutorial" class="tutorial-btn">Tutorial</button>
+                <button id="show-tutorial" class="tutorial-btn" data-i18n="tutorial">Tutorial</button>
                 <!-- Bottone Gioca! sotto, più rilevante -->
-                <button id="start-game" class="play-btn">Gioca!</button>
+                <button id="start-game" class="play-btn" data-i18n="play">Gioca!</button>
             </div>
         </div>
     </div>
 
     <!-- Tutorial Screen -->
     <div id="tutorial-screen" class="screen" style="display:none;">
-        <button class="back-button" id="back-to-menu-from-tutorial">
+        <button class="back-button" id="back-to-menu-from-tutorial" aria-label="Back to menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
         </button>
-        <h2>Tutorial</h2>
+        <h2 data-i18n="tutorialTitle">Tutorial</h2>
         
         <div class="tutorial-content">
             <div class="tutorial-section tutorial-objective">
-                <h3>Obiettivo del Gioco</h3>
-                <p>Benvenuto su <strong>SOMMATRIX</strong>! L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga esattamente il totale indicato.</p>
+                <h3 data-i18n="gameObjective">Obiettivo del Gioco</h3>
+                <p data-i18n="gameObjectiveText">Benvenuto su <strong>SOMMATRIX</strong>! L'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga esattamente il totale indicato.</p>
             </div>
     
             <div class="tutorial-section tutorial-controls">
-                <h3>Controlli</h3>
-                <p>Per risolvere l'enigma puoi eseguire due operazioni sui numeri:</p>
+                <h3 data-i18n="controls">Controlli</h3>
+                <p data-i18n="controlsIntro">Per risolvere l'enigma puoi eseguire due operazioni sui numeri:</p>
                 
                 <div class="control-item control-confirm">
-                    <div class="control-icon">✓</div>
+                    <div class="control-icon" aria-hidden="true">✓</div>
                     <div class="control-text">
-                        <strong>Confermare</strong>
-                        <p>Clicca per confermare un numero che fa parte della somma</p>
+                        <strong data-i18n="confirm">Confermare</strong>
+                        <p data-i18n="confirmText">Clicca per confermare un numero che fa parte della somma</p>
                     </div>
                 </div>
                 
                 <div class="control-item control-cancel">
-                    <div class="control-icon">✗</div>
+                    <div class="control-icon" aria-hidden="true">✗</div>
                     <div class="control-text">
-                        <strong>Cancellare</strong>
-                        <p>Clicca per cancellare un numero che NON fa parte della somma</p>
+                        <strong data-i18n="cancel">Cancellare</strong>
+                        <p data-i18n="cancelText">Clicca per cancellare un numero che NON fa parte della somma</p>
                     </div>
                 </div>
                 
-                <p><strong>Attenzione:</strong> Se sbagli perdi una vita e verrà segnalato da un flash rosso!</p>
+                <p data-i18n="warning"><strong>Attenzione:</strong> Se sbagli perdi una vita e verrà segnalato da un flash rosso!</p>
             </div>
     
             <div class="tutorial-section tutorial-tips">
-                <h3>Suggerimenti</h3>
+                <h3 data-i18n="tips">Suggerimenti</h3>
                 <div class="tip-box">
                     <ul>
-                        <li>Una volta selezionati tutti gli addendi corretti di una riga o colonna, i numeri da cancellare si auto-eliminano automaticamente</li>
-                        <li>Usa la modalità "Cancella" per eliminare i numeri che sicuramente non fanno parte della somma</li>
-                        <li>Controlla sempre i totali parziali per verificare i tuoi progressi</li>
+                        <li data-i18n="tip1">Una volta selezionati tutti gli addendi corretti di una riga o colonna, i numeri da cancellare si auto-eliminano automaticamente</li>
+                        <li data-i18n="tip2">Usa la modalità "Cancella" per eliminare i numeri che sicuramente non fanno parte della somma</li>
+                        <li data-i18n="tip3">Controlla sempre i totali parziali per verificare i tuoi progressi</li>
                     </ul>
                 </div>
             </div>
     
             <div class="tutorial-section tutorial-samurai">
-                <h3>Modalità "Ultimo Samurai"</h3>
+                <h3 data-i18n="samuraiMode">Modalità "Ultimo Samurai"</h3>
                 <div class="samurai-warning">
-                    <h4>Solo per Veri Temerari!</h4>
-                    <p>Farai la partita con <strong>una sola vita</strong> - non c'è alcun margine di errore!</p>
+                    <h4 data-i18n="samuraiWarningTitle">Solo per Veri Temerari!</h4>
+                    <p data-i18n="samuraiWarningText">Farai la partita con <strong>una sola vita</strong> - non c'è alcun margine di errore!</p>
                 </div>
             </div>
         </div>
@@ -137,9 +136,9 @@
     <div id="game-screen" class="screen" style="display:none; overflow-y: auto;">
         <!-- Barra superiore con health bar (sx), titolo (centro) e bottone (dx) -->
         <div id="game-header">
-            <div id="health-bar"></div>
-            <h1 class="game-title">SOMMATRIX</h1>
-            <button class="back-button" id="back-to-menu-from-game">
+            <div id="health-bar" role="status" aria-label="Lives remaining"></div>
+            <h1 class="game-title" data-i18n="title">SOMMATRIX</h1>
+            <button class="back-button" id="back-to-menu-from-game" aria-label="Back to menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -148,15 +147,15 @@
         </div>
 
         <!-- Informazioni di gioco: timer, punteggio e record -->
-        <div class="game-info">
-            <div id="timer-display">Tempo: 0s</div>
-            <div id="score-display">Punteggio: 0</div>
-            <div id="record-display">Record: 0</div>
+        <div class="game-info" role="status" aria-live="polite">
+            <div id="timer-display"><span data-i18n="time">Tempo</span>: <span id="timer-value">0</span>s</div>
+            <div id="score-display"><span data-i18n="score">Punteggio</span>: <span id="score-value">0</span></div>
+            <div id="record-display"><span data-i18n="record">Record</span>: <span id="record-value">0</span></div>
         </div>
 
         <!-- Contenitore per la tabella -->
         <div id="grid-wrapper">
-            <table id="game-table"></table>
+            <table id="game-table" role="grid" aria-label="Game grid"></table>
         </div>
 
         <!-- Barra inferiore con toggle migliorato e messaggio -->
@@ -165,35 +164,28 @@
                 <!-- Icona Conferma -->
                 <div class="mode-icon confirm-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                         <path d="m15 5 4 4"></path>
                     </svg>
-                    <span>Conferma</span>
+                    <span data-i18n="confirm">Conferma</span>
                 </div>
 
                 <!-- Toggle Button -->
-                <button id="mode-toggle"></button>
+                <button id="mode-toggle" aria-label="Toggle confirm/cancel mode" role="switch" aria-checked="false"></button>
 
                 <!-- Icona Cancella -->
                 <div class="mode-icon cancel-icon">
                     <svg class="eraser" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M20 20H7L3 16c-1.5-1.5-1.5-3.5 0-5l7-7c1.5-1.5 3.5-1.5 5 0l5 5" />
                         <path d="M6 12l6 6" />
                         <path d="M11 7l5 5" />
                     </svg>
-                    <span>Cancella</span>
+                    <span data-i18n="cancel">Cancella</span>
                 </div>
             </div>
-            <!-- Rimosso: <div id="message"></div> -->
         </div>
-
-
-    </div>
-    </div>
-    <!-- Rimosso: <div id="message"></div> -->
-    </div>
     </div>
 
     <!-- Footer -->
@@ -205,6 +197,8 @@
         </p>
     </footer>
     
+    <!-- i18n must load before script.js -->
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
 

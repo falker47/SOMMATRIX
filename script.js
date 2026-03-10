@@ -18,6 +18,14 @@ let timerInterval = null;
 let errors = 0;
 let score = 0;
 
+/* Language Toggle */
+const languageToggle = document.getElementById('language-toggle');
+if (languageToggle) {
+  languageToggle.addEventListener('click', () => {
+    i18n.toggleLanguage();
+  });
+}
+
 /* Elementi DOM */
 const mainMenu = document.getElementById("main-menu");
 const tutorialScreen = document.getElementById("tutorial-screen");
@@ -42,8 +50,18 @@ gridSizeButtons.forEach(btn => {
     btn.classList.add("selected");
     selectedGridSize = parseInt(btn.dataset.size);
   });
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      btn.click();
+    }
+  });
 });
 document.querySelector(".level-card[data-size='4']").classList.add("selected");
+
+/* Anno corrente nel footer */
+const currentYearEl = document.getElementById('currentYear');
+if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
 
 /* Navigazione Schermate */
 function showMainMenu() {
@@ -98,10 +116,9 @@ modeToggleBtn.addEventListener("click", () => {
 
 /* Aggiorna indicatore di modalità */
 function updateModeIndicator() {
-  // Funzione aggiunta per aggiornare l'indicatore testuale sotto il toggle
   const modeIndicator = document.getElementById("mode-indicator");
   if (modeIndicator) {
-    modeIndicator.textContent = currentMode === "confirm" ? "Conferma" : "Cancella";
+    modeIndicator.textContent = currentMode === "confirm" ? i18n.t('confirm') : i18n.t('cancel');
     modeIndicator.className = currentMode === "confirm" ? "mode-confirm" : "mode-cancel";
   }
 }
@@ -131,6 +148,7 @@ function updateHealthBar() {
 
 /* Timer e Punteggio */
 function startTimer() {
+  clearInterval(timerInterval);
   startTime = Date.now();
   timerInterval = setInterval(updateTimer, 1000);
 }
@@ -138,7 +156,8 @@ function startTimer() {
 function updateTimer() {
   if (gameOver) return;
   currentTime = Math.floor((Date.now() - startTime) / 1000);
-  timerDisplay.textContent = `Tempo: ${currentTime}s`;
+  const timerValue = document.getElementById('timer-value');
+  if (timerValue) timerValue.textContent = currentTime;
   // Aggiornamento del punteggio in tempo reale
   updateScore();
 }
@@ -146,7 +165,8 @@ function updateTimer() {
 function updateScore() {
   // Nuova funzione per aggiornare il punteggio in tempo reale
   score = calculateScore();
-  scoreDisplay.textContent = `Punteggio: ${score}`;
+  const scoreValue = document.getElementById('score-value');
+  if (scoreValue) scoreValue.textContent = score;
 }
 
 function stopTimer() {
@@ -161,10 +181,10 @@ function loadRecord() {
 }
 
 function displayRecord() {
-  const recordDisplay = document.getElementById('record-display');
-  if (recordDisplay) {
+  const recordValue = document.getElementById('record-value');
+  if (recordValue) {
     const currentRecord = loadRecord();
-    recordDisplay.textContent = `Record: ${currentRecord}`;
+    recordValue.textContent = currentRecord;
   }
 }
 
@@ -177,53 +197,68 @@ function calculateScore() {
   return finalScore;
 }
 
-function initGame() {
-  gameOver = false;
+/* Verifica unicità della soluzione per riga/colonna */
+function countSubsetSums(numbers, target) {
+  let count = 0;
+  const n = numbers.length;
+  for (let mask = 1; mask < (1 << n); mask++) {
+    let sum = 0;
+    for (let bit = 0; bit < n; bit++) {
+      if (mask & (1 << bit)) {
+        sum += numbers[bit];
+      }
+    }
+    if (sum === target) {
+      count++;
+      if (count > 1) return count;
+    }
+  }
+  return count;
+}
+
+function hasUniqueSolution() {
+  for (let i = 0; i < gridSize; i++) {
+    if (countSubsetSums(gridNumbers[i], rowTargets[i]) > 1) return false;
+  }
+  for (let j = 0; j < gridSize; j++) {
+    const colNumbers = [];
+    for (let i = 0; i < gridSize; i++) {
+      colNumbers.push(gridNumbers[i][j]);
+    }
+    if (countSubsetSums(colNumbers, colTargets[j]) > 1) return false;
+  }
+  return true;
+}
+
+function generatePuzzle() {
   gridNumbers = [];
   gridSolution = [];
-  gridState = [];
   rowTargets = [];
   colTargets = [];
-  rowCompleted = new Array(gridSize).fill(false);
-  colCompleted = new Array(gridSize).fill(false);
 
-  scoreDisplay.textContent = "Punteggio: 0"; // Inizializzato il punteggio
-  updateHealthBar();
-
-  currentMode = "confirm";
-  modeToggleBtn.classList.remove("cancel");
-  updateModeIndicator(); // Aggiornamento indicatore modalità
-
-  // Genera matrici
   for (let i = 0; i < gridSize; i++) {
     gridNumbers[i] = [];
     gridSolution[i] = [];
-    gridState[i] = [];
     for (let j = 0; j < gridSize; j++) {
       gridNumbers[i][j] = Math.floor(Math.random() * 9) + 1;
       gridSolution[i][j] = (Math.random() < 0.5);
-      gridState[i][j] = 0;
     }
   }
 
-  // Forza almeno un true in ogni riga
+  // Forza almeno un true in ogni riga (posizione casuale)
   for (let i = 0; i < gridSize; i++) {
-    const hasTrue = gridSolution[i].some(val => val === true);
-    if (!hasTrue) {
-      gridSolution[i][0] = true;
+    if (!gridSolution[i].some(val => val === true)) {
+      gridSolution[i][Math.floor(Math.random() * gridSize)] = true;
     }
   }
-  // Forza almeno un true in ogni colonna
+  // Forza almeno un true in ogni colonna (posizione casuale)
   for (let j = 0; j < gridSize; j++) {
     let hasTrue = false;
     for (let i = 0; i < gridSize; i++) {
-      if (gridSolution[i][j]) {
-        hasTrue = true;
-        break;
-      }
+      if (gridSolution[i][j]) { hasTrue = true; break; }
     }
     if (!hasTrue) {
-      gridSolution[0][j] = true;
+      gridSolution[Math.floor(Math.random() * gridSize)][j] = true;
     }
   }
 
@@ -231,20 +266,43 @@ function initGame() {
   for (let i = 0; i < gridSize; i++) {
     let total = 0;
     for (let j = 0; j < gridSize; j++) {
-      if (gridSolution[i][j]) {
-        total += gridNumbers[i][j];
-      }
+      if (gridSolution[i][j]) total += gridNumbers[i][j];
     }
     rowTargets[i] = total;
   }
   for (let j = 0; j < gridSize; j++) {
     let total = 0;
     for (let i = 0; i < gridSize; i++) {
-      if (gridSolution[i][j]) {
-        total += gridNumbers[i][j];
-      }
+      if (gridSolution[i][j]) total += gridNumbers[i][j];
     }
     colTargets[j] = total;
+  }
+}
+
+function initGame() {
+  gameOver = false;
+  rowCompleted = new Array(gridSize).fill(false);
+  colCompleted = new Array(gridSize).fill(false);
+
+  const scoreValue = document.getElementById('score-value');
+  if (scoreValue) scoreValue.textContent = '0';
+  updateHealthBar();
+
+  currentMode = "confirm";
+  modeToggleBtn.classList.remove("cancel");
+  updateModeIndicator();
+
+  // Genera puzzle con soluzione unica per ogni riga e colonna
+  let attempts = 0;
+  do {
+    generatePuzzle();
+    attempts++;
+  } while (!hasUniqueSolution() && attempts < 100);
+
+  // Inizializza stato griglia
+  gridState = [];
+  for (let i = 0; i < gridSize; i++) {
+    gridState[i] = new Array(gridSize).fill(0);
   }
 
   buildTable();
@@ -278,7 +336,14 @@ function buildTable() {
       td.dataset.row = i;
       td.dataset.col = j;
       td.textContent = gridNumbers[i][j];
+      td.setAttribute("tabindex", "0");
       td.addEventListener("click", cellClick);
+      td.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          cellClick(e);
+        }
+      });
       tr.appendChild(td);
     }
     gameTable.appendChild(tr);
@@ -448,6 +513,7 @@ function triggerError() {
 
 /* Verifica vittoria */
 function checkWin() {
+  if (gameOver) return;
   const allRows = rowCompleted.every(val => val === true);
   const allCols = colCompleted.every(val => val === true);
   if (allRows && allCols) {
@@ -495,20 +561,22 @@ function showVictoryAnimation(finalScore) {
     const victoryOverlay = document.createElement('div');
     victoryOverlay.className = 'victory-overlay animate__animated animate__fadeIn';
 
+    const newRecordLabel = i18n.t('newRecord');
+    const scoreLabel = i18n.t('score');
     const recordText = isNewRecord ?
-      `🏆 Nuovo Record: ${finalScore}! 🏆` :
-      `Punteggio: ${finalScore}`;
+      `🏆 ${newRecordLabel}: ${finalScore}! 🏆` :
+      `${scoreLabel}: ${finalScore}`;
 
     victoryOverlay.innerHTML = `
         <div class="victory-content animate__animated animate__bounceIn animate__delay-1s">
-            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">VITTORIA!</h2>
+            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">${i18n.t('victory')}</h2>
             <p class="animate__animated animate__fadeInUp animate__delay-2s">
-                Complimenti! Hai risolto il puzzle!<br>
+                ${i18n.t('victoryMessage')}<br>
                 <strong>${recordText}</strong>
             </p>
             <div class="victory-buttons animate__animated animate__fadeInUp animate__delay-3s">
-                <button class="victory-btn" id="play-again-btn">Gioca Ancora</button>
-                <button class="victory-btn secondary" id="victory-menu-btn">Menu Principale</button>
+                <button class="victory-btn" id="play-again-btn">${i18n.t('playAgain')}</button>
+                <button class="victory-btn secondary" id="victory-menu-btn">${i18n.t('mainMenu')}</button>
             </div>
         </div>
     `;
@@ -545,8 +613,8 @@ function showDefeatAnimation() {
   const gameScreen = document.getElementById('game-screen');
 
   // Anima le vite rimanenti
-  const lives = document.querySelectorAll('.life');
-  lives.forEach((life, index) => {
+  const lifeElements = document.querySelectorAll('.life');
+  lifeElements.forEach((life, index) => {
     setTimeout(() => {
       life.classList.add('animate__animated', 'animate__shakeX');
     }, index * 100);
@@ -566,13 +634,13 @@ function showDefeatAnimation() {
     defeatOverlay.className = 'defeat-overlay animate__animated animate__fadeIn animate__delay-1s';
     defeatOverlay.innerHTML = `
         <div class="defeat-content animate__animated animate__slideInDown animate__delay-2s">
-            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">GAME OVER</h2>
+            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">${i18n.t('gameOver')}</h2>
             <p class="animate__animated animate__fadeInUp animate__delay-3s">
-                Non ti arrendere! Ogni errore è un passo verso la vittoria!
+                ${i18n.t('defeatMessage')}
             </p>
             <div class="defeat-buttons animate__animated animate__fadeInUp animate__delay-4s">
-                <button class="defeat-btn retry-btn" id="retry-btn">Riprova</button>
-                <button class="defeat-btn menu-btn" id="defeat-menu-btn">Menu Principale</button>
+                <button class="defeat-btn retry-btn" id="retry-btn">${i18n.t('retry')}</button>
+                <button class="defeat-btn menu-btn" id="defeat-menu-btn">${i18n.t('mainMenu')}</button>
             </div>
         </div>
     `;
@@ -632,7 +700,8 @@ function restartGame() {
   gameOver = false;
   // Resetta currentTime a 0 prima di chiamare initGame e startTimer
   currentTime = 0;
-  timerDisplay.textContent = `Tempo: 0s`; // Aggiorna subito il display del timer
+  const timerValue = document.getElementById('timer-value');
+  if (timerValue) timerValue.textContent = '0';
 
   initGame();
   displayRecord();
