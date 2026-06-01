@@ -18,11 +18,19 @@ let timerInterval = null;
 let errors = 0;
 let score = 0;
 
-/* Language Toggle */
-const languageToggle = document.getElementById('language-toggle');
-if (languageToggle) {
-  languageToggle.addEventListener('click', () => {
-    i18n.toggleLanguage();
+/* Language Toggle (segmented IT/EN) */
+document.querySelectorAll('.lang-opt').forEach(opt => {
+  opt.addEventListener('click', () => i18n.setLanguage(opt.dataset.lang));
+});
+
+/* Theme Toggle (light/dark, persisted) */
+const themeToggle = document.getElementById('theme-toggle');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sommatrix_theme', next); } catch (e) { }
   });
 }
 
@@ -74,6 +82,74 @@ function showTutorial() {
   mainMenu.style.display = "none";
   tutorialScreen.style.display = "block";
   gameScreen.style.display = "none";
+  initTutorialDemo();
+}
+
+/* ===== Tutorial interattivo (widget isolato, non tocca il gameplay) ===== */
+let tutorialWired = false;
+let tutorialStep = 1;
+const TUTORIAL_TOTAL = 4;
+// Stato dimostrativo della riga "= 12" con numeri [5, 7, 8, 3] (5+7 = 12)
+const tutorialStates = {
+  1: { partial: 0, focus: true, cells: ["", "", "", ""], complete: false },
+  2: { partial: 12, focus: false, cells: ["confirm", "confirm", "", ""], complete: false },
+  3: { partial: 12, focus: false, cells: ["confirm", "confirm", "cancel", ""], complete: false },
+  4: { partial: 12, focus: false, cells: ["confirm", "confirm", "cancel", "cancel"], complete: true }
+};
+
+function renderTutorialStep() {
+  const state = tutorialStates[tutorialStep];
+  // Testo dello step
+  document.querySelectorAll('.tut-step').forEach(el => {
+    el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
+  });
+  // Puntini
+  document.querySelectorAll('.tut-dot').forEach(el => {
+    el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
+  });
+  // Demo: parziale e header
+  const partialEl = document.getElementById('demo-partial');
+  if (partialEl) partialEl.textContent = state.partial;
+  const th = document.getElementById('demo-th');
+  if (th) {
+    th.classList.toggle('is-focus', state.focus);
+    th.classList.toggle('is-complete', state.complete);
+  }
+  // Demo: celle
+  state.cells.forEach((cls, i) => {
+    const cell = document.getElementById('demo-' + i);
+    if (cell) {
+      cell.classList.remove('confirm', 'cancel');
+      if (cls) cell.classList.add(cls);
+    }
+  });
+  // Bottoni nav
+  const prev = document.getElementById('tut-prev');
+  const next = document.getElementById('tut-next');
+  if (prev) prev.disabled = tutorialStep === 1;
+  if (next) next.disabled = tutorialStep === TUTORIAL_TOTAL;
+}
+
+function initTutorialDemo() {
+  tutorialStep = 1;
+  if (!tutorialWired) {
+    const prev = document.getElementById('tut-prev');
+    const next = document.getElementById('tut-next');
+    if (prev) prev.addEventListener('click', () => {
+      if (tutorialStep > 1) { tutorialStep--; renderTutorialStep(); }
+    });
+    if (next) next.addEventListener('click', () => {
+      if (tutorialStep < TUTORIAL_TOTAL) { tutorialStep++; renderTutorialStep(); }
+    });
+    document.querySelectorAll('.tut-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        tutorialStep = parseInt(dot.dataset.step);
+        renderTutorialStep();
+      });
+    });
+    tutorialWired = true;
+  }
+  renderTutorialStep();
 }
 function showGame() {
   mainMenu.style.display = "none";
@@ -100,6 +176,25 @@ startGameBtn.addEventListener("click", () => {
 showTutorialBtn.addEventListener("click", showTutorial);
 backToMenuFromTutorialBtn.addEventListener("click", showMainMenu);
 backToMenuFromGameBtn.addEventListener("click", showMainMenu);
+
+/* Samurai mode: make the emblem go hardcore when armed */
+(() => {
+  const samuraiToggle = document.getElementById("samurai-toggle");
+  const samuraiPanel = document.querySelector(".samurai-panel");
+  if (!samuraiToggle || !samuraiPanel) return;
+  samuraiToggle.addEventListener("change", () => {
+    if (samuraiToggle.checked) {
+      samuraiPanel.classList.add("armed");
+      // brief activation burst: shake + katana slash, then settle
+      samuraiPanel.classList.remove("striking");
+      void samuraiPanel.offsetWidth; // restart the animation
+      samuraiPanel.classList.add("striking");
+      setTimeout(() => samuraiPanel.classList.remove("striking"), 550);
+    } else {
+      samuraiPanel.classList.remove("armed", "striking");
+    }
+  });
+})();
 
 /* Toggle Modalità */
 modeToggleBtn.addEventListener("click", () => {
@@ -559,7 +654,7 @@ function showVictoryAnimation(finalScore) {
     }
 
     const victoryOverlay = document.createElement('div');
-    victoryOverlay.className = 'victory-overlay animate__animated animate__fadeIn';
+    victoryOverlay.className = 'victory-overlay';
 
     const newRecordLabel = i18n.t('newRecord');
     const scoreLabel = i18n.t('score');
@@ -568,13 +663,13 @@ function showVictoryAnimation(finalScore) {
       `${scoreLabel}: ${finalScore}`;
 
     victoryOverlay.innerHTML = `
-        <div class="victory-content animate__animated animate__bounceIn animate__delay-1s">
-            <h2 class="animate__animated animate__pulse animate__infinite animate__slow">${i18n.t('victory')}</h2>
-            <p class="animate__animated animate__fadeInUp animate__delay-2s">
+        <div class="victory-content">
+            <h2>${i18n.t('victory')}</h2>
+            <p>
                 ${i18n.t('victoryMessage')}<br>
                 <strong>${recordText}</strong>
             </p>
-            <div class="victory-buttons animate__animated animate__fadeInUp animate__delay-3s">
+            <div class="victory-buttons">
                 <button class="victory-btn" id="play-again-btn">${i18n.t('playAgain')}</button>
                 <button class="victory-btn secondary" id="victory-menu-btn">${i18n.t('mainMenu')}</button>
             </div>
@@ -588,21 +683,19 @@ function showVictoryAnimation(finalScore) {
 
     // Event listeners
     document.getElementById('play-again-btn').addEventListener('click', () => {
-      victoryOverlay.classList.remove('animate__fadeIn');
-      victoryOverlay.classList.add('animate__fadeOut');
+      victoryOverlay.classList.add('is-closing');
       setTimeout(() => {
         victoryOverlay.remove();
         restartGame();
-      }, 500);
+      }, 280);
     });
 
     document.getElementById('victory-menu-btn').addEventListener('click', () => {
-      victoryOverlay.classList.remove('animate__fadeIn');
-      victoryOverlay.classList.add('animate__fadeOut');
+      victoryOverlay.classList.add('is-closing');
       setTimeout(() => {
         victoryOverlay.remove();
         showMainMenu();
-      }, 500);
+      }, 280);
     });
 
   }, 800);
@@ -616,7 +709,7 @@ function showDefeatAnimation() {
   const lifeElements = document.querySelectorAll('.life');
   lifeElements.forEach((life, index) => {
     setTimeout(() => {
-      life.classList.add('animate__animated', 'animate__shakeX');
+      life.classList.add('life-shake');
     }, index * 100);
   });
 
@@ -631,14 +724,14 @@ function showDefeatAnimation() {
   // Crea overlay per la sconfitta
   setTimeout(() => {
     const defeatOverlay = document.createElement('div');
-    defeatOverlay.className = 'defeat-overlay animate__animated animate__fadeIn animate__delay-1s';
+    defeatOverlay.className = 'defeat-overlay';
     defeatOverlay.innerHTML = `
-        <div class="defeat-content animate__animated animate__slideInDown animate__delay-2s">
-            <h2 class="animate__animated animate__headShake animate__infinite animate__slow">${i18n.t('gameOver')}</h2>
-            <p class="animate__animated animate__fadeInUp animate__delay-3s">
+        <div class="defeat-content">
+            <h2>${i18n.t('gameOver')}</h2>
+            <p>
                 ${i18n.t('defeatMessage')}
             </p>
-            <div class="defeat-buttons animate__animated animate__fadeInUp animate__delay-4s">
+            <div class="defeat-buttons">
                 <button class="defeat-btn retry-btn" id="retry-btn">${i18n.t('retry')}</button>
                 <button class="defeat-btn menu-btn" id="defeat-menu-btn">${i18n.t('mainMenu')}</button>
             </div>
@@ -649,21 +742,19 @@ function showDefeatAnimation() {
 
     // Event listeners
     document.getElementById('retry-btn').addEventListener('click', () => {
-      defeatOverlay.classList.remove('animate__fadeIn');
-      defeatOverlay.classList.add('animate__fadeOut');
+      defeatOverlay.classList.add('is-closing');
       setTimeout(() => {
         defeatOverlay.remove();
         restartGame();
-      }, 500);
+      }, 280);
     });
 
     document.getElementById('defeat-menu-btn').addEventListener('click', () => {
-      defeatOverlay.classList.remove('animate__fadeIn');
-      defeatOverlay.classList.add('animate__fadeOut');
+      defeatOverlay.classList.add('is-closing');
       setTimeout(() => {
         defeatOverlay.remove();
         showMainMenu();
-      }, 500);
+      }, 280);
     });
 
   }, 1000);
@@ -677,13 +768,13 @@ function restartGame() {
   // Rimuovi tutte le animazioni dalle celle
   const cells = document.querySelectorAll('.cell');
   cells.forEach(cell => {
-    cell.classList.remove('victory-pulse', 'defeat-shake', 'animate__animated', 'animate__pulse', 'animate__shakeX');
+    cell.classList.remove('victory-pulse', 'defeat-shake');
   });
 
   // Rimuovi animazioni dalle vite
   const livesElements = document.querySelectorAll('.life'); // Rinominato per evitare conflitto con la variabile 'lives' globale
   livesElements.forEach(life => {
-    life.classList.remove('animate__animated', 'animate__shakeX');
+    life.classList.remove('life-shake');
   });
 
   // Aggiungi le stesse istruzioni del bottone "Gioca" principale

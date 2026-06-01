@@ -10,13 +10,33 @@ const i18n = {
         it: {
             // Main Menu
             title: 'SOMMATRIX',
-            chooseGridSize: 'Scegli la dimensione della griglia:',
+            tagline: 'Ogni numero conta. Fai quadrare <b>righe</b> e <b>colonne</b>.',
+            chooseGridSize: 'Scegli la sfida',
+            lvl4Name: 'Schizzo',
+            lvl4Desc: 'Per prendere la mano',
+            lvl6Name: 'Studio',
+            lvl6Desc: 'La sfida classica',
+            lvl8Name: 'Capolavoro',
+            lvl8Desc: 'Per menti allenate',
             lastSamurai: "L'Ultimo Samurai",
+            samuraiSub: 'Una sola vita. Nessun errore.',
             tutorial: 'Tutorial',
-            play: 'Gioca!',
+            play: 'Gioca',
+
+            // UI controls (aria)
+            toggleTheme: 'Cambia tema chiaro/scuro',
+            toggleMode: 'Cambia modalità conferma/cancella',
+            backToMenu: 'Torna al menu',
+            prevStep: 'Passo precedente',
+            nextStep: 'Passo successivo',
 
             // Tutorial
-            tutorialTitle: 'Tutorial',
+            tutorialTitle: 'Come si gioca',
+            demoLabel: 'Obiettivo riga: <b>12</b>',
+            tutStep1: 'Su ogni riga e colonna hai un <b>obiettivo</b>: la somma dei numeri deve coincidere con il numero target.',
+            tutStep2: 'In modalità <b>Conferma</b> tocca i numeri che sicuramente fanno parte della somma. Se sbagli perdi una vita.',
+            tutStep3: 'In modalità <b>Cancella</b> elimina i numeri che non fanno parte della somma. Se sbagli perdi sempre una vita.',
+            tutStep4: 'Completata la somma, i numeri restanti si cancellano da soli. <b>Modalità Ultimo Samurai</b>: hai una vita sola!',
             gameObjective: 'Obiettivo del Gioco',
             gameObjectiveText: 'Benvenuto su <strong>SOMMATRIX</strong>! L\'obiettivo è far sì che in ogni riga e colonna la somma dei numeri confermati raggiunga esattamente il totale indicato.',
             controls: 'Controlli',
@@ -55,13 +75,33 @@ const i18n = {
         en: {
             // Main Menu
             title: 'SOMMATRIX',
-            chooseGridSize: 'Choose grid size:',
+            tagline: 'Every number counts. Make <b>rows</b> and <b>columns</b> add up.',
+            chooseGridSize: 'Choose your challenge',
+            lvl4Name: 'Sketch',
+            lvl4Desc: 'Warm up your mind',
+            lvl6Name: 'Study',
+            lvl6Desc: 'The classic challenge',
+            lvl8Name: 'Masterpiece',
+            lvl8Desc: 'For trained minds',
             lastSamurai: 'The Last Samurai',
+            samuraiSub: 'One life. No mistakes.',
             tutorial: 'Tutorial',
-            play: 'Play!',
+            play: 'Play',
+
+            // UI controls (aria)
+            toggleTheme: 'Toggle light/dark theme',
+            toggleMode: 'Toggle confirm/cancel mode',
+            backToMenu: 'Back to menu',
+            prevStep: 'Previous step',
+            nextStep: 'Next step',
 
             // Tutorial
-            tutorialTitle: 'Tutorial',
+            tutorialTitle: 'How to play',
+            demoLabel: 'Row target: <b>12</b>',
+            tutStep1: 'Each row and column has a <b>target</b>: the sum of the right numbers.',
+            tutStep2: 'In <b>Confirm</b> mode, tap the numbers that are part of the sum.',
+            tutStep3: 'In <b>Cancel</b> mode, remove the ones you don\'t need. Wrong? You lose a life.',
+            tutStep4: 'Once the sum is complete, the remaining numbers cross out on their own. <b>Last Samurai</b>: just one life!',
             gameObjective: 'Game Objective',
             gameObjectiveText: 'Welcome to <strong>SOMMATRIX</strong>! Your goal is to make sure that the sum of the confirmed numbers in each row and column matches exactly the indicated total.',
             controls: 'Controls',
@@ -182,11 +222,14 @@ const i18n = {
      * Update the language toggle button appearance
      */
     updateToggleButton() {
-        const toggleBtn = document.getElementById('language-toggle');
-        if (toggleBtn) {
-            toggleBtn.textContent = this.currentLanguage === 'it' ? '🇬🇧 EN' : '🇮🇹 IT';
-            toggleBtn.title = this.currentLanguage === 'it' ? 'Switch to English' : 'Passa a Italiano';
-        }
+        const sw = document.querySelector('.lang-switch');
+        if (!sw) return;
+        sw.classList.toggle('en', this.currentLanguage === 'en');
+        sw.querySelectorAll('.lang-opt').forEach(opt => {
+            const active = opt.dataset.lang === this.currentLanguage;
+            opt.classList.toggle('is-active', active);
+            opt.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
     }
 };
 
