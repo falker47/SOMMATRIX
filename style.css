@@ -514,6 +514,9 @@ button {
   border: 1.5px dashed var(--danger);
   background: color-mix(in srgb, var(--danger) 7%, var(--surface));
   position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
 }
 .samurai-panel::before {
   content: '';
@@ -524,7 +527,7 @@ button {
   border-radius: var(--r-md) 0 0 var(--r-md);
 }
 .samurai-info { display: flex; align-items: center; gap: var(--s3); text-align: left; }
-.samurai-text { display: flex; flex-direction: column; }
+.samurai-text { display: flex; flex-direction: column; min-width: 0; }
 .samurai-title { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--danger); }
 .samurai-sub { font-size: var(--fs-xs); color: var(--text-muted); }
 
@@ -656,7 +659,7 @@ button {
 .ios-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
 .ios-track {
   position: relative;
-  width: 56px; height: 32px;
+  width: 68px; height: 38px;
   border-radius: var(--r-pill);
   background: color-mix(in srgb, var(--text) 18%, transparent);
   border: 1px solid var(--border);
@@ -664,15 +667,15 @@ button {
 }
 .ios-thumb {
   position: absolute;
-  top: 3px; left: 3px;
-  width: 26px; height: 26px;
+  top: 4px; left: 4px;
+  width: 28px; height: 28px;
   border-radius: 50%;
   background: var(--surface-2);
   box-shadow: var(--sh-1);
   transition: transform var(--dur-2) var(--ease-bounce);
 }
 .ios-switch input:checked + .ios-track { background: var(--danger); border-color: var(--danger); }
-.ios-switch input:checked + .ios-track .ios-thumb { transform: translateX(24px); }
+.ios-switch input:checked + .ios-track .ios-thumb { transform: translateX(30px); }
 .ios-switch input:focus-visible + .ios-track { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* ============================================
@@ -1251,11 +1254,13 @@ footer a:hover { color: var(--primary); }
   .screen::before { display: none; }
   .screen { padding: var(--s5) var(--s4); }
   .hero { margin-top: var(--s6); }
-  .level-cards { gap: var(--s2); }
+  .level-cards { grid-template-columns: 1fr; gap: var(--s2); }
   .level-card { min-height: 96px; padding: var(--s3); }
   .level-card .lvl-size { font-size: 1.25rem; }
   .level-card .lvl-name { font-size: .95rem; }
-  .samurai-panel { padding: var(--s3) var(--s4); }
+  .samurai-panel { gap: var(--s3); padding: var(--s3) var(--s4); }
+  .samurai-info { min-width: 0; }
+  .samurai-title, .samurai-sub { overflow-wrap: anywhere; }
   #game-screen { padding: var(--s2); }
   .game-info { gap: var(--s3); padding: var(--s2) var(--s4); }
   #game-table th, #game-table td {
