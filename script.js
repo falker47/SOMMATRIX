@@ -215,6 +215,7 @@ function updateModeIndicator() {
   if (modeIndicator) {
     modeIndicator.textContent = currentMode === "confirm" ? i18n.t('confirm') : i18n.t('cancel');
     modeIndicator.className = currentMode === "confirm" ? "mode-confirm" : "mode-cancel";
+    modeToggleBtn.setAttribute("aria-checked", currentMode === "cancel" ? "true" : "false");
   }
 }
 
@@ -292,89 +293,7 @@ function calculateScore() {
   return finalScore;
 }
 
-/* Verifica unicità della soluzione per riga/colonna */
-function countSubsetSums(numbers, target) {
-  let count = 0;
-  const n = numbers.length;
-  for (let mask = 1; mask < (1 << n); mask++) {
-    let sum = 0;
-    for (let bit = 0; bit < n; bit++) {
-      if (mask & (1 << bit)) {
-        sum += numbers[bit];
-      }
-    }
-    if (sum === target) {
-      count++;
-      if (count > 1) return count;
-    }
-  }
-  return count;
-}
-
-function hasUniqueSolution() {
-  for (let i = 0; i < gridSize; i++) {
-    if (countSubsetSums(gridNumbers[i], rowTargets[i]) > 1) return false;
-  }
-  for (let j = 0; j < gridSize; j++) {
-    const colNumbers = [];
-    for (let i = 0; i < gridSize; i++) {
-      colNumbers.push(gridNumbers[i][j]);
-    }
-    if (countSubsetSums(colNumbers, colTargets[j]) > 1) return false;
-  }
-  return true;
-}
-
-function generatePuzzle() {
-  gridNumbers = [];
-  gridSolution = [];
-  rowTargets = [];
-  colTargets = [];
-
-  for (let i = 0; i < gridSize; i++) {
-    gridNumbers[i] = [];
-    gridSolution[i] = [];
-    for (let j = 0; j < gridSize; j++) {
-      gridNumbers[i][j] = Math.floor(Math.random() * 9) + 1;
-      gridSolution[i][j] = (Math.random() < 0.5);
-    }
-  }
-
-  // Forza almeno un true in ogni riga (posizione casuale)
-  for (let i = 0; i < gridSize; i++) {
-    if (!gridSolution[i].some(val => val === true)) {
-      gridSolution[i][Math.floor(Math.random() * gridSize)] = true;
-    }
-  }
-  // Forza almeno un true in ogni colonna (posizione casuale)
-  for (let j = 0; j < gridSize; j++) {
-    let hasTrue = false;
-    for (let i = 0; i < gridSize; i++) {
-      if (gridSolution[i][j]) { hasTrue = true; break; }
-    }
-    if (!hasTrue) {
-      gridSolution[Math.floor(Math.random() * gridSize)][j] = true;
-    }
-  }
-
-  // Calcola i target
-  for (let i = 0; i < gridSize; i++) {
-    let total = 0;
-    for (let j = 0; j < gridSize; j++) {
-      if (gridSolution[i][j]) total += gridNumbers[i][j];
-    }
-    rowTargets[i] = total;
-  }
-  for (let j = 0; j < gridSize; j++) {
-    let total = 0;
-    for (let i = 0; i < gridSize; i++) {
-      if (gridSolution[i][j]) total += gridNumbers[i][j];
-    }
-    colTargets[j] = total;
-  }
-}
-
-function initGame() {
+/* Inizializza una partita con un puzzle globalmente univoco */\nfunction initGame() {
   gameOver = false;
   rowCompleted = new Array(gridSize).fill(false);
   colCompleted = new Array(gridSize).fill(false);
@@ -387,12 +306,12 @@ function initGame() {
   modeToggleBtn.classList.remove("cancel");
   updateModeIndicator();
 
-  // Genera puzzle con soluzione unica per ogni riga e colonna
-  let attempts = 0;
-  do {
-    generatePuzzle();
-    attempts++;
-  } while (!hasUniqueSolution() && attempts < 100);
+  // Genera un puzzle con una sola soluzione globale compatibile con tutti i target
+  const puzzle = SommatrixCore.generateUniquePuzzle(gridSize);
+  gridNumbers = puzzle.gridNumbers;
+  gridSolution = puzzle.gridSolution;
+  rowTargets = puzzle.rowTargets;
+  colTargets = puzzle.colTargets;
 
   // Inizializza stato griglia
   gridState = [];
