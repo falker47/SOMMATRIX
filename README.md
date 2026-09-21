@@ -1,66 +1,51 @@
-<div align="center">
-  <h1>SOMMATRIX</h1>
-  <p>
-    <strong>A Logical Grid Puzzle of Sums and Deductions</strong>
-  </p>
-  
-  <p>
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5"/>
-    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3"/>
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"/>
-  </p>
-</div>
+# SOMMATRIX
 
----
+SOMMATRIX is a lightweight browser puzzle built with HTML, CSS and vanilla JavaScript. Each cell contains a number; the player must determine which cells belong to the hidden solution so that every row and column reaches its target sum.
 
-## 🧩 Overview
+**Live demo:** https://falker47.github.io/SOMMATRIX/
 
-**SOMMATRIX** is a minimalist logic puzzle game that challenges your math and deduction skills. The goal is simple yet deep: identify which numbers in a grid contribute to the target sums for each row and column, and eliminate the impostors.
+## How it works
 
-Unlike traditional Sudoku or Kakuro, you are given a filled grid and must **validate** or **invalidate** cells to solve the matrix.
+Choose a 4x4, 6x6 or 8x8 grid. In **Confirm** mode, select numbers that belong to the solution; in **Cancel** mode, eliminate numbers that do not. Standard mode gives you three lives, while **Last Samurai** gives you one.
 
-## ✨ Features
+The puzzle is generated locally in the browser. Before a board is shown, SOMMATRIX enumerates the row subset candidates and uses the column constraints to count complete assignments. The board is accepted only when exactly one **global** solution exists. This avoids penalizing a player for a different assignment that satisfies the same row and column sums.
 
-*   **🎛️ Flexible Grid Systems:** Challenge yourself on `4x4`, `6x6`, or `8x8` grids.
-*   **🔢 Target Sum Analysis:** Deep logical deduction required to match intersecting row and column totals.
-*   **👆 Interactive Controls:** Simple touch/click interface.
-    *   **Left Click / Tap:** Confirm a number (Green Check ✅).
-    *   **Right Click / Long Press / Toggle:** Eliminate a number (Red Cross ❌).
-*   **⚔️ Game Modes:**
-    *   **Standard Mode:** 3 Lives. Room for error.
-    *   **Last Samurai:** 1 Life. Perfection required.
-*   **📱 Responsive & Clean:** Optimized for desktop and mobile with a distraction-free UI.
-*   **⚡ Lightweight:** Built with 100% pure Vanilla JavaScript. No frameworks, no bloat.
+## Run locally
 
-## 🕹️ How to Play
+No build step or external dependency is required.
 
-1.  **Analyze the Target** 🎯
-    Look at the numbers at the end of each row and column. These are your **Target Sums**.
+```bash
+git clone https://github.com/falker47/SOMMATRIX.git
+cd SOMMATRIX
+```
 
-2.  **Deduce the Path** 🔍
-    The numbers inside the grid must sum up to these targets. Not all numbers are valid!
+Open `index.html` in a modern browser.
 
-3.  **Mark Your Decisions** 🖊️
-    *   **Click** a number if you believe it belongs to the sum. It turns **Green**.
-    *   **Toggle/Right-Click** a number if it is an extra distractor. It turns **Red**.
+## Verification
 
-4.  **Solve the Matrix** 🏆
-    Clear the entire board without losing your lives.
+The puzzle-generation logic lives in `puzzle-core.js`, separate from the DOM code, so it can be tested directly with Node:
 
+```bash
+node --test tests/*.test.js
+```
 
----
+The test suite covers:
 
-## 🚀 Installation & Running
+- a globally unique puzzle whose individual row subset sum is ambiguous;
+- a genuinely ambiguous puzzle;
+- generated 4x4, 6x6 and 8x8 boards;
+- consistency between the hidden solution and the published row/column targets.
 
-This is a static web application. No installation or build steps are required.
+GitHub Actions runs the same tests on pushes and pull requests.
 
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/yourusername/SOMMATRIX.git
-    ```
-2.  **Play Locally**
-    Simply open the `index.html` file in your favorite web browser.
+## Repository map
 
-## 📄 License
+- `puzzle-core.js` — puzzle generation and global uniqueness solver
+- `script.js` — game state, interactions, scoring and UI flow
+- `i18n.js` — Italian/English strings
+- `style.css` — responsive visual design
+- `tests/` — zero-dependency Node tests
 
-This project is open source and available under the [MIT License](LICENSE).
+## License
+
+No explicit software license is currently included in this repository.
