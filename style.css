@@ -1556,11 +1556,17 @@ button {
 }
 .mode-choice.confirm.is-active {
   color: var(--success);
-  box-shadow: var(--sh-1), inset 0 0 0 1px color-mix(in srgb, var(--success) 20%, transparent);
+  background: color-mix(in srgb, var(--success) 12%, var(--surface-2));
+  box-shadow:
+    var(--sh-1),
+    inset 0 0 0 1px color-mix(in srgb, var(--success) 38%, transparent);
 }
 .mode-choice.cancel.is-active {
   color: var(--danger);
-  box-shadow: var(--sh-1), inset 0 0 0 1px color-mix(in srgb, var(--danger) 20%, transparent);
+  background: color-mix(in srgb, var(--danger) 12%, var(--surface-2));
+  box-shadow:
+    var(--sh-1),
+    inset 0 0 0 1px color-mix(in srgb, var(--danger) 38%, transparent);
 }
 .mode-choice:active { transform: scale(.985); }
 
@@ -2095,7 +2101,7 @@ footer a:hover { color: var(--primary); }
     font-size: 1.02rem;
   }
   body.game-active #bottom-bar {
-    padding: 7px 0 0;
+    padding: 8px 0 clamp(12px, 1.8dvh, 18px);
   }
   body.game-active #mode-toggle-container {
     width: min(100%, 360px);
@@ -2130,6 +2136,16 @@ footer a:hover { color: var(--primary); }
 
   body.game-active .brand-corner-mark {
     font-size: clamp(1.35rem, 6vw, 1.7rem);
+    transform-origin: center;
+  }
+  body.game-active #game-table[data-grid-size="4"] .brand-corner-mark {
+    transform: scale(1.85);
+  }
+  body.game-active #game-table[data-grid-size="6"] .brand-corner-mark {
+    transform: scale(1.31);
+  }
+  body.game-active #game-table[data-grid-size="8"] .brand-corner-mark {
+    transform: scale(1);
   }
 
   #game-table[data-grid-size="4"] th,
