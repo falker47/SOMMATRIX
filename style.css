@@ -810,7 +810,7 @@ button {
    8. GAME SCREEN
    ============================================ */
 #game-screen {
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   max-width: none;
   margin: 0;
@@ -1275,6 +1275,123 @@ footer a:hover { color: var(--primary); }
 @media (max-width: 520px) {
   .screen::before { display: none; }
   .screen { padding: var(--s5) var(--s4); }
+
+  /* Full-screen app states on mobile: no document scroll while playing. */
+  body.game-active {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+  body.game-active #game-screen {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding:
+      max(var(--s2), env(safe-area-inset-top))
+      max(var(--s2), env(safe-area-inset-right))
+      max(var(--s2), env(safe-area-inset-bottom))
+      max(var(--s2), env(safe-area-inset-left));
+  }
+  body.game-active footer,
+  body.tutorial-active footer {
+    display: none;
+  }
+
+  /* Tutorial uses the whole phone height instead of collapsing at the top. */
+  body.tutorial-active {
+    min-height: 100dvh;
+  }
+  body.tutorial-active #tutorial-screen {
+    width: 100%;
+    max-width: none;
+    min-height: 100dvh;
+    margin: 0;
+    padding:
+      max(var(--s4), env(safe-area-inset-top))
+      var(--s4)
+      max(var(--s4), env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+    background-image: none;
+  }
+  body.tutorial-active #tutorial-screen::after {
+    display: none;
+  }
+  body.tutorial-active #tutorial-screen h2 {
+    margin: var(--s2) 0 var(--s4);
+    font-size: clamp(1.7rem, 7vw, 2.15rem);
+  }
+  body.tutorial-active .tutorial-stage {
+    flex: 1;
+    max-width: none;
+    min-height: 0;
+    justify-content: space-between;
+    gap: clamp(14px, 3dvh, 28px);
+  }
+  body.tutorial-active .tut-demo {
+    flex: 1 1 42%;
+    min-height: 220px;
+    max-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(18px, 5vw, 28px);
+  }
+  body.tutorial-active .demo-label {
+    margin-bottom: clamp(18px, 3dvh, 28px);
+    font-size: clamp(.95rem, 3.8vw, 1.1rem);
+  }
+  body.tutorial-active .demo-row {
+    flex-wrap: nowrap;
+    gap: clamp(5px, 1.8vw, 9px);
+  }
+  body.tutorial-active .demo-th {
+    min-width: clamp(50px, 15vw, 68px);
+    padding: var(--s3) var(--s2);
+    font-size: clamp(.85rem, 3.4vw, 1rem);
+  }
+  body.tutorial-active .demo-cell {
+    width: clamp(42px, 13vw, 58px);
+    height: clamp(42px, 13vw, 58px);
+    font-size: clamp(1rem, 4.5vw, 1.3rem);
+  }
+  body.tutorial-active .tut-steps {
+    min-height: 128px;
+    display: flex;
+    align-items: stretch;
+  }
+  body.tutorial-active .tut-step.is-active {
+    width: 100%;
+    align-items: center;
+    gap: var(--s4);
+    padding: var(--s4);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface-2);
+    box-shadow: var(--sh-1);
+  }
+  body.tutorial-active .tut-step-num {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
+  }
+  body.tutorial-active .tut-step.danger .tut-step-num {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 12%, transparent);
+  }
+  body.tutorial-active .tut-step p {
+    font-size: clamp(1rem, 4vw, 1.15rem);
+    line-height: 1.45;
+  }
+  body.tutorial-active .tut-nav {
+    flex-shrink: 0;
+    padding-bottom: var(--s1);
+  }
+  body.tutorial-active .tut-prev,
+  body.tutorial-active .tut-next {
+    width: 54px;
+    height: 54px;
+  }
   .hero { margin-top: var(--s6); }
   .level-cards { grid-template-columns: 1fr; gap: var(--s2); }
   .level-card { min-height: 96px; padding: var(--s3); }
@@ -1284,16 +1401,23 @@ footer a:hover { color: var(--primary); }
   .samurai-info { min-width: 0; }
   .samurai-title, .samurai-sub { overflow-wrap: anywhere; }
   #game-screen { padding: var(--s2); }
-  .game-info { gap: var(--s3); padding: var(--s2) var(--s4); }
+  .game-info {
+    gap: var(--s3);
+    padding: 6px var(--s4);
+    margin-top: 2px;
+  }
+  #game-header { min-height: 46px; }
+  #bottom-bar { padding: 6px 0 2px; }
 
   /* On phones, let the game board use almost the full viewport width. */
   #grid-wrapper {
     width: 100%;
-    padding-inline: 0;
+    padding: 4px 0;
+    overflow: hidden;
   }
   #game-table {
-    width: 100%;
-    max-width: none;
+    width: min(100%, calc(100dvh - 170px));
+    max-width: 100%;
     table-layout: fixed;
     border-spacing: 3px;
     padding: 4px;
@@ -1304,17 +1428,17 @@ footer a:hover { color: var(--primary); }
   }
   #game-table[data-grid-size="4"] th,
   #game-table[data-grid-size="4"] td {
-    height: 18vw;
+    height: clamp(48px, 17vw, 72px);
     font-size: clamp(.9rem, 4vw, 1.15rem);
   }
   #game-table[data-grid-size="6"] th,
   #game-table[data-grid-size="6"] td {
-    height: 12.5vw;
+    height: clamp(36px, 11.5vw, 52px);
     font-size: clamp(.78rem, 3.2vw, 1rem);
   }
   #game-table[data-grid-size="8"] th,
   #game-table[data-grid-size="8"] td {
-    height: 9.6vw;
+    height: clamp(29px, 8.8vw, 42px);
     font-size: clamp(.68rem, 2.6vw, .9rem);
   }
 
@@ -1328,7 +1452,7 @@ footer a:hover { color: var(--primary); }
 
 @media (max-width: 768px) and (orientation: landscape) {
   #main-menu { min-height: auto; }
-  #game-screen { min-height: 100vh; padding: var(--s2); }
+  #game-screen { min-height: 100dvh; padding: var(--s2); }
   .game-title { font-size: 1.1rem; }
 }
 
