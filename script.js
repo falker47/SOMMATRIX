@@ -466,6 +466,8 @@ function buildTable() {
   // Prima riga: indicatori colonna
   const headerRow = document.createElement("tr");
   const emptyHeader = document.createElement("th");
+  emptyHeader.className = "grid-brand-corner";
+  emptyHeader.innerHTML = '<img src="sommatrix-logo.png" alt="" aria-hidden="true">';
   headerRow.appendChild(emptyHeader);
   for (let j = 0; j < gridSize; j++) {
     const th = document.createElement("th");
