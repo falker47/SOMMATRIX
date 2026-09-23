@@ -1746,9 +1746,12 @@ footer a:hover { color: var(--primary); }
     gap: clamp(10px, 2.1dvh, 18px);
   }
   body.tutorial-active .tut-demo {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    width: min(calc(88vw + 18px), calc(43dvh + 18px), 408px, 100%);
     min-height: 0;
-    padding: 10px 10px 12px;
+    height: auto;
+    padding: 7px 8px;
+    align-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;
