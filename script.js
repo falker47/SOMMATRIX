@@ -68,13 +68,20 @@ const currentYearEl = document.getElementById('currentYear');
 if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
 
 /* Navigazione Schermate */
+function setScreenMode(mode) {
+  document.body.classList.toggle("game-active", mode === "game");
+  document.body.classList.toggle("tutorial-active", mode === "tutorial");
+}
+
 function showMainMenu() {
+  setScreenMode("menu");
   mainMenu.style.display = "block";
   tutorialScreen.style.display = "none";
   gameScreen.style.display = "none";
   stopTimer();
 }
 function showTutorial() {
+  setScreenMode("tutorial");
   mainMenu.style.display = "none";
   tutorialScreen.style.display = "block";
   gameScreen.style.display = "none";
@@ -148,6 +155,7 @@ function initTutorialDemo() {
   renderTutorialStep();
 }
 function showGame() {
+  setScreenMode("game");
   mainMenu.style.display = "none";
   tutorialScreen.style.display = "none";
   gameScreen.style.display = "block";
