@@ -23,6 +23,9 @@ jobs:
           node --check script.js
           node --check i18n.js
           node --check puzzle-core.js
-          node -e "const fs=require('node:fs'); const html=fs.readFileSync('index.html','utf8'); if (html.includes('\\\\n    <script')) throw new Error('index.html contains a literal \\\\n before a script tag');"
+          if grep -Fq '\n    <script' index.html; then
+            echo 'index.html contains a literal \n before a script tag' >&2
+            exit 1
+          fi
       - name: Run puzzle-core tests
         run: node --test tests/*.test.js
