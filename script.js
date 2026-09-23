@@ -317,6 +317,7 @@ function initGame() {
 /* Crea la tabella */
 function buildTable() {
   gameTable.innerHTML = "";
+  gameTable.dataset.gridSize = String(gridSize);
   // Prima riga: indicatori colonna
   const headerRow = document.createElement("tr");
   const emptyHeader = document.createElement("th");
