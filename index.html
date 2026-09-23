@@ -271,10 +271,19 @@
         </div>
 
         <!-- Informazioni di gioco: timer, punteggio e record -->
-        <div class="game-info" role="status" aria-live="polite">
-            <div id="timer-display"><span data-i18n="time">Tempo</span>: <span id="timer-value">0</span>s</div>
-            <div id="score-display"><span data-i18n="score">Punteggio</span>: <span id="score-value">0</span></div>
-            <div id="record-display"><span data-i18n="record">Record</span>: <span id="record-value">0</span></div>
+        <div class="game-info" aria-live="off">
+            <div class="game-stat" id="timer-display">
+                <span class="game-stat-label" data-i18n="time">Tempo</span>
+                <span class="game-stat-value"><span id="timer-value">0</span><span class="game-stat-unit">s</span></span>
+            </div>
+            <div class="game-stat" id="score-display">
+                <span class="game-stat-label" data-i18n="score">Punteggio</span>
+                <span class="game-stat-value" id="score-value">0</span>
+            </div>
+            <div class="game-stat" id="record-display">
+                <span class="game-stat-label" data-i18n="record">Record</span>
+                <span class="game-stat-value" id="record-value">0</span>
+            </div>
         </div>
 
         <!-- Contenitore per la tabella -->
@@ -282,27 +291,24 @@
             <table id="game-table" role="grid" aria-label="Game grid"></table>
         </div>
 
-        <!-- Barra inferiore con toggle modalità -->
+        <!-- Barra inferiore con selettore modalità -->
         <div id="bottom-bar">
-            <div id="mode-toggle-container">
-                <div class="mode-icon confirm-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            <div id="mode-toggle-container" role="group" aria-label="Toggle confirm/cancel mode" data-i18n-aria="toggleMode">
+                <button id="confirm-mode-btn" class="mode-choice confirm is-active" type="button" aria-pressed="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="20 6 9 17 4 12" />
                     </svg>
                     <span data-i18n="confirm">Conferma</span>
-                </div>
-
-                <button id="mode-toggle" aria-label="Toggle confirm/cancel mode" data-i18n-aria="toggleMode" role="switch" aria-checked="false"></button>
-
-                <div class="mode-icon cancel-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                </button>
+                <button id="cancel-mode-btn" class="mode-choice cancel" type="button" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                     <span data-i18n="cancel">Cancella</span>
-                </div>
+                </button>
             </div>
         </div>
     </div>
