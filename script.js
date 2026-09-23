@@ -69,6 +69,7 @@ if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
 
 /* Navigazione Schermate */
 function setScreenMode(mode) {
+  document.body.classList.toggle("menu-active", mode === "menu");
   document.body.classList.toggle("game-active", mode === "game");
   document.body.classList.toggle("tutorial-active", mode === "tutorial");
 }
@@ -92,41 +93,106 @@ function showTutorial() {
 let tutorialWired = false;
 let tutorialStep = 1;
 const TUTORIAL_TOTAL = 4;
-// Stato dimostrativo della riga "= 12" con numeri [5, 7, 8, 3] (5+7 = 12)
+
 const tutorialStates = {
-  1: { partial: 0, focus: true, cells: ["", "", "", ""], complete: false },
-  2: { partial: 12, focus: false, cells: ["confirm", "confirm", "", ""], complete: false },
-  3: { partial: 12, focus: false, cells: ["confirm", "confirm", "cancel", ""], complete: false },
-  4: { partial: 12, focus: false, cells: ["confirm", "confirm", "cancel", "cancel"], complete: true }
+  1: {
+    rowCurrents: [0, 0, 0, 0],
+    colCurrents: [0, 0, 0, 0],
+    confirms: [],
+    cancels: [],
+    autoCancels: [],
+    focusRows: [0],
+    focusCols: [0],
+    completedRows: [],
+    completedCols: []
+  },
+  2: {
+    rowCurrents: [12, 0, 0, 0],
+    colCurrents: [5, 7, 0, 0],
+    confirms: [[0, 0], [0, 1]],
+    cancels: [],
+    autoCancels: [],
+    focusRows: [0],
+    focusCols: [],
+    completedRows: [0],
+    completedCols: []
+  },
+  3: {
+    rowCurrents: [12, 0, 0, 0],
+    colCurrents: [5, 7, 0, 0],
+    confirms: [[0, 0], [0, 1]],
+    cancels: [[1, 1], [2, 3]],
+    autoCancels: [],
+    focusRows: [],
+    focusCols: [1],
+    completedRows: [0],
+    completedCols: []
+  },
+  4: {
+    rowCurrents: [12, 10, 0, 0],
+    colCurrents: [9, 7, 0, 6],
+    confirms: [[0, 0], [0, 1], [1, 0], [1, 3]],
+    cancels: [],
+    autoCancels: [[0, 2], [0, 3], [1, 1], [1, 2]],
+    focusRows: [0, 1],
+    focusCols: [],
+    completedRows: [0, 1],
+    completedCols: []
+  }
 };
+
+function hasTutorialCoord(coords, row, col) {
+  return coords.some(([r, c]) => r === row && c === col);
+}
 
 function renderTutorialStep() {
   const state = tutorialStates[tutorialStep];
-  // Testo dello step
+
   document.querySelectorAll('.tut-step').forEach(el => {
     el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
   });
-  // Puntini
   document.querySelectorAll('.tut-dot').forEach(el => {
     el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
   });
-  // Demo: parziale e header
-  const partialEl = document.getElementById('demo-partial');
-  if (partialEl) partialEl.textContent = state.partial;
-  const th = document.getElementById('demo-th');
-  if (th) {
-    th.classList.toggle('is-focus', state.focus);
-    th.classList.toggle('is-complete', state.complete);
+
+  const board = document.getElementById('tutorial-board');
+  if (board) {
+    board.classList.remove('step-1', 'step-2', 'step-3', 'step-4');
+    // Restart CSS animations when changing step.
+    void board.offsetWidth;
+    board.classList.add('step-' + tutorialStep);
   }
-  // Demo: celle
-  state.cells.forEach((cls, i) => {
-    const cell = document.getElementById('demo-' + i);
-    if (cell) {
-      cell.classList.remove('confirm', 'cancel');
-      if (cls) cell.classList.add(cls);
-    }
+
+  document.querySelectorAll('.tutorial-target.row-target').forEach(target => {
+    const row = parseInt(target.dataset.row);
+    target.classList.toggle('target-active', state.focusRows.includes(row));
+    target.classList.toggle('is-complete', state.completedRows.includes(row));
+    const current = target.querySelector('.target-current');
+    if (current) current.textContent = state.rowCurrents[row];
   });
-  // Bottoni nav
+
+  document.querySelectorAll('.tutorial-target.col-target').forEach(target => {
+    const col = parseInt(target.dataset.col);
+    target.classList.toggle('target-active', state.focusCols.includes(col));
+    target.classList.toggle('is-complete', state.completedCols.includes(col));
+    const current = target.querySelector('.target-current');
+    if (current) current.textContent = state.colCurrents[col];
+  });
+
+  document.querySelectorAll('.tutorial-board .demo-cell').forEach(cell => {
+    const row = parseInt(cell.dataset.row);
+    const col = parseInt(cell.dataset.col);
+    cell.classList.remove('confirm', 'cancel', 'auto-cancel', 'tutorial-axis', 'tutorial-focus');
+
+    const inAxis = state.focusRows.includes(row) || state.focusCols.includes(col);
+    const atFocus = state.focusRows.includes(row) && state.focusCols.includes(col);
+    if (inAxis) cell.classList.add('tutorial-axis');
+    if (atFocus) cell.classList.add('tutorial-focus');
+    if (hasTutorialCoord(state.confirms, row, col)) cell.classList.add('confirm');
+    if (hasTutorialCoord(state.cancels, row, col)) cell.classList.add('cancel');
+    if (hasTutorialCoord(state.autoCancels, row, col)) cell.classList.add('auto-cancel');
+  });
+
   const prev = document.getElementById('tut-prev');
   const next = document.getElementById('tut-next');
   if (prev) prev.disabled = tutorialStep === 1;
@@ -138,22 +204,34 @@ function initTutorialDemo() {
   if (!tutorialWired) {
     const prev = document.getElementById('tut-prev');
     const next = document.getElementById('tut-next');
+
     if (prev) prev.addEventListener('click', () => {
-      if (tutorialStep > 1) { tutorialStep--; renderTutorialStep(); }
+      if (tutorialStep > 1) {
+        tutorialStep--;
+        renderTutorialStep();
+      }
     });
+
     if (next) next.addEventListener('click', () => {
-      if (tutorialStep < TUTORIAL_TOTAL) { tutorialStep++; renderTutorialStep(); }
+      if (tutorialStep < TUTORIAL_TOTAL) {
+        tutorialStep++;
+        renderTutorialStep();
+      }
     });
+
     document.querySelectorAll('.tut-dot').forEach(dot => {
       dot.addEventListener('click', () => {
         tutorialStep = parseInt(dot.dataset.step);
         renderTutorialStep();
       });
     });
+
     tutorialWired = true;
   }
+
   renderTutorialStep();
 }
+
 function showGame() {
   setScreenMode("game");
   mainMenu.style.display = "none";
