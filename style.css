@@ -699,6 +699,14 @@ button {
   margin: 0 auto;
 }
 
+.tutorial-content-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(var(--s4), 2.2vw, var(--s5));
+}
+
 .tut-demo {
   width: min(100%, calc(430px + var(--s6)));
   padding: var(--s4);
@@ -740,12 +748,12 @@ button {
   animation: stepIn var(--dur-2) var(--ease);
 }
 .samurai-compare {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1.1fr 1fr;
   align-items: center;
-  justify-content: center;
-  gap: var(--s3);
-  padding: var(--s4);
+  justify-items: center;
+  gap: 0;
+  padding: clamp(var(--s4), 3vw, var(--s5)) var(--s3);
   border: 1.5px solid var(--border);
   border-radius: var(--r-md);
   background: var(--surface);
@@ -761,14 +769,25 @@ button {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 10%, transparent), var(--sh-1);
 }
 .samurai-compare-label {
+  min-height: 2.2em;
+  max-width: 8.5ch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(.9rem, 2.8vw, 1.15rem);
+  font-size: clamp(1.2rem, 3.4vw, 1.65rem);
   font-weight: 800;
+  line-height: 1.05;
+  text-wrap: balance;
 }
 .samurai-compare.hardcore .samurai-compare-label { color: var(--danger); }
 .samurai-hearts {
-  font-size: clamp(1.5rem, 5vw, 2.2rem);
-  letter-spacing: 4px;
+  min-height: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  letter-spacing: 3px;
   color: var(--success);
   line-height: 1;
 }
@@ -777,15 +796,22 @@ button {
   text-shadow: 0 0 10px color-mix(in srgb, var(--danger) 45%, transparent);
 }
 .samurai-compare-note {
-  font-size: var(--fs-xs);
+  min-height: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: clamp(.88rem, 2.4vw, 1.05rem);
   font-weight: 700;
   color: var(--text-muted);
-  line-height: 1.25;
+  line-height: 1.15;
 }
+.samurai-bonus-note > span { display: block; }
 .samurai-compare.hardcore .samurai-compare-note { color: var(--danger); }
 .samurai-vs {
   align-self: center;
-  font-size: .7rem;
+  font-size: .82rem;
   font-weight: 900;
   letter-spacing: 1px;
   color: var(--text-muted);
@@ -1742,10 +1768,14 @@ footer a:hover { color: var(--primary); }
     min-height: 0;
     width: 100%;
     max-width: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: clamp(10px, 2.1dvh, 18px);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: clamp(10px, 1.6dvh, 14px);
+  }
+  body.tutorial-active .tutorial-content-block {
+    align-self: center;
+    gap: clamp(12px, 1.8dvh, 16px);
   }
   body.tutorial-active .tut-demo {
     flex: 0 0 auto;
@@ -1779,18 +1809,25 @@ footer a:hover { color: var(--primary); }
     gap: 8px;
   }
   body.tutorial-active .samurai-compare {
-    gap: 10px;
-    padding: 10px 7px;
+    grid-template-rows: 1fr 1.1fr 1fr;
+    gap: 0;
+    padding: 12px 8px;
   }
   body.tutorial-active .samurai-compare-label {
-    font-size: clamp(.78rem, 3.2vw, .95rem);
+    min-height: 2.2em;
+    max-width: 8.5ch;
+    font-size: clamp(1.15rem, 5.2vw, 1.45rem);
+    line-height: 1.05;
   }
   body.tutorial-active .samurai-hearts {
-    font-size: clamp(1.25rem, 5vw, 1.8rem);
-    letter-spacing: 2px;
+    min-height: 1.15em;
+    font-size: clamp(2rem, 8vw, 2.75rem);
+    letter-spacing: clamp(1px, 1vw, 4px);
   }
   body.tutorial-active .samurai-compare-note {
-    font-size: clamp(.62rem, 2.7vw, .75rem);
+    min-height: 3em;
+    font-size: clamp(.9rem, 3.4vw, 1.02rem);
+    line-height: 1.15;
   }
   body.tutorial-active .tutorial-target,
   body.tutorial-active .tutorial-board .demo-cell {
@@ -1832,7 +1869,7 @@ footer a:hover { color: var(--primary); }
     flex: 0 0 auto;
     grid-template-columns: 52px auto 52px;
     gap: 14px;
-    margin-top: auto;
+    margin-top: 0;
     padding-bottom: 2px;
   }
   body.tutorial-active .tut-prev,
@@ -1943,6 +1980,12 @@ footer a:hover { color: var(--primary); }
     overflow: visible;
   }
 
+  body.tutorial-active .tutorial-stage {
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.tutorial-active .tutorial-content-block,
   body.tutorial-active .tut-nav {
     margin-top: 0;
   }
