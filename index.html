@@ -228,15 +228,25 @@
             </div>
 
             <div class="tut-nav">
-                <button class="tut-prev" id="tut-prev" aria-label="Previous step" data-i18n-aria="prevStep" disabled>←</button>
-                <div class="tut-dots">
+                <button class="tut-prev" id="tut-prev" aria-label="Previous step" data-i18n-aria="prevStep" disabled>
+                    <svg class="tut-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19 12H5"></path>
+                        <path d="M11 6L5 12L11 18"></path>
+                    </svg>
+                </button>
+                <div class="tut-dots" aria-hidden="true">
                     <span class="tut-dot is-active" data-step="1"></span>
                     <span class="tut-dot" data-step="2"></span>
                     <span class="tut-dot" data-step="3"></span>
                     <span class="tut-dot" data-step="4"></span>
                     <span class="tut-dot" data-step="5"></span>
                 </div>
-                <button class="tut-next" id="tut-next" aria-label="Next step" data-i18n-aria="nextStep">→</button>
+                <button class="tut-next" id="tut-next" aria-label="Next step" data-i18n-aria="nextStep">
+                    <svg class="tut-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12H19"></path>
+                        <path d="M13 6L19 12L13 18"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
