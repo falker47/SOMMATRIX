@@ -157,13 +157,6 @@
         <div class="tutorial-stage">
             <!-- Animated 4x4 tutorial board -->
             <div class="tut-demo" aria-hidden="true">
-                <div class="demo-label" data-i18n="tutorialDemoTitle">Esempio 4×4</div>
-                <div class="tutorial-logic-hints">
-                    <div class="tutorial-logic-hint is-active" data-step="1" data-i18n="tutorialVisual1">TARGET <b>12</b> · le quattro celle evidenziate sono gli addendi candidati.</div>
-                    <div class="tutorial-logic-hint" data-step="2" data-i18n="tutorialVisual2"><b>5 + 7 = 12</b> · questi due addendi sono confermati.</div>
-                    <div class="tutorial-logic-hint" data-step="3" data-i18n="tutorialVisual3">TARGET <b>6</b> · <b>7</b> e <b>9</b> sono impossibili: da soli superano già il target.</div>
-                    <div class="tutorial-logic-hint" data-step="4" data-i18n="tutorialVisual4">Raggiunto il target, gli altri candidati della riga vengono eliminati automaticamente.</div>
-                </div>
                 <div class="tutorial-board" id="tutorial-board">
                     <span class="tutorial-corner"></span>
                     <span class="tutorial-target col-target" data-col="0"><span class="target-label" data-i18n="tutorialTargetLabel">TARGET</span><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">11</span></span>
@@ -195,6 +188,19 @@
                     <span class="demo-cell" data-row="3" data-col="2">4</span>
                     <span class="demo-cell" data-row="3" data-col="3">9</span>
                 </div>
+                <div class="tutorial-samurai-card" id="tutorial-samurai-card">
+                    <div class="samurai-compare standard">
+                        <span class="samurai-compare-label" data-i18n="tutorialStandard">Standard</span>
+                        <span class="samurai-hearts" aria-hidden="true">♥ ♥ ♥</span>
+                        <span class="samurai-compare-note" data-i18n="tutorialThreeLives">3 vite</span>
+                    </div>
+                    <div class="samurai-vs" aria-hidden="true">VS</div>
+                    <div class="samurai-compare hardcore">
+                        <span class="samurai-compare-label" data-i18n="lastSamurai">L'Ultimo Samurai</span>
+                        <span class="samurai-hearts" aria-hidden="true">♥</span>
+                        <span class="samurai-compare-note" data-i18n="tutorialSamuraiBonus">1 vita · ×1,25 punti</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Step text -->
@@ -211,9 +217,13 @@
                     <span class="tut-step-num">3</span>
                     <p data-i18n="tutStep3">In modalità <b>Cancella</b> elimina quelli che non servono. Sbagli? Perdi una vita.</p>
                 </div>
-                <div class="tut-step danger" data-step="4">
+                <div class="tut-step" data-step="4">
                     <span class="tut-step-num">4</span>
-                    <p data-i18n="tutStep4">Completata la somma, i numeri restanti si cancellano da soli. <b>Ultimo Samurai</b>: una vita sola!</p>
+                    <p data-i18n="tutStep4">Quando una riga o colonna raggiunge il target, gli altri candidati si cancellano automaticamente.</p>
+                </div>
+                <div class="tut-step danger samurai-step-copy" data-step="5">
+                    <span class="tut-step-num">5</span>
+                    <p data-i18n="tutStep5">Di norma hai <b>3 vite</b>. In <b>Ultimo Samurai</b> hai una sola possibilità: un errore è game over, ma il punteggio vale di più.</p>
                 </div>
             </div>
 
@@ -224,6 +234,7 @@
                     <span class="tut-dot" data-step="2"></span>
                     <span class="tut-dot" data-step="3"></span>
                     <span class="tut-dot" data-step="4"></span>
+                    <span class="tut-dot" data-step="5"></span>
                 </div>
                 <button class="tut-next" id="tut-next" aria-label="Next step" data-i18n-aria="nextStep">→</button>
             </div>
