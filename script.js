@@ -43,12 +43,8 @@ const showTutorialBtn = document.getElementById("show-tutorial");
 const backToMenuFromTutorialBtn = document.getElementById("back-to-menu-from-tutorial");
 const backToMenuFromGameBtn = document.getElementById("back-to-menu-from-game");
 const modeToggleBtn = document.getElementById("mode-toggle");
-const modeLabel = document.getElementById("mode-label");
 const healthBar = document.getElementById("health-bar");
 const gameTable = document.getElementById("game-table");
-const messageDiv = document.getElementById("message");
-const scoreDisplay = document.getElementById("score-display");
-const timerDisplay = document.getElementById("timer-display");
 const gridSizeButtons = document.querySelectorAll(".level-card");
 
 /* Selezione dimensione griglia */
@@ -211,12 +207,7 @@ modeToggleBtn.addEventListener("click", () => {
 
 /* Aggiorna indicatore di modalità */
 function updateModeIndicator() {
-  const modeIndicator = document.getElementById("mode-indicator");
-  if (modeIndicator) {
-    modeIndicator.textContent = currentMode === "confirm" ? i18n.t('confirm') : i18n.t('cancel');
-    modeIndicator.className = currentMode === "confirm" ? "mode-confirm" : "mode-cancel";
-    modeToggleBtn.setAttribute("aria-checked", currentMode === "cancel" ? "true" : "false");
-  }
+  modeToggleBtn.setAttribute("aria-checked", currentMode === "cancel" ? "true" : "false");
 }
 
 /* Aggiorna Health Bar */
@@ -293,7 +284,8 @@ function calculateScore() {
   return finalScore;
 }
 
-/* Inizializza una partita con un puzzle globalmente univoco */\nfunction initGame() {
+/* Inizializza una partita con un puzzle globalmente univoco */
+function initGame() {
   gameOver = false;
   rowCompleted = new Array(gridSize).fill(false);
   colCompleted = new Array(gridSize).fill(false);
