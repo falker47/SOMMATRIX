@@ -42,7 +42,8 @@ const startGameBtn = document.getElementById("start-game");
 const showTutorialBtn = document.getElementById("show-tutorial");
 const backToMenuFromTutorialBtn = document.getElementById("back-to-menu-from-tutorial");
 const backToMenuFromGameBtn = document.getElementById("back-to-menu-from-game");
-const modeToggleBtn = document.getElementById("mode-toggle");
+const confirmModeBtn = document.getElementById("confirm-mode-btn");
+const cancelModeBtn = document.getElementById("cancel-mode-btn");
 const healthBar = document.getElementById("health-bar");
 const gameTable = document.getElementById("game-table");
 const gridSizeButtons = document.querySelectorAll(".level-card");
@@ -306,22 +307,22 @@ backToMenuFromGameBtn.addEventListener("click", showMainMenu);
   });
 })();
 
-/* Toggle Modalità */
-modeToggleBtn.addEventListener("click", () => {
-  if (currentMode === "confirm") {
-    currentMode = "cancel";
-    modeToggleBtn.classList.add("cancel");
-    updateModeIndicator(); // Aggiunta chiamata funzione
-  } else {
-    currentMode = "confirm";
-    modeToggleBtn.classList.remove("cancel");
-    updateModeIndicator(); // Aggiunta chiamata funzione
-  }
-});
+/* Selezione modalità */
+function setMode(mode) {
+  currentMode = mode === "cancel" ? "cancel" : "confirm";
+  updateModeIndicator();
+}
+
+confirmModeBtn.addEventListener("click", () => setMode("confirm"));
+cancelModeBtn.addEventListener("click", () => setMode("cancel"));
 
 /* Aggiorna indicatore di modalità */
 function updateModeIndicator() {
-  modeToggleBtn.setAttribute("aria-checked", currentMode === "cancel" ? "true" : "false");
+  const isConfirm = currentMode === "confirm";
+  confirmModeBtn.classList.toggle("is-active", isConfirm);
+  cancelModeBtn.classList.toggle("is-active", !isConfirm);
+  confirmModeBtn.setAttribute("aria-pressed", isConfirm ? "true" : "false");
+  cancelModeBtn.setAttribute("aria-pressed", isConfirm ? "false" : "true");
 }
 
 /* Aggiorna Health Bar */
@@ -409,9 +410,7 @@ function initGame() {
   if (scoreValue) scoreValue.textContent = '0';
   updateHealthBar();
 
-  currentMode = "confirm";
-  modeToggleBtn.classList.remove("cancel");
-  updateModeIndicator();
+  setMode("confirm");
 
   // Genera un puzzle con una sola soluzione globale compatibile con tutti i target
   const puzzle = SommatrixCore.generateUniquePuzzle(gridSize);
