@@ -1441,6 +1441,10 @@ button {
 #game-table th.axis-target:hover {
   border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
 }
+#game-table th.axis-target:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
 #game-table th.target-axis-active {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 14%, var(--surface));
