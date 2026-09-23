@@ -101,8 +101,10 @@ const tutorialStates = {
     confirms: [],
     cancels: [],
     autoCancels: [],
+    candidates: [[0, 0], [0, 1], [0, 2], [0, 3]],
+    impossible: [],
     focusRows: [0],
-    focusCols: [0],
+    focusCols: [],
     completedRows: [],
     completedCols: []
   },
@@ -112,6 +114,8 @@ const tutorialStates = {
     confirms: [[0, 0], [0, 1]],
     cancels: [],
     autoCancels: [],
+    candidates: [],
+    impossible: [],
     focusRows: [0],
     focusCols: [],
     completedRows: [0],
@@ -121,22 +125,26 @@ const tutorialStates = {
     rowCurrents: [12, 0, 0, 0],
     colCurrents: [5, 7, 0, 0],
     confirms: [[0, 0], [0, 1]],
-    cancels: [[1, 1], [2, 3]],
+    cancels: [[2, 2], [2, 3]],
     autoCancels: [],
-    focusRows: [],
-    focusCols: [1],
+    candidates: [[2, 0], [2, 1]],
+    impossible: [[2, 2], [2, 3]],
+    focusRows: [2],
+    focusCols: [],
     completedRows: [0],
     completedCols: []
   },
   4: {
-    rowCurrents: [12, 10, 0, 0],
-    colCurrents: [9, 7, 0, 6],
-    confirms: [[0, 0], [0, 1], [1, 0], [1, 3]],
-    cancels: [],
-    autoCancels: [[0, 2], [0, 3], [1, 1], [1, 2]],
-    focusRows: [0, 1],
+    rowCurrents: [12, 0, 0, 0],
+    colCurrents: [5, 7, 0, 0],
+    confirms: [[0, 0], [0, 1]],
+    cancels: [[2, 2], [2, 3]],
+    autoCancels: [[0, 2], [0, 3]],
+    candidates: [],
+    impossible: [],
+    focusRows: [0],
     focusCols: [],
-    completedRows: [0, 1],
+    completedRows: [0],
     completedCols: []
   }
 };
@@ -152,6 +160,9 @@ function renderTutorialStep() {
     el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
   });
   document.querySelectorAll('.tut-dot').forEach(el => {
+    el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
+  });
+  document.querySelectorAll('.tutorial-logic-hint').forEach(el => {
     el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
   });
 
@@ -182,12 +193,14 @@ function renderTutorialStep() {
   document.querySelectorAll('.tutorial-board .demo-cell').forEach(cell => {
     const row = parseInt(cell.dataset.row);
     const col = parseInt(cell.dataset.col);
-    cell.classList.remove('confirm', 'cancel', 'auto-cancel', 'tutorial-axis', 'tutorial-focus');
+    cell.classList.remove('confirm', 'cancel', 'auto-cancel', 'candidate', 'logic-impossible', 'tutorial-axis', 'tutorial-focus');
 
     const inAxis = state.focusRows.includes(row) || state.focusCols.includes(col);
     const atFocus = state.focusRows.includes(row) && state.focusCols.includes(col);
     if (inAxis) cell.classList.add('tutorial-axis');
     if (atFocus) cell.classList.add('tutorial-focus');
+    if (hasTutorialCoord(state.candidates, row, col)) cell.classList.add('candidate');
+    if (hasTutorialCoord(state.impossible, row, col)) cell.classList.add('logic-impossible');
     if (hasTutorialCoord(state.confirms, row, col)) cell.classList.add('confirm');
     if (hasTutorialCoord(state.cancels, row, col)) cell.classList.add('cancel');
     if (hasTutorialCoord(state.autoCancels, row, col)) cell.classList.add('auto-cancel');
