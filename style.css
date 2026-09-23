@@ -1340,7 +1340,7 @@ button {
   height: clamp(40px, 8vw, 60px);
   text-align: center;
   vertical-align: middle;
-  font-size: clamp(.9rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
   font-variant-numeric: tabular-nums;
   transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
   padding: 0;
@@ -1350,7 +1350,7 @@ button {
 #game-table th {
   color: var(--text-muted);
   font-weight: 700;
-  font-size: clamp(.7rem, 1.6vw, .95rem);
+  font-size: clamp(.8rem, 1.8vw, 1.05rem);
   line-height: 1.05;
   background: color-mix(in srgb, var(--primary) 8%, var(--surface));
   border: 1px solid var(--border);
@@ -1434,8 +1434,20 @@ button {
   transform: translateY(-1px);
   z-index: 4;
 }
+#game-table th.axis-target {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#game-table th.axis-target:hover {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+}
+#game-table th.axis-target:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
 #game-table th.target-axis-active {
   border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
 }
 #game-table th.target-axis-active .partial {
@@ -1498,7 +1510,7 @@ button {
 #game-table.large-grid td {
   width: clamp(32px, 6vw, 48px);
   height: clamp(32px, 6vw, 48px);
-  font-size: clamp(.75rem, 1.6vw, 1rem);
+  font-size: clamp(.86rem, 1.8vw, 1.08rem);
 }
 
 /* ============================================
@@ -2151,17 +2163,17 @@ footer a:hover { color: var(--primary); }
   #game-table[data-grid-size="4"] th,
   #game-table[data-grid-size="4"] td {
     height: calc((var(--mobile-board-size) - 28px) / 5);
-    font-size: clamp(.9rem, 4vw, 1.15rem);
+    font-size: clamp(1.05rem, 4.6vw, 1.3rem);
   }
   #game-table[data-grid-size="6"] th,
   #game-table[data-grid-size="6"] td {
     height: calc((var(--mobile-board-size) - 34px) / 7);
-    font-size: clamp(.78rem, 3.2vw, 1rem);
+    font-size: clamp(.92rem, 3.65vw, 1.12rem);
   }
   #game-table[data-grid-size="8"] th,
   #game-table[data-grid-size="8"] td {
     height: calc((var(--mobile-board-size) - 40px) / 9);
-    font-size: clamp(.68rem, 2.6vw, .9rem);
+    font-size: clamp(.8rem, 3vw, 1rem);
   }
 }
 
