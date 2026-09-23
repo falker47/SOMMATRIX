@@ -76,7 +76,7 @@ function setScreenMode(mode) {
 
 function showMainMenu() {
   setScreenMode("menu");
-  mainMenu.style.display = "block";
+  mainMenu.style.display = "flex";
   tutorialScreen.style.display = "none";
   gameScreen.style.display = "none";
   stopTimer();
@@ -84,7 +84,7 @@ function showMainMenu() {
 function showTutorial() {
   setScreenMode("tutorial");
   mainMenu.style.display = "none";
-  tutorialScreen.style.display = "block";
+  tutorialScreen.style.display = "flex";
   gameScreen.style.display = "none";
   initTutorialDemo();
 }
@@ -264,7 +264,7 @@ function showGame() {
   setScreenMode("game");
   mainMenu.style.display = "none";
   tutorialScreen.style.display = "none";
-  gameScreen.style.display = "block";
+  gameScreen.style.display = "flex";
 }
 
 /* Event Listeners Menu */
