@@ -314,6 +314,37 @@ function initGame() {
   buildTable();
 }
 
+/* Evidenziazione contestuale di riga, colonna e target */
+function clearGridFocus() {
+  gameTable.querySelectorAll(".axis-active, .grid-focus").forEach(el => {
+    el.classList.remove("axis-active", "grid-focus");
+  });
+  gameTable.querySelectorAll(".target-axis-active").forEach(el => {
+    el.classList.remove("target-axis-active");
+  });
+}
+
+function setGridFocus(row, col) {
+  clearGridFocus();
+
+  gameTable.querySelectorAll(".cell").forEach(cell => {
+    const cellRow = parseInt(cell.dataset.row);
+    const cellCol = parseInt(cell.dataset.col);
+
+    if (cellRow === row || cellCol === col) {
+      cell.classList.add("axis-active");
+    }
+    if (cellRow === row && cellCol === col) {
+      cell.classList.add("grid-focus");
+    }
+  });
+
+  const rowTarget = document.getElementById("row-indicator-" + row);
+  const colTarget = document.getElementById("col-indicator-" + col);
+  if (rowTarget) rowTarget.classList.add("target-axis-active");
+  if (colTarget) colTarget.classList.add("target-axis-active");
+}
+
 /* Crea la tabella */
 function buildTable() {
   gameTable.innerHTML = "";
@@ -344,6 +375,8 @@ function buildTable() {
       td.dataset.col = j;
       td.textContent = gridNumbers[i][j];
       td.setAttribute("tabindex", "0");
+      td.addEventListener("pointerenter", () => setGridFocus(i, j));
+      td.addEventListener("focus", () => setGridFocus(i, j));
       td.addEventListener("click", cellClick);
       td.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -362,6 +395,15 @@ function buildTable() {
   }
 }
 
+if (!gameTable.dataset.axisLeaveWired) {
+  gameTable.addEventListener("pointerleave", () => {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      clearGridFocus();
+    }
+  });
+  gameTable.dataset.axisLeaveWired = "true";
+}
+
 /* Gestione clic su cella */
 function cellClick(e) {
   if (gameOver) return;
@@ -374,6 +416,8 @@ function cellClick(e) {
     console.error('Dati cella non validi:', i, j);
     return;
   }
+
+  setGridFocus(i, j);
 
   // Controlla se la cella è già stata processata correttamente
   if ((gridSolution[i][j] && gridState[i][j] === 1) ||
