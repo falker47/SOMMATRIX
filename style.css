@@ -775,7 +775,7 @@ button {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 3.2vw, 1.55rem);
+  font-size: clamp(1.2rem, 3.4vw, 1.65rem);
   font-weight: 800;
   line-height: 1.05;
   text-wrap: balance;
@@ -802,7 +802,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  font-size: clamp(.82rem, 2.3vw, 1rem);
+  font-size: clamp(.88rem, 2.4vw, 1.05rem);
   font-weight: 700;
   color: var(--text-muted);
   line-height: 1.15;
@@ -1816,7 +1816,7 @@ footer a:hover { color: var(--primary); }
   body.tutorial-active .samurai-compare-label {
     min-height: 2.2em;
     max-width: 8.5ch;
-    font-size: clamp(1.05rem, 4.8vw, 1.35rem);
+    font-size: clamp(1.15rem, 5.2vw, 1.45rem);
     line-height: 1.05;
   }
   body.tutorial-active .samurai-hearts {
@@ -1826,7 +1826,7 @@ footer a:hover { color: var(--primary); }
   }
   body.tutorial-active .samurai-compare-note {
     min-height: 3em;
-    font-size: clamp(.78rem, 3.2vw, .95rem);
+    font-size: clamp(.9rem, 3.4vw, 1.02rem);
     line-height: 1.15;
   }
   body.tutorial-active .tutorial-target,
