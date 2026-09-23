@@ -1416,7 +1416,8 @@ footer a:hover { color: var(--primary); }
     overflow: hidden;
   }
   #game-table {
-    width: min(100%, calc(100dvh - 170px));
+    --mobile-board-size: min(calc(100vw - 16px), calc(100dvh - 180px));
+    width: min(100%, var(--mobile-board-size));
     max-width: 100%;
     table-layout: fixed;
     border-spacing: 3px;
@@ -1428,17 +1429,17 @@ footer a:hover { color: var(--primary); }
   }
   #game-table[data-grid-size="4"] th,
   #game-table[data-grid-size="4"] td {
-    height: clamp(48px, 17vw, 72px);
+    height: calc((var(--mobile-board-size) - 28px) / 5);
     font-size: clamp(.9rem, 4vw, 1.15rem);
   }
   #game-table[data-grid-size="6"] th,
   #game-table[data-grid-size="6"] td {
-    height: clamp(36px, 11.5vw, 52px);
+    height: calc((var(--mobile-board-size) - 34px) / 7);
     font-size: clamp(.78rem, 3.2vw, 1rem);
   }
   #game-table[data-grid-size="8"] th,
   #game-table[data-grid-size="8"] td {
-    height: clamp(29px, 8.8vw, 42px);
+    height: calc((var(--mobile-board-size) - 40px) / 9);
     font-size: clamp(.68rem, 2.6vw, .9rem);
   }
 
