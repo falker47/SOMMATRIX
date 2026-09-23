@@ -1393,6 +1393,12 @@ button {
   margin-left: 1px;
   color: var(--brand-accent);
 }
+:root[data-theme="dark"] .brand-corner-mark {
+  color: var(--text);
+}
+:root[data-theme="dark"] .brand-corner-dot {
+  color: var(--primary-2);
+}
 
 .partial { display: block; font-weight: 700; color: var(--primary); font-size: 1.05em; }
 .slash-bold { display: block; font-weight: 600; color: var(--text-muted); font-size: .82em; }
