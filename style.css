@@ -1608,7 +1608,7 @@ footer a:hover { color: var(--primary); }
     min-height: 0;
     gap: clamp(10px, 1.8dvh, 16px);
     margin-top: clamp(10px, 1.7dvh, 16px);
-    justify-content: flex-start;
+    justify-content: space-evenly;
   }
   body.menu-active .option-label {
     margin-bottom: 7px;
@@ -1680,8 +1680,7 @@ footer a:hover { color: var(--primary); }
   body.menu-active .buttons-group {
     flex-direction: column;
     gap: 8px;
-    margin-top: auto;
-    padding-top: clamp(2px, .8dvh, 8px);
+    margin-top: 0;
   }
   body.menu-active .play-btn,
   body.menu-active .tutorial-btn {
@@ -1940,7 +1939,6 @@ footer a:hover { color: var(--primary); }
     overflow: visible;
   }
 
-  body.menu-active .buttons-group,
   body.tutorial-active .tut-nav {
     margin-top: 0;
   }
