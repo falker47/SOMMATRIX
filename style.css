@@ -811,6 +811,8 @@ button {
    ============================================ */
 #game-screen {
   min-height: 100vh;
+  width: 100%;
+  max-width: none;
   margin: 0;
   padding: var(--s3) var(--s4);
   display: flex;
@@ -1263,21 +1265,45 @@ footer a:hover { color: var(--primary); }
   .samurai-title, .samurai-sub { overflow-wrap: anywhere; }
   #game-screen { padding: var(--s2); }
   .game-info { gap: var(--s3); padding: var(--s2) var(--s4); }
-  #game-table th, #game-table td {
-    width: clamp(30px, 11vw, 46px);
-    height: clamp(30px, 11vw, 46px);
-    font-size: clamp(.7rem, 2.8vw, .95rem);
+
+  /* On phones, let the game board use almost the full viewport width. */
+  #grid-wrapper {
+    width: 100%;
+    padding-inline: 0;
   }
+  #game-table {
+    width: 100%;
+    max-width: none;
+    table-layout: fixed;
+    border-spacing: 3px;
+    padding: 4px;
+  }
+  #game-table th,
+  #game-table td {
+    width: auto;
+  }
+  #game-table[data-grid-size="4"] th,
+  #game-table[data-grid-size="4"] td {
+    height: 18vw;
+    font-size: clamp(.9rem, 4vw, 1.15rem);
+  }
+  #game-table[data-grid-size="6"] th,
+  #game-table[data-grid-size="6"] td {
+    height: 12.5vw;
+    font-size: clamp(.78rem, 3.2vw, 1rem);
+  }
+  #game-table[data-grid-size="8"] th,
+  #game-table[data-grid-size="8"] td {
+    height: 9.6vw;
+    font-size: clamp(.68rem, 2.6vw, .9rem);
+  }
+
   .demo-cell { width: 44px; height: 44px; font-size: 1rem; }
   .demo-th { min-width: 54px; }
 }
 
 @media (max-width: 360px) {
   .level-card { min-height: 86px; }
-  #game-table th, #game-table td {
-    width: clamp(26px, 12vw, 40px);
-    height: clamp(26px, 12vw, 40px);
-  }
 }
 
 @media (max-width: 768px) and (orientation: landscape) {
