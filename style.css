@@ -1383,10 +1383,10 @@ button {
   align-items: baseline;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 1.15em;
+  font-size: clamp(1.3rem, 2.8vw, 1.7rem);
   font-weight: 900;
-  line-height: 1;
-  letter-spacing: -.04em;
+  line-height: .9;
+  letter-spacing: -.05em;
   color: var(--brand-ink);
 }
 .brand-corner-dot {
@@ -2121,6 +2121,17 @@ footer a:hover { color: var(--primary); }
   }
   #game-table th,
   #game-table td { width: auto; }
+
+  /* Large-grid desktop sizing must not leak into the fixed mobile table layout. */
+  body.game-active #game-table.large-grid th,
+  body.game-active #game-table.large-grid td {
+    width: auto;
+  }
+
+  body.game-active .brand-corner-mark {
+    font-size: clamp(1.35rem, 6vw, 1.7rem);
+  }
+
   #game-table[data-grid-size="4"] th,
   #game-table[data-grid-size="4"] td {
     height: calc((var(--mobile-board-size) - 28px) / 5);
