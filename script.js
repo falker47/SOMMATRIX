@@ -92,7 +92,7 @@ function showTutorial() {
 /* ===== Tutorial interattivo (widget isolato, non tocca il gameplay) ===== */
 let tutorialWired = false;
 let tutorialStep = 1;
-const TUTORIAL_TOTAL = 4;
+const TUTORIAL_TOTAL = 5;
 
 const tutorialStates = {
   1: {
@@ -146,6 +146,19 @@ const tutorialStates = {
     focusCols: [],
     completedRows: [0],
     completedCols: []
+  },
+  5: {
+    rowCurrents: [0, 0, 0, 0],
+    colCurrents: [0, 0, 0, 0],
+    confirms: [],
+    cancels: [],
+    autoCancels: [],
+    candidates: [],
+    impossible: [],
+    focusRows: [],
+    focusCols: [],
+    completedRows: [],
+    completedCols: []
   }
 };
 
@@ -162,16 +175,18 @@ function renderTutorialStep() {
   document.querySelectorAll('.tut-dot').forEach(el => {
     el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
   });
-  document.querySelectorAll('.tutorial-logic-hint').forEach(el => {
-    el.classList.toggle('is-active', parseInt(el.dataset.step) === tutorialStep);
-  });
 
   const board = document.getElementById('tutorial-board');
+  const samuraiCard = document.getElementById('tutorial-samurai-card');
   if (board) {
-    board.classList.remove('step-1', 'step-2', 'step-3', 'step-4');
+    board.classList.remove('step-1', 'step-2', 'step-3', 'step-4', 'step-5', 'is-hidden');
     // Restart CSS animations when changing step.
     void board.offsetWidth;
     board.classList.add('step-' + tutorialStep);
+    board.classList.toggle('is-hidden', tutorialStep === 5);
+  }
+  if (samuraiCard) {
+    samuraiCard.classList.toggle('is-active', tutorialStep === 5);
   }
 
   document.querySelectorAll('.tutorial-target.row-target').forEach(target => {
@@ -376,11 +391,12 @@ function displayRecord() {
 
 /* Calcola il punteggio finale */
 function calculateScore() {
-  const timeBonus = Math.max(0, 300 - currentTime); // Bonus tempo
-  const errorPenalty = errors * 10; // Penalità errori
-  const sizeBonus = gridSize * 50; // Bonus dimensione griglia
-  const finalScore = Math.max(0, timeBonus + sizeBonus - errorPenalty);
-  return finalScore;
+  const timeBonus = Math.max(0, 300 - currentTime);
+  const errorPenalty = errors * 10;
+  const sizeBonus = gridSize * 50;
+  const baseScore = Math.max(0, timeBonus + sizeBonus - errorPenalty);
+  const samuraiMultiplier = initialLives === 1 ? 1.25 : 1;
+  return Math.round(baseScore * samuraiMultiplier);
 }
 
 /* Inizializza una partita con un puzzle globalmente univoco */
