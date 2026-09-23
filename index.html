@@ -47,7 +47,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="menu-active">
     <!-- Main Menu -->
     <div id="main-menu" class="screen">
         <!-- Top controls: language + theme -->
@@ -155,15 +155,39 @@
         <h2 data-i18n="tutorialTitle">Come si gioca</h2>
 
         <div class="tutorial-stage">
-            <!-- Mini-grid demo (una riga dimostrativa) -->
+            <!-- Animated 4x4 tutorial board -->
             <div class="tut-demo" aria-hidden="true">
-                <div class="demo-label" data-i18n="demoLabel">Obiettivo riga: <b>12</b></div>
-                <div class="demo-row">
-                    <span class="demo-th" id="demo-th"><span id="demo-partial">0</span>/12</span>
-                    <span class="demo-cell" id="demo-0">5</span>
-                    <span class="demo-cell" id="demo-1">7</span>
-                    <span class="demo-cell" id="demo-2">8</span>
-                    <span class="demo-cell" id="demo-3">3</span>
+                <div class="demo-label" data-i18n="tutorialDemoTitle">Esempio 4×4</div>
+                <div class="tutorial-board" id="tutorial-board">
+                    <span class="tutorial-corner"></span>
+                    <span class="tutorial-target col-target" data-col="0"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">17</span></span>
+                    <span class="tutorial-target col-target" data-col="1"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">13</span></span>
+                    <span class="tutorial-target col-target" data-col="2"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">5</span></span>
+                    <span class="tutorial-target col-target" data-col="3"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">15</span></span>
+
+                    <span class="tutorial-target row-target" data-row="0"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">12</span></span>
+                    <span class="demo-cell" data-row="0" data-col="0">5</span>
+                    <span class="demo-cell" data-row="0" data-col="1">7</span>
+                    <span class="demo-cell" data-row="0" data-col="2">8</span>
+                    <span class="demo-cell" data-row="0" data-col="3">3</span>
+
+                    <span class="tutorial-target row-target" data-row="1"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">10</span></span>
+                    <span class="demo-cell" data-row="1" data-col="0">4</span>
+                    <span class="demo-cell" data-row="1" data-col="1">9</span>
+                    <span class="demo-cell" data-row="1" data-col="2">2</span>
+                    <span class="demo-cell" data-row="1" data-col="3">6</span>
+
+                    <span class="tutorial-target row-target" data-row="2"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">13</span></span>
+                    <span class="demo-cell" data-row="2" data-col="0">8</span>
+                    <span class="demo-cell" data-row="2" data-col="1">1</span>
+                    <span class="demo-cell" data-row="2" data-col="2">5</span>
+                    <span class="demo-cell" data-row="2" data-col="3">7</span>
+
+                    <span class="tutorial-target row-target" data-row="3"><span class="target-current">0</span><span class="target-sep">/</span><span class="target-total">15</span></span>
+                    <span class="demo-cell" data-row="3" data-col="0">3</span>
+                    <span class="demo-cell" data-row="3" data-col="1">6</span>
+                    <span class="demo-cell" data-row="3" data-col="2">4</span>
+                    <span class="demo-cell" data-row="3" data-col="3">9</span>
                 </div>
             </div>
 
