@@ -10,7 +10,7 @@ const i18n = {
         it: {
             // Main Menu
             title: 'SOMMATRIX',
-            tagline: 'Ogni numero conta. Fai quadrare <b>righe</b> e <b>colonne</b>.',
+            tagline: 'Ogni numero conta.<br>Fai quadrare <b>righe</b> e <b>colonne</b>.',
             chooseGridSize: 'Scegli la sfida',
             lvl4Name: 'Schizzo',
             lvl4Desc: 'Per prendere la mano',
@@ -82,7 +82,7 @@ const i18n = {
         en: {
             // Main Menu
             title: 'SOMMATRIX',
-            tagline: 'Every number counts. Make <b>rows</b> and <b>columns</b> add up.',
+            tagline: 'Every number counts.<br>Make <b>rows</b> and <b>columns</b> add up.',
             chooseGridSize: 'Choose your challenge',
             lvl4Name: 'Sketch',
             lvl4Desc: 'Warm up your mind',

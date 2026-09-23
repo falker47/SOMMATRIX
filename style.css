@@ -874,8 +874,12 @@ button {
   min-width: 0;
 }
 .tutorial-corner {
+  display: grid;
+  place-items: center;
   border-radius: var(--r-sm);
-  background: transparent;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+  overflow: hidden;
 }
 .tutorial-target,
 .tutorial-board .demo-cell {
@@ -1341,7 +1345,23 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
 }
-#game-table tr:first-child th:first-child { background: transparent; border-color: transparent; }
+#game-table tr:first-child th:first-child {
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+  border-color: var(--border);
+}
+
+.grid-brand-corner {
+  overflow: hidden;
+}
+.grid-brand-corner img {
+  display: block;
+  width: 64%;
+  height: 64%;
+  margin: auto;
+  object-fit: contain;
+  opacity: .92;
+  filter: drop-shadow(0 1px 1px color-mix(in srgb, var(--text) 16%, transparent));
+}
 
 .partial { display: block; font-weight: 700; color: var(--primary); font-size: 1.05em; }
 .slash-bold { display: block; font-weight: 600; color: var(--text-muted); font-size: .82em; }
