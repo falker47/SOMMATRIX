@@ -712,8 +712,31 @@ button {
   font-weight: 700;
   letter-spacing: .4px;
   color: var(--text-muted);
-  margin-bottom: var(--s3);
+  margin-bottom: var(--s2);
   text-align: center;
+}
+.tutorial-logic-hints {
+  width: min(100%, 430px);
+  min-height: 42px;
+  margin: 0 auto var(--s3);
+}
+.tutorial-logic-hint {
+  display: none;
+  padding: 7px 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 5%, var(--surface));
+  color: var(--text-muted);
+  font-size: .8rem;
+  line-height: 1.3;
+  text-align: center;
+}
+.tutorial-logic-hint.is-active {
+  display: block;
+  animation: stepIn var(--dur-2) var(--ease);
+}
+.tutorial-logic-hint b {
+  color: var(--text);
 }
 
 .tutorial-board {
@@ -755,6 +778,13 @@ button {
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
+.tutorial-target .target-label {
+  display: none;
+  font-size: .46em;
+  font-weight: 800;
+  letter-spacing: .9px;
+  color: var(--primary);
+}
 .tutorial-target .target-current {
   display: block;
   font-weight: 800;
@@ -772,6 +802,14 @@ button {
   background: color-mix(in srgb, var(--primary) 14%, var(--surface));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
   animation: tutTargetPulse .8s var(--ease);
+}
+.tutorial-target.target-active .target-label {
+  display: block;
+}
+.tutorial-target.target-active .target-total {
+  color: var(--primary);
+  font-size: .86em;
+  font-weight: 900;
 }
 .tutorial-target.is-complete {
   border-color: var(--success);
@@ -792,6 +830,16 @@ button {
 .tutorial-board .demo-cell.tutorial-axis {
   background: color-mix(in srgb, var(--primary) 7%, var(--surface));
   border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+.tutorial-board .demo-cell.candidate {
+  border-style: dashed;
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+.tutorial-board .demo-cell.logic-impossible {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 9%, var(--surface));
 }
 .tutorial-board .demo-cell.tutorial-focus {
   border-color: var(--primary);
@@ -1414,154 +1462,181 @@ footer a:hover { color: var(--primary); }
     display: none;
   }
 
-  /* -------- Main menu: one phone screen, app-style -------- */
+  /* -------- Main menu: balanced notebook card, still one-screen -------- */
   body.menu-active #main-menu {
-    width: 100%;
-    max-width: none;
-    height: 100dvh;
+    width: calc(100% - 16px);
+    max-width: 500px;
+    height: 94dvh;
     min-height: 0;
-    margin: 0;
+    margin: 3dvh auto;
     padding:
-      max(8px, env(safe-area-inset-top))
-      max(10px, env(safe-area-inset-right))
-      max(10px, env(safe-area-inset-bottom))
-      max(10px, env(safe-area-inset-left));
-    border: 0;
-    border-radius: 0;
-    background-image: none;
+      max(14px, env(safe-area-inset-top))
+      max(14px, env(safe-area-inset-right))
+      max(16px, env(safe-area-inset-bottom))
+      max(36px, env(safe-area-inset-left));
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    background-image:
+      linear-gradient(var(--rule-bold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-bold) 1px, transparent 1px);
+    background-size: 30px 30px, 30px 30px;
+    box-shadow: var(--sh-2), var(--sh-inset);
     justify-content: flex-start;
     overflow: hidden;
   }
-  body.menu-active #main-menu::after { display: none; }
+  body.menu-active #main-menu::after {
+    display: block;
+    left: 22px;
+    top: 12px;
+    bottom: 12px;
+    opacity: .72;
+  }
 
   body.menu-active .top-controls {
-    top: max(7px, env(safe-area-inset-top));
-    right: max(8px, env(safe-area-inset-right));
-    transform: scale(.9);
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    transform: scale(.94);
     transform-origin: top right;
   }
   body.menu-active .hero {
-    margin: 38px 0 2px;
+    margin: 48px 0 6px;
   }
   body.menu-active .hero h1 {
-    font-size: clamp(2.25rem, 11vw, 3rem);
-    line-height: .9;
+    font-size: clamp(2.55rem, 12vw, 3.25rem);
+    line-height: .92;
   }
   body.menu-active .hero h1::after {
-    bottom: -6px;
+    bottom: -7px;
     height: 4px;
   }
   body.menu-active .tagline {
-    margin-top: 14px;
-    max-width: none;
-    font-size: clamp(.84rem, 3.5vw, .98rem);
-    line-height: 1.25;
+    margin-top: 17px;
+    max-width: 33ch;
+    font-size: clamp(.9rem, 3.7vw, 1.02rem);
+    line-height: 1.3;
   }
   body.menu-active .menu-options {
     flex: 1;
     min-height: 0;
-    gap: 9px;
-    margin-top: 9px;
-    justify-content: center;
+    gap: 0;
+    margin-top: 10px;
+    justify-content: space-evenly;
   }
   body.menu-active .option-label {
-    margin-bottom: 6px;
-    font-size: .68rem;
-    letter-spacing: 1.5px;
+    margin-bottom: 7px;
+    font-size: .7rem;
+    letter-spacing: 1.6px;
   }
   body.menu-active .level-cards {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
+    gap: 7px;
   }
   body.menu-active .level-card {
-    min-height: 72px;
-    padding: 7px 5px;
+    min-height: 92px;
+    padding: 9px 5px;
     align-items: center;
     justify-content: center;
     text-align: center;
   }
   body.menu-active .level-card::before { display: none; }
   body.menu-active .level-card.selected::after {
-    top: 4px;
-    right: 5px;
-    font-size: .72rem;
+    top: 5px;
+    right: 6px;
+    font-size: .76rem;
   }
   body.menu-active .level-card .lvl-size {
-    font-size: 1.08rem;
+    font-size: 1.18rem;
     line-height: 1;
   }
   body.menu-active .level-card .lvl-name {
-    font-size: .77rem;
+    margin-top: 2px;
+    font-size: .82rem;
     line-height: 1.05;
   }
   body.menu-active .level-card .lvl-desc {
-    display: none;
+    display: block;
+    margin-top: 3px;
+    font-size: .6rem;
+    line-height: 1.12;
   }
   body.menu-active .samurai-panel {
-    min-height: 52px;
-    gap: 8px;
-    padding: 7px 10px;
+    min-height: 62px;
+    gap: 10px;
+    padding: 9px 12px;
   }
   body.menu-active .sam-emblem,
   body.menu-active .samurai-icon {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
   }
-  body.menu-active .samurai-info { gap: 8px; min-width: 0; }
-  body.menu-active .samurai-title { font-size: .86rem; line-height: 1.05; }
+  body.menu-active .samurai-info { gap: 9px; min-width: 0; }
+  body.menu-active .samurai-title { font-size: .92rem; line-height: 1.08; }
   body.menu-active .samurai-sub {
-    font-size: .65rem;
-    line-height: 1.15;
+    font-size: .69rem;
+    line-height: 1.2;
     overflow-wrap: anywhere;
   }
   body.menu-active .ios-track {
-    width: 54px;
-    height: 30px;
+    width: 58px;
+    height: 32px;
   }
   body.menu-active .ios-thumb {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     top: 3px;
     left: 3px;
   }
   body.menu-active .ios-switch input:checked + .ios-track .ios-thumb {
-    transform: translateX(24px);
+    transform: translateX(26px);
   }
   body.menu-active .buttons-group {
-    flex-direction: row;
+    flex-direction: column;
     gap: 8px;
     margin-top: 0;
   }
   body.menu-active .play-btn,
   body.menu-active .tutorial-btn {
-    flex: 1;
+    width: min(100%, 300px);
     min-width: 0;
-    min-height: 46px;
-    padding: 8px 12px;
+    min-height: 48px;
+    padding: 9px 18px;
   }
   body.menu-active .play-btn {
-    font-size: .96rem;
-    letter-spacing: 1px;
+    font-size: 1rem;
+    letter-spacing: 1.1px;
   }
-  body.menu-active .tutorial-btn { font-size: .88rem; }
+  body.menu-active .tutorial-btn { font-size: .92rem; }
 
   /* -------- Tutorial: full-screen animated 4x4 walkthrough -------- */
   body.tutorial-active #tutorial-screen {
-    width: 100%;
-    max-width: none;
-    height: 100dvh;
+    width: calc(100% - 12px);
+    max-width: 520px;
+    height: calc(100dvh - 12px);
     min-height: 0;
-    margin: 0;
+    margin: 6px auto;
     padding:
-      max(8px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-top))
       12px
-      max(10px, env(safe-area-inset-bottom));
-    border: 0;
-    border-radius: 0;
-    background-image: none;
+      max(10px, env(safe-area-inset-bottom))
+      30px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    background-image:
+      linear-gradient(var(--rule-bold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-bold) 1px, transparent 1px);
+    background-size: 30px 30px, 30px 30px;
+    box-shadow: var(--sh-2), var(--sh-inset);
     overflow: hidden;
   }
-  body.tutorial-active #tutorial-screen::after { display: none; }
+  body.tutorial-active #tutorial-screen::after {
+    display: block;
+    left: 18px;
+    top: 10px;
+    bottom: 10px;
+    opacity: .66;
+  }
   body.tutorial-active #tutorial-screen .back-button {
     top: max(6px, env(safe-area-inset-top));
     right: 8px;
@@ -1586,7 +1661,7 @@ footer a:hover { color: var(--primary); }
   body.tutorial-active .tut-demo {
     min-height: 0;
     height: 100%;
-    padding: 8px 10px 10px;
+    padding: 10px 10px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1594,10 +1669,27 @@ footer a:hover { color: var(--primary); }
   }
   body.tutorial-active .demo-label {
     flex-shrink: 0;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     font-size: .78rem;
     text-transform: uppercase;
     letter-spacing: 1.2px;
+  }
+  body.tutorial-active .tutorial-logic-hints {
+    flex-shrink: 0;
+    width: min(100%, 390px);
+    min-height: 48px;
+    margin-bottom: 8px;
+  }
+  body.tutorial-active .tutorial-logic-hint {
+    min-height: 48px;
+    padding: 7px 9px;
+    font-size: clamp(.72rem, 3vw, .84rem);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  body.tutorial-active .tutorial-logic-hint.is-active {
+    display: flex;
   }
   body.tutorial-active .tutorial-board {
     width: min(88vw, 43dvh, 390px);
