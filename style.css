@@ -683,10 +683,61 @@ button {
    ============================================ */
 #tutorial-screen { justify-content: flex-start; }
 #tutorial-screen h2 {
-  font-size: var(--fs-h2);
-  margin: var(--s2) 0 var(--s6);
-  text-align: center;
-  align-self: center;
+  align-self: stretch;
+  max-width: calc(100% - 64px);
+  margin: var(--s4) 0 var(--s6);
+  position: relative;
+  text-align: left;
+  font-size: clamp(2.2rem, 5.4vw, 3.2rem);
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.5px;
+}
+#tutorial-screen h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 104px;
+  height: 4px;
+  border-radius: 3px;
+  background: var(--primary);
+  clip-path: polygon(0 35%, 12% 10%, 26% 55%, 40% 18%, 55% 60%, 70% 22%, 84% 58%, 100% 25%, 100% 100%, 0 100%);
+}
+
+#tutorial-screen .back-button {
+  width: 50px;
+  height: 50px;
+  right: var(--s5);
+  top: var(--s5);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
+  color: var(--primary);
+  box-shadow: var(--sh-1), var(--sh-inset);
+  backdrop-filter: blur(6px);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+#tutorial-screen .back-button svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 2.2;
+}
+#tutorial-screen .back-button:hover {
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface-2));
+  box-shadow: var(--sh-2);
+  transform: translateY(-1px);
+}
+#tutorial-screen .back-button:active {
+  transform: translateY(1px) scale(.97);
+  box-shadow: var(--sh-1);
 }
 
 .tutorial-stage {
@@ -1752,16 +1803,29 @@ footer a:hover { color: var(--primary); }
     opacity: .66;
   }
   body.tutorial-active #tutorial-screen .back-button {
-    top: max(6px, env(safe-area-inset-top));
-    right: 8px;
-    width: 40px;
-    height: 40px;
+    top: max(14px, env(safe-area-inset-top));
+    right: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+  body.tutorial-active #tutorial-screen .back-button svg {
+    width: 25px;
+    height: 25px;
   }
   body.tutorial-active #tutorial-screen h2 {
     flex-shrink: 0;
-    margin: 2px 0 clamp(16px, 2.2dvh, 22px);
-    font-size: clamp(1.55rem, 6.6vw, 2rem);
-    line-height: 1;
+    align-self: stretch;
+    max-width: calc(100% - 62px);
+    margin: clamp(18px, 2.8dvh, 26px) 0 clamp(24px, 3dvh, 32px);
+    text-align: left;
+    font-size: clamp(2.25rem, 10vw, 2.9rem);
+    line-height: .94;
+  }
+  body.tutorial-active #tutorial-screen h2::after {
+    bottom: -9px;
+    width: clamp(86px, 28vw, 104px);
+    height: 4px;
   }
   body.tutorial-active .tutorial-stage {
     flex: 1;
