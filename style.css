@@ -968,6 +968,26 @@ button {
 }
 .cell:not(.cell-confirmed):not(.cell-cancelled):active { transform: translateY(1px) scale(.97); }
 
+/* Contextual row/column guide — orientation aid, not game state */
+.cell.axis-active:not(.cell-confirmed):not(.cell-cancelled) {
+  background: color-mix(in srgb, var(--primary) 7%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+}
+.cell.grid-focus:not(.cell-confirmed):not(.cell-cancelled) {
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface-2));
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 36%, transparent), var(--sh-1);
+  transform: translateY(-1px);
+  z-index: 4;
+}
+#game-table th.target-axis-active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+#game-table th.target-axis-active .partial {
+  color: var(--primary);
+}
+
 /* Confirmed — ink spread */
 .cell-confirmed {
   background: color-mix(in srgb, var(--success) 16%, var(--surface-2)) !important;
