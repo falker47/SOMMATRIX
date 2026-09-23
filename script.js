@@ -438,25 +438,52 @@ function clearGridFocus() {
   });
 }
 
-function setGridFocus(row, col) {
+function setGridFocus(row = null, col = null) {
   clearGridFocus();
+
+  const hasRow = Number.isInteger(row);
+  const hasCol = Number.isInteger(col);
+  if (!hasRow && !hasCol) return;
 
   gameTable.querySelectorAll(".cell").forEach(cell => {
     const cellRow = parseInt(cell.dataset.row);
     const cellCol = parseInt(cell.dataset.col);
+    const inRow = hasRow && cellRow === row;
+    const inCol = hasCol && cellCol === col;
 
-    if (cellRow === row || cellCol === col) {
+    if (inRow || inCol) {
       cell.classList.add("axis-active");
     }
-    if (cellRow === row && cellCol === col) {
+    if (inRow && inCol) {
       cell.classList.add("grid-focus");
     }
   });
 
-  const rowTarget = document.getElementById("row-indicator-" + row);
-  const colTarget = document.getElementById("col-indicator-" + col);
-  if (rowTarget) rowTarget.classList.add("target-axis-active");
-  if (colTarget) colTarget.classList.add("target-axis-active");
+  if (hasRow) {
+    const rowTarget = document.getElementById("row-indicator-" + row);
+    if (rowTarget) rowTarget.classList.add("target-axis-active");
+  }
+  if (hasCol) {
+    const colTarget = document.getElementById("col-indicator-" + col);
+    if (colTarget) colTarget.classList.add("target-axis-active");
+  }
+}
+
+function wireAxisTarget(target, row = null, col = null) {
+  target.classList.add("axis-target");
+  target.setAttribute("tabindex", "0");
+  target.setAttribute("role", "button");
+
+  const focusAxis = () => setGridFocus(row, col);
+  target.addEventListener("pointerenter", focusAxis);
+  target.addEventListener("focus", focusAxis);
+  target.addEventListener("click", focusAxis);
+  target.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      focusAxis();
+    }
+  });
 }
 
 /* Crea la tabella */
@@ -473,6 +500,7 @@ function buildTable() {
     const th = document.createElement("th");
     th.id = "col-indicator-" + j;
     th.innerHTML = `<span class="partial">0</span><span class="slash-bold">/${colTargets[j]}</span>`;
+    wireAxisTarget(th, null, j);
     headerRow.appendChild(th);
   }
   gameTable.appendChild(headerRow);
@@ -483,6 +511,7 @@ function buildTable() {
     const th = document.createElement("th");
     th.id = "row-indicator-" + i;
     th.innerHTML = `<span class="partial">0</span><span class="slash-bold">/${rowTargets[i]}</span>`;
+    wireAxisTarget(th, i, null);
     tr.appendChild(th);
     for (let j = 0; j < gridSize; j++) {
       const td = document.createElement("td");
