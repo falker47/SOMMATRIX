@@ -32,6 +32,7 @@ const i18n = {
 
             // Tutorial
             tutorialTitle: 'Come si gioca',
+            tutorialDemoTitle: 'Esempio 4×4',
             demoLabel: 'Obiettivo riga: <b>12</b>',
             tutStep1: 'Su ogni riga e colonna hai un <b>obiettivo</b>: la somma dei numeri deve coincidere con il numero target.',
             tutStep2: 'In modalità <b>Conferma</b> tocca i numeri che sicuramente fanno parte della somma. Se sbagli perdi una vita.',
@@ -97,6 +98,7 @@ const i18n = {
 
             // Tutorial
             tutorialTitle: 'How to play',
+            tutorialDemoTitle: '4×4 example',
             demoLabel: 'Row target: <b>12</b>',
             tutStep1: 'Each row and column has a <b>target</b>: the sum of the right numbers.',
             tutStep2: 'In <b>Confirm</b> mode, tap the numbers that are part of the sum.',
