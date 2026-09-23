@@ -989,37 +989,81 @@ button {
 }
 
 .tut-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: 54px auto 54px;
   align-items: center;
   justify-content: center;
-  gap: var(--s5);
+  gap: var(--s4);
   width: 100%;
 }
 .tut-prev,
 .tut-next {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--r-sm);
-  border: 1.5px solid var(--border-strong);
-  color: var(--text);
-  font-size: 1.2rem;
-  transition: all var(--dur) var(--ease);
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--primary);
+  box-shadow: 0 2px 0 var(--border-strong), var(--sh-1);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
 }
-.tut-prev:hover,
-.tut-next:hover { border-color: var(--primary); color: var(--primary); }
-.tut-prev:disabled { opacity: .35; cursor: not-allowed; }
-.tut-dots { display: flex; gap: var(--s2); }
+.tut-next {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+  background: color-mix(in srgb, var(--primary) 7%, var(--surface-2));
+}
+.tut-arrow {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tut-prev:hover:not(:disabled),
+.tut-next:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 11%, var(--surface-2));
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--primary) 35%, var(--border)), var(--sh-1);
+}
+.tut-prev:active:not(:disabled),
+.tut-next:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--border-strong);
+}
+.tut-prev:disabled,
+.tut-next:disabled {
+  opacity: .28;
+  cursor: default;
+  box-shadow: none;
+}
+.tut-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 78px;
+}
 .tut-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
   background: var(--border-strong);
   transition: all var(--dur) var(--ease);
 }
-.tut-dot.is-active { background: var(--primary); transform: scale(1.3); }
+.tut-dot.is-active {
+  width: 18px;
+  background: var(--primary);
+}
 
 /* ============================================
    8. GAME SCREEN
@@ -1696,13 +1740,14 @@ footer a:hover { color: var(--primary); }
     min-height: 0;
     width: 100%;
     max-width: none;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto auto;
-    gap: clamp(8px, 1.7dvh, 14px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(10px, 2.1dvh, 18px);
   }
   body.tutorial-active .tut-demo {
+    flex: 1 1 auto;
     min-height: 0;
-    height: 100%;
     padding: 10px 10px 12px;
     display: flex;
     flex-direction: column;
@@ -1746,6 +1791,7 @@ footer a:hover { color: var(--primary); }
     font-size: clamp(.7rem, 3vw, 1rem);
   }
   body.tutorial-active .tut-steps {
+    flex: 0 0 auto;
     min-height: 104px;
     display: flex;
     align-items: stretch;
@@ -1775,13 +1821,19 @@ footer a:hover { color: var(--primary); }
     line-height: 1.35;
   }
   body.tutorial-active .tut-nav {
-    flex-shrink: 0;
-    gap: 20px;
+    flex: 0 0 auto;
+    grid-template-columns: 52px auto 52px;
+    gap: 14px;
+    padding-bottom: 2px;
   }
   body.tutorial-active .tut-prev,
   body.tutorial-active .tut-next {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 40px;
+  }
+  body.tutorial-active .tut-arrow {
+    width: 22px;
+    height: 22px;
   }
 
   /* -------- Gameplay: all controls stay inside the phone viewport -------- */
