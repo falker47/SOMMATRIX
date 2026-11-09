@@ -12,7 +12,7 @@ The puzzle is generated locally in the browser. Before a board is shown, SOMMATR
 
 ## Run locally
 
-No build step or external dependency is required.
+No build step, package manager or external JavaScript library is required to play.
 
 ```bash
 git clone https://github.com/falker47/SOMMATRIX.git
@@ -21,13 +21,31 @@ cd SOMMATRIX
 
 Open `index.html` in a modern browser.
 
+## Browser storage and external resources
+
+SOMMATRIX generates puzzles and evaluates player selections in the browser.
+
+The application uses browser `localStorage` to remember:
+
+- The selected language (Italian or English).
+- The selected light or dark theme.
+- High scores for each grid size.
+
+Clearing the site's browser storage resets these saved values.
+
+The page also requests fonts from Google Fonts (`fonts.googleapis.com` and `fonts.gstatic.com`). These external resources are used for typography and are not required by the puzzle-generation logic.
+
 ## Verification
 
-The puzzle-generation logic lives in `puzzle-core.js`, separate from the DOM code, so it can be tested directly with Node:
+The puzzle-generation logic lives in `puzzle-core.js`, separate from the DOM code, so it can be tested directly with Node.js. The GitHub Actions workflow uses Node.js 22.
+
+From the repository root, run:
 
 ```bash
-node --test tests/*.test.js
+node --test
 ```
+
+No package installation is required.
 
 The test suite covers:
 
@@ -36,7 +54,7 @@ The test suite covers:
 - generated 4x4, 6x6 and 8x8 boards;
 - consistency between the hidden solution and the published row/column targets.
 
-GitHub Actions runs the same tests on pushes and pull requests.
+GitHub Actions runs these tests on pushes to `main` and on pull requests. The workflow also checks the JavaScript syntax and a specific HTML formatting issue. It does not constitute a browser gameplay test or an independent security audit.
 
 ## Repository map
 
